@@ -1,0 +1,495 @@
+// header
+
+.header {
+  background-color: $text-color;
+  padding: 0.5em;
+  height: auto;
+}
+
+.logoHeader {
+  height: 10em;
+}
+
+.logo {
+  display: flex;
+  justify-content: center;
+}
+
+i {
+  color: $light-color;
+  margin: 0.2em;
+  font-size: x-large;
+}
+
+.iconI {
+  position: absolute;
+  top: 5px;
+  left: 5px;
+}
+
+.iconU {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+}
+
+.iconFB {
+  position: absolute;
+  top: 40px;
+  left: 5px;
+}
+
+// Navigation
+
+.menu-container {
+  position: relative;
+}
+
+.burger {
+  display: none;
+  font-size: 2rem;
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+.menu {
+  display: flex;
+  justify-content: space-around;
+  gap: 1rem;
+  width: 100%;
+}
+
+.itemMenu a {
+  text-decoration: none;
+  color: $text-color;
+  font-size: x-large;
+  font-family: $font-titleh2;
+}
+
+/* Responsive */
+@include mobile {
+  .burger {
+    display: block;
+    color: $light-color;
+    justify-self: end;
+  }
+
+  .menu {
+    display: none;
+    flex-direction: column;
+    background-color: $text-color;
+
+    top: 3rem;
+    left: 0;
+    right: 0;
+    padding: 1rem;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  }
+
+  .menu.open {
+    display: flex;
+  }
+
+  .itemMenu {
+    margin: 0.5rem 0;
+  }
+}
+
+.menu .itemMenu a {
+  text-decoration: none;
+  color: $light-color;
+}
+
+.menu .itemMenu a:hover {
+  color: $lightorange-color;
+}
+
+// Footer
+
+.footer {
+  background-color: $dark-color;
+  padding: 0.1em;
+  height: auto;
+  margin-top: 0;
+}
+
+.pFooter {
+  color: $light-color;
+  font-family: $font-main;
+}
+
+.footerCol1 i {
+  color: $light-color;
+}
+
+.footerCol1 p {
+  @include mobile {
+    display: none;
+  }
+}
+
+.footerCol1 p,
+.footerCol1 i {
+  text-align: center;
+  font-size: x-large;
+  @include tablette {
+    font-size: larger;
+  }
+}
+
+.footerCol2 p {
+  text-align: end;
+  margin-bottom: 0;
+  @include mobile {
+    display: none;
+  }
+}
+
+.footerCol4 p {
+  margin-bottom: 0;
+  @include mobile {
+    font-size: smaller;
+    text-align: center;
+  }
+}
+
+.footerCol3 {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.logoFooter {
+  width: auto;
+  height: 135px;
+}
+
+.pFooter a {
+  text-decoration: none;
+  color: $light-color;
+}
+
+.pFooter a:hover {
+  color: $darkorange-color;
+}
+
+.footerCol5 {
+  @include mobile {
+    visibility: hidden;
+  }
+}
+
+.footerCol5 p {
+  font-size: x-large;
+  text-align: center;
+  @include mobile {
+    display: none;
+  }
+  @include tablette {
+    font-size: larger;
+  }
+}
+
+.footerCol5,
+.footerCol1,
+.footerCol2,
+.footerCol4 {
+  align-content: center;
+}
+
+.copyright {
+  color: $light-color;
+  font-size: x-small;
+  text-align: center;
+}
+
+// Pâtisserie de la semaine
+
+.patSemaine {
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: row;
+  justify-content: center;
+  padding: 3em;
+  padding-top: 0;
+  gap: 3em;
+
+  @include mobile {
+    display: flex;
+    flex-direction: column;
+    align-content: center;
+  }
+}
+
+.PatDivSemaine {
+  width: 80%;
+  @include mobile {
+    width: 80%;
+  }
+}
+
+.imagePatSemaineDiv {
+  @include tablette {
+    width: 15em;
+    height: 12em;
+  }
+
+  @include desktop {
+    width: 25em;
+    height: 15em;
+  }
+
+  width: 100%;
+  border: solid 3px $text-color;
+  border-radius: 10px;
+}
+
+.imagePatisserieSemaine {
+  object-fit: cover;
+  width: 100%;
+  height: 100%;
+}
+
+.titrePatSemaine {
+  color: $text-color;
+  text-align: center;
+  font-size: x-large;
+  @include desktop {
+    font-size: xx-large;
+  }
+  @include mobile {
+    font-size: large;
+  }
+  font-weight: 700;
+  font-family: $font-titleh2;
+}
+
+.cadrePat {
+  border: dashed 3px $dark-color;
+  border-radius: 12px;
+  background-color: $light-color;
+  padding: 1em;
+  @include mobile {
+    margin-top: 1em;
+  }
+}
+
+.videoExtrait {
+  width: 30%;
+  @include mobile {
+    width: 80%;
+  }
+}
+
+.videoEmbed {
+  width: 100%;
+  height: auto;
+  aspect-ratio: 16 / 9;
+  display: block;
+}
+
+.videoDirect {
+  width: 100%;
+  height: auto;
+  display: block;
+  object-fit: contain;
+}
+
+.imageDirect {
+  width: 100%;
+  height: auto;
+  display: block;
+  object-fit: contain;
+}
+
+.titreFilm {
+  margin: 0;
+  font-size: xx-large;
+  text-align: end;
+  font-style: italic;
+  color: $text-color;
+  @include desktop {
+    margin-top: 1rem;
+  }
+  @include tablette {
+    font-size: x-large;
+  }
+  @include mobile {
+    padding-top: 1em;
+    font-size: large;
+    text-align: center;
+  }
+}
+
+.realFilm {
+  color: $dark-color;
+  font-size: large;
+
+  @include tablette {
+    font-size: medium;
+  }
+  @include mobile {
+    font-size: small;
+    text-align: center;
+  }
+  text-align: end;
+  margin: 0;
+}
+
+.dateFilm {
+  color: $dark-color;
+  text-align: end;
+  font-size: medium;
+  margin: 0;
+
+  @include mobile {
+    text-align: center;
+  }
+}
+
+// News
+
+.newsDiv {
+  display: flex;
+  flex-wrap: wrap;
+  padding: 2em;
+  @include mobile {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+}
+
+.imageNewsDiv {
+  width: 50%;
+  height: auto;
+  align-content: start;
+  @include mobile {
+    width: 80%;
+  }
+}
+
+.imageNews {
+  object-fit: cover;
+  width: 100%;
+  height: auto;
+  border: solid 3px $text-color;
+  border-radius: 10px;
+
+  @include desktop {
+    height: 50em;
+  }
+}
+
+.texteNews {
+  width: 50%;
+  padding-right: 2em;
+  padding-left: 2em;
+  color: $text-color;
+  display: inline-block;
+  flex-direction: column;
+  justify-content: center;
+  text-align: center;
+
+  @include mobile {
+    font-size: smaller;
+    width: 80%;
+    padding-right: 0.2em;
+    padding-left: 0.2em;
+  }
+  @include desktop {
+    font-size: x-large;
+    line-height: 2em;
+  }
+  @include tablette {
+    font-size: large;
+    line-height: 1.7em;
+  }
+}
+
+.texteNews h3 {
+  text-align: center;
+  font-weight: 700;
+  color: $logo-color;
+  font-size: xx-large;
+  margin-top: 1em;
+}
+
+.boutonReservation {
+  visibility: hidden;
+  width: 35%;
+  border: solid 2px $lightorange-color;
+  border-radius: 10px;
+  background-color: $dark-color;
+  @include mobile {
+    width: 50%;
+  }
+  @include desktop {
+    margin-top: 2em;
+  }
+}
+
+.boutonReservation a {
+  color: $light-color;
+  text-decoration: none;
+  font-family: $font-titleh2;
+  font-size: x-large;
+  @include mobile {
+    font-size: medium;
+  }
+}
+
+strong {
+  font-family: $font-titleh2;
+}
+
+.lieuEvent {
+  width: 70%;
+  justify-self: center;
+  @include tablette {
+    width: 100%;
+  }
+  @include mobile {
+    width: 100%;
+  }
+}
+
+.descriptionParaph {
+  font-weight: 700;
+  font-size: larger;
+  @include tablette {
+    font-size: large;
+  }
+}
+
+// Calendar
+
+.calendar *:last-child {
+  margin-bottom: 0;
+}
+
+.grilleCalendrier {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
+  grid-template-rows: 1fr 1fr 1fr 1fr;
+  background-color: $light-color;
+  grid-gap: 5px;
+  padding: 2em;
+}
+
+.grilleCalendrier > div {
+  background-color: $lightorange-color;
+  border: solid 2px $text-color;
+  height: 100px;
+  position: relative;
+}
+
+.chiffreJour {
+  position: absolute;
+  top: 1px;
+  left: 8px;
+  font-size: 1.5rem;
+  color: $text-color;
+  font-family: $font-titleh1;
+}
