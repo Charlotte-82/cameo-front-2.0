@@ -8,6 +8,7 @@ import Shop from "./pages/Shop.jsx";
 import Header from "./components/Header.jsx";
 import Footer from "./components/Footer.jsx";
 import Travaux from "./pages/Travaux.jsx";
+import Admin from "./pages/admin.jsx";
 
 function App() {
   return (
@@ -21,6 +22,7 @@ function App() {
           <Route path="/agenda" element={<Program />}></Route>
           <Route path="/partenaires" element={<Partnership />}></Route>
           <Route path="/404" element={<Travaux />}></Route>
+          <Route path="/admin" element={<Admin />}></Route>
         </Routes>
         <Footer />
       </div>
