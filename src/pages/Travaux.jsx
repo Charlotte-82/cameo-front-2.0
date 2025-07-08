@@ -1,3 +1,4 @@
+import React from "react";
 import Image404 from "../assets/images/404.png";
 
 function page404() {

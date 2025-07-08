@@ -8,7 +8,9 @@ import Shop from "./pages/Shop.jsx";
 import Header from "./components/Header.jsx";
 import Footer from "./components/Footer.jsx";
 import Travaux from "./pages/Travaux.jsx";
-import Admin from "./pages/admin.jsx";
+import Admin from "./pages/AdminLogin.jsx";
+import Dashboard from "./pages/Dashboard.jsx";
+import Mentions from "./pages/Mentions.jsx";
 
 function App() {
   return (
@@ -23,6 +25,8 @@ function App() {
           <Route path="/partenaires" element={<Partnership />}></Route>
           <Route path="/404" element={<Travaux />}></Route>
           <Route path="/admin" element={<Admin />}></Route>
+          <Route path="/admin/dashboard" element={<Dashboard />}></Route>
+          <Route path="/mentions" element={<Mentions />}></Route>
         </Routes>
         <Footer />
       </div>
