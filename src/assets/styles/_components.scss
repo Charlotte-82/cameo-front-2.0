@@ -497,3 +497,22 @@ strong {
   color: $text-color;
   font-family: $font-titleh1;
 }
+
+// PastrySVG
+
+.pastryIMG {
+  color: $text-color;
+  height: 10em;
+  width: 8em;
+}
+
+.pastryIMG:hover {
+  color: $darkorange-color;
+  cursor: pointer;
+}
+
+.flexSVG {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}

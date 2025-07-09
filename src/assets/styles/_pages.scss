@@ -476,8 +476,6 @@
 }
 
 .divH2 {
-  border: solid 2px $darkorange-color;
-  border-style: dotted;
   width: 25%;
   display: flex;
   justify-self: center;
@@ -493,37 +491,105 @@
 
 .imageMenuDashboard {
   height: 10em;
+  display: flex;
+  justify-content: center;
 }
 
 .dashboardGrid {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
   grid-template-rows: 1fr 1fr;
+  justify-content: center;
 }
 
 .weeklyPastryDiv {
+  margin-top: 2em;
+  margin-bottom: 2em;
+  margin-left: 4em;
+  margin-right: 4em;
+  border: dotted 1px $text-color;
   grid-row: 1;
   grid-column: 1;
 }
 
+.weeklyPastryDiv:hover {
+  border: dotted 2px $darkorange-color;
+}
+
 .workshopManagementDiv {
+  margin-top: 2em;
+  margin-bottom: 2em;
+  margin-left: 4em;
+  margin-right: 4em;
+  border: dotted 1px $text-color;
   grid-row: 1;
   grid-column: 2;
 }
 
+.workshopManagementDiv:hover {
+  border: dotted 2px $darkorange-color;
+}
+
 .eventManagementDiv {
+  margin-top: 2em;
+  margin-bottom: 2em;
+  margin-left: 4em;
+  margin-right: 4em;
+  border: dotted 1px $text-color;
   grid-row: 1;
   grid-column: 3;
 }
 
+.eventManagementDiv:hover {
+  border: dotted 2px $darkorange-color;
+}
+
 .userManagementDiv {
+  margin-top: 2em;
+  margin-bottom: 2em;
+  margin-left: 4em;
+  margin-right: 4em;
+  border: dotted 1px $text-color;
   grid-row: 2;
   grid-column: 1;
 }
 
+.userManagementDiv:hover {
+  border: dotted 2px $darkorange-color;
+}
+
 .reservationManagementDiv {
+  margin-top: 2em;
+  margin-bottom: 2em;
+  margin-left: 4em;
+  margin-right: 4em;
+  border: dotted 1px $text-color;
   grid-row: 2;
   grid-column: 2;
+}
+
+.reservationManagementDiv:hover {
+  border: dotted 2px $darkorange-color;
+}
+
+.cakeManagementDiv {
+  margin-top: 2em;
+  margin-bottom: 2em;
+  margin-left: 4em;
+  margin-right: 4em;
+  border: dotted 1px $text-color;
+  grid-row: 2;
+  grid-column: 3;
+}
+
+.cakeManagementDiv:hover {
+  border: dotted 2px $darkorange-color;
+}
+
+.cakeManagementDiv h3:hover {
+  color: $darkorange-color;
+  font-weight: 700;
+  cursor: pointer;
 }
 
 .weeklyPastryDiv h3:hover {
@@ -554,4 +620,25 @@
   color: $darkorange-color;
   font-weight: 700;
   cursor: pointer;
+}
+
+.adminLink {
+  text-decoration: none;
+}
+
+// Pages d'administration
+
+.adminPages {
+  background-color: $light-color;
+  padding: 1em;
+}
+
+.adminPages h1 {
+  color: $text-color;
+}
+
+.adminPages h2 {
+  color: $text-color;
+  padding-bottom: 1em;
+  padding-top: 1em;
 }
