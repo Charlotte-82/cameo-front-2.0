@@ -628,17 +628,142 @@
 
 // Pages d'administration
 
-.adminPages {
+.menuManagement {
+  background-color: $light-color;
+}
+
+.menuManagement h1 {
+  padding-top: 0.5em;
+  color: $text-color;
+}
+
+.menuManagement hr {
+  border: 2px solid $text-color;
+  opacity: 100;
+  color: $dark-color;
+  width: 75%;
+  display: block;
+  justify-self: center;
+}
+
+.cakeManagementCompo {
   background-color: $light-color;
   padding: 1em;
 }
 
-.adminPages h1 {
+.cakeManagementCompo h2 {
   color: $text-color;
+  font-weight: 700;
 }
 
-.adminPages h2 {
+.cakeManagementCompo h3 {
   color: $text-color;
   padding-bottom: 1em;
   padding-top: 1em;
+}
+
+.adminForm2 {
+  display: flex;
+  justify-content: center;
+}
+
+.adminForm2 fieldset {
+  border: $dark-color 2px solid;
+  padding: 3em;
+  width: 60%;
+}
+
+.adminForm2 ::placeholder {
+  font-family: $font-main;
+  color: $lightorange-color;
+}
+
+.adminForm2 label {
+  font-family: $font-main;
+  color: $text-color;
+}
+
+.adminForm2 legend {
+  font-family: $font-titleh2;
+  color: $text-color;
+  text-align: center;
+}
+
+.adminForm2 input[type="file"] {
+  font-family: $font-main;
+}
+
+.adminForm2 button {
+  font-family: $font-titleh2;
+  border: $dark-color solid 2px;
+  color: $light-color;
+  background-color: $text-color;
+}
+
+.adminForm2 button:hover {
+  color: $lightorange-color;
+}
+
+.allCakeDiv {
+  display: flex;
+  flex-direction: row;
+}
+
+.cakeAddDiv {
+  width: 50%;
+}
+
+.cakeTable {
+  border: solid $text-color 2px;
+  margin: 2em;
+  gap: 2px;
+  width: 90%;
+}
+
+.cakeTableDiv {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  width: 50%;
+}
+
+.cakeTable th {
+  text-align: center;
+  font-family: $font-titleh2;
+  color: $light-color;
+  background-color: $text-color;
+  border: $lightorange-color 2px solid;
+}
+
+.cakeTable th,
+.cakeTable td {
+  padding: 0.2em;
+  padding-left: 1em;
+  font-family: $font-main;
+}
+
+.cakeTable td {
+  border: $dark-color 2px solid;
+  color: $text-color;
+}
+
+.cakeTable button {
+  margin: 1.5em;
+  font-family: $font-titleh2;
+  border: $dark-color solid 2px;
+  color: $light-color;
+  background-color: $text-color;
+}
+
+.tableRank2 {
+  height: 100px;
+}
+
+.cakePhotoDiv {
+  height: 5em;
+}
+
+.cakePhoto {
+  height: 100%;
+  object-fit: cover;
 }

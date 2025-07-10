@@ -16,7 +16,7 @@ import Event from "./adminPages/EventManagement.jsx";
 import Workshop from "./adminPages/WorkshopManagement.jsx";
 import User from "./adminPages/UserManagament.jsx";
 import Reserv from "./adminPages/ReservManagement.jsx";
-import Cake from "./adminPages/cakeManagement.jsx";
+import MenuManagement from "./adminPages/MenuManagement.jsx";
 
 function App() {
   return (
@@ -44,7 +44,10 @@ function App() {
             path="/admin/dashboard/reservation"
             element={<Reserv />}
           ></Route>
-          <Route path="/admin/dashboard/gateaux" element={<Cake />}></Route>
+          <Route
+            path="/admin/dashboard/carte"
+            element={<MenuManagement />}
+          ></Route>
         </Routes>
         <Footer />
       </div>

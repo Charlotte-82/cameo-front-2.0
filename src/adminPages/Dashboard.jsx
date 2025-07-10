@@ -53,8 +53,8 @@ function Dashboard() {
           </a>
         </div>
         <div className="cakeManagementDiv">
-          <a className="adminLink" href="/admin/dashboard/gateaux">
-            <h3>Gestion des Gâteaux</h3>
+          <a className="adminLink" href="/admin/dashboard/carte">
+            <h3>Gestion de la carte</h3>
             <CakeSVG />
           </a>
         </div>
