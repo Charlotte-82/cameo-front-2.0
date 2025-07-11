@@ -516,3 +516,16 @@ strong {
   justify-content: center;
   align-items: center;
 }
+
+// Gestion utilisateurs composant
+
+.labelRadioNews {
+  padding-right: 1em;
+  padding-left: 0.5em;
+}
+
+select {
+  font-family: $font-main;
+  color: $darkorange-color;
+  background-color: $light-color;
+}

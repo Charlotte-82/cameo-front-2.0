@@ -1,6 +1,7 @@
 import React from "react";
 import CakeManagement from "../components/adminComponents/CakeManagement";
 import BoissonsChaudesManagement from "../components/adminComponents/BoissonsChaudesManagement";
+import BoissonsFroidesManagement from "../components/adminComponents/BoissonsFroidesManagement";
 
 function MenuManagement() {
   return (
@@ -9,6 +10,8 @@ function MenuManagement() {
       <CakeManagement />
       <hr></hr>
       <BoissonsChaudesManagement />
+      <hr></hr>
+      <BoissonsFroidesManagement />
     </div>
   );
 }
