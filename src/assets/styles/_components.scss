@@ -519,13 +519,13 @@ strong {
 
 // Gestion utilisateurs composant
 
-.labelRadioNews {
+.inputRadioNews {
   padding-right: 1em;
-  padding-left: 0.5em;
+  margin-right: 1em;
+  accent-color: $logo-color;
 }
 
-select {
-  font-family: $font-main;
-  color: $darkorange-color;
-  background-color: $light-color;
+.labelRadioNews {
+  padding-left: 1em;
+  padding-right: 2em;
 }

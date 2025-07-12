@@ -128,6 +128,7 @@ function CakeManagement() {
   return (
     <div className="cakeManagementCompo">
       <h2>Gestion des Gâteaux</h2>
+
       <div className="allCakeDiv">
         <div className="cakeAddDiv">
           <h3>{editingId ? "Modifier un gâteau" : "Ajouter un gâteau"}</h3>
@@ -170,7 +171,7 @@ function CakeManagement() {
           <table className="cakeTable">
             <thead>
               <tr>
-                <th>ID</th>
+                {/* <th>ID</th> */}
                 <th>Nom</th>
                 <th>Prix</th>
                 <th>Actions</th>
@@ -179,10 +180,10 @@ function CakeManagement() {
             <tbody>
               {cakes.map((cake) => (
                 <tr key={cake.id_cake} className="tableRank2">
-                  <td>{cake.id_cake}</td>
+                  {/* <td>{cake.id_cake}</td> */}
                   <td>{cake.name}</td>
                   <td>{cake.price} €</td>
-                  <td>
+                  <td className="buttonCell">
                     <button onClick={() => handleEdit(cake)}>Modifier</button>
                     <button onClick={() => handleDelete(cake.id_cake)}>
                       Supprimer

@@ -1,28 +1,26 @@
 import React, { useEffect, useState } from "react";
 
-function BoissonsFroidesManagement() {
-  const [boissonsfroides, setBoissonsfroides] = useState([]);
+function GlacesManagement() {
+  const [glaces, setGlaces] = useState([]);
   const [form, setForm] = useState({ name: "", price: "" });
   const [editingId, setEditingId] = useState(null);
 
   const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
   useEffect(() => {
-    fetchBoissonsfroides();
+    fetchGlaces();
   }, []);
 
-  const fetchBoissonsfroides = () => {
-    fetch(`${API_BASE_URL}/boissonsfroides`)
+  const fetchGlaces = () => {
+    fetch(`${API_BASE_URL}/glaces`)
       .then((res) => {
         if (!res.ok) {
           throw new Error(`Erreur HTTP: ${res.status} ${res.statusText}`);
         }
         return res.json();
       })
-      .then(setBoissonsfroides)
-      .catch((err) =>
-        console.error("Erreur lors du fetch des boissons froides :", err)
-      );
+      .then(setGlaces)
+      .catch((err) => console.error("Erreur lors du fetch des glaces :", err));
   };
 
   const handleChange = (e) => {
@@ -33,17 +31,17 @@ function BoissonsFroidesManagement() {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    let url = `${API_BASE_URL}/boissonsfroides`;
+    let url = `${API_BASE_URL}/glaces`;
     let method = "POST";
 
-    const boissonsfroidesData = {
+    const glacesData = {
       name: form.name,
       price: parseFloat(form.price),
     };
 
     if (editingId) {
       method = "PUT";
-      boissonsfroidesData.id_boissonsfroides = editingId;
+      glacesData.id_glaces = editingId;
     }
 
     try {
@@ -52,7 +50,7 @@ function BoissonsFroidesManagement() {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify(boissonsfroidesData),
+        body: JSON.stringify(glacesData),
       });
 
       const textResponse = await response.text();
@@ -77,7 +75,7 @@ function BoissonsFroidesManagement() {
         result.message || "Aucun message spécifique."
       );
 
-      fetchBoissonsfroides();
+      fetchGlaces();
     } catch (error) {
       console.error("Erreur lors de l'envoi ou du rechargement :", error);
     } finally {
@@ -86,13 +84,13 @@ function BoissonsFroidesManagement() {
     }
   };
 
-  const handleEdit = (boissonsfroides) => {
-    setForm({ name: boissonsfroides.name, price: boissonsfroides.price });
-    setEditingId(boissonsfroides.id_boissonsfroides);
+  const handleEdit = (glaces) => {
+    setForm({ name: glaces.name, price: glaces.price });
+    setEditingId(glaces.id_glaces);
   };
 
   const handleDelete = (id) => {
-    fetch(`${API_BASE_URL}/boissonsfroides/${id}`, {
+    fetch(`${API_BASE_URL}/glaces/${id}`, {
       method: "DELETE",
     })
       .then((res) => {
@@ -119,30 +117,23 @@ function BoissonsFroidesManagement() {
       })
       .then((text) => {
         if (text) console.log("Suppression réussie, réponse:", text);
-        else console.log("Boisson froide supprimée avec succès.");
-        fetchBoissonsfroides();
+        else console.log("Glace supprimée avec succès.");
+        fetchGlaces();
       })
       .catch((err) =>
-        console.error(
-          "Erreur lors de la suppression de la boisson froide :",
-          err
-        )
+        console.error("Erreur lors de la suppression de la glace :", err)
       );
   };
 
   return (
     <div className="cakeManagementCompo">
-      <h2>Gestion des Boissons Froides</h2>
+      <h2>Gestion des Glaces</h2>
       <div className="allCakeDiv">
         <div className="cakeAddDiv">
-          <h3>
-            {editingId
-              ? "Modifier une boisson froide"
-              : "Ajouter une boisson froide"}
-          </h3>
+          <h3>{editingId ? "Modifier une glace" : "Ajouter une glace"}</h3>
           <form onSubmit={handleSubmit} className="adminForm2">
             <fieldset>
-              <label>Nom de la boisson froide</label>
+              <label>Nom de la glace</label>
               <br />
               <input
                 name="name"
@@ -153,7 +144,7 @@ function BoissonsFroidesManagement() {
               />
               <br />
               <br />
-              <label>Prix de la boisson froide</label>
+              <label>Prix de la glace</label>
               <br />
               <input
                 name="price"
@@ -174,7 +165,7 @@ function BoissonsFroidesManagement() {
           </form>
         </div>
         <div className="cakeTableDiv">
-          <h3>Liste des boissons froides</h3>
+          <h3>Liste des glaces</h3>
 
           <table className="cakeTable">
             <thead>
@@ -186,23 +177,14 @@ function BoissonsFroidesManagement() {
               </tr>
             </thead>
             <tbody>
-              {boissonsfroides.map((boissonsfroides) => (
-                <tr
-                  key={boissonsfroides.id_boissonsfroides}
-                  className="tableRank2"
-                >
-                  {/* <td>{boissonsfroides.id_boissonsfroides}</td> */}
-                  <td>{boissonsfroides.name}</td>
-                  <td>{boissonsfroides.price} €</td>
+              {glaces.map((glaces) => (
+                <tr key={glaces.id_glaces} className="tableRank2">
+                  {/* <td>{glaces.id_glaces}</td> */}
+                  <td>{glaces.name}</td>
+                  <td>{glaces.price} €</td>
                   <td>
-                    <button onClick={() => handleEdit(boissonsfroides)}>
-                      Modifier
-                    </button>
-                    <button
-                      onClick={() =>
-                        handleDelete(boissonsfroides.id_boissonsfroides)
-                      }
-                    >
+                    <button onClick={() => handleEdit(glaces)}>Modifier</button>
+                    <button onClick={() => handleDelete(glaces.id_glaces)}>
                       Supprimer
                     </button>
                   </td>
@@ -216,4 +198,4 @@ function BoissonsFroidesManagement() {
   );
 }
 
-export default BoissonsFroidesManagement;
+export default GlacesManagement;

@@ -179,7 +179,7 @@ function BoissonsChaudesManagement() {
           <table className="cakeTable">
             <thead>
               <tr>
-                <th>ID</th>
+                {/* <th>ID</th> */}
                 <th>Nom</th>
                 <th>Prix</th>
                 <th>Actions</th>
@@ -191,7 +191,7 @@ function BoissonsChaudesManagement() {
                   key={boissonschaudes.id_boissonschaudes}
                   className="tableRank2"
                 >
-                  <td>{boissonschaudes.id_boissonschaudes}</td>
+                  {/* <td>{boissonschaudes.id_boissonschaudes}</td> */}
                   <td>{boissonschaudes.name}</td>
                   <td>{boissonschaudes.price} €</td>
                   <td>

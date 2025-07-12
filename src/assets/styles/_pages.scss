@@ -710,7 +710,7 @@
 }
 
 .cakeAddDiv {
-  width: 50%;
+  width: 40%;
 }
 
 .cakeTable {
@@ -737,7 +737,6 @@
 
 .cakeTable th,
 .cakeTable td {
-  padding: 0.2em;
   padding-left: 1em;
   font-family: $font-main;
 }
@@ -748,7 +747,8 @@
 }
 
 .cakeTable button {
-  margin: 1.5em;
+  margin-left: 1.5em;
+  margin-right: 1.5em;
   font-family: $font-titleh2;
   border: $dark-color solid 2px;
   color: $light-color;
@@ -756,7 +756,7 @@
 }
 
 .tableRank2 {
-  height: 100px;
+  height: 45px;
 }
 
 .cakePhotoDiv {
@@ -766,4 +766,14 @@
 .cakePhoto {
   height: 100%;
   object-fit: cover;
+}
+
+.backButtonDash {
+  position: relative;
+  top: 5px;
+  left: 5px;
+  font-family: $font-titleh2;
+  border: $dark-color solid 2px;
+  color: $light-color;
+  background-color: $text-color;
 }

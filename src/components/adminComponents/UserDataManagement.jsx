@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 
 function UserDataManagement() {
   const [users, setUsers] = useState([]);
+  const [cakes, setCakes] = useState([]);
   const [form, setForm] = useState({
     lastname: "",
     firstname: "",
@@ -16,6 +17,7 @@ function UserDataManagement() {
 
   useEffect(() => {
     fetchUsers();
+    fetchCakes();
   }, []);
 
   const fetchUsers = () => {
@@ -32,6 +34,18 @@ function UserDataManagement() {
       );
   };
 
+  const fetchCakes = () => {
+    fetch(`${API_BASE_URL}/cakes`)
+      .then((res) => {
+        if (!res.ok) {
+          throw new Error(`Erreur HTTP: ${res.status} ${res.statusText}`);
+        }
+        return res.json();
+      })
+      .then(setCakes)
+      .catch((err) => console.error("Erreur lors du fetch des gâteaux :", err));
+  };
+
   const handleChange = (e) => {
     const { name, value } = e.target;
     setForm({ ...form, [name]: value });
@@ -44,8 +58,12 @@ function UserDataManagement() {
     let method = "POST";
 
     const userData = {
-      name: form.name,
-      price: parseFloat(form.price),
+      lastname: form.lastname,
+      firstname: form.firstname,
+      email: form.email,
+      tel: form.tel,
+      newsletter: form.newsletter,
+      id_cake: form.id_cake,
     };
 
     if (editingId) {
@@ -203,7 +221,7 @@ function UserDataManagement() {
               <br />
               <br />
               <label>L'utilisateur accepte-t-il la newsletter ?</label>
-              <br></br>
+              <br />
               <input
                 name="newsletter"
                 type="radio"
@@ -220,32 +238,24 @@ function UserDataManagement() {
                 required
               />
               <label className="labelRadioNews">non</label>
+
               <br />
               <br />
+
               <label>Gâteau préféré</label>
-              <br></br>
-              <select name="pets" id="pet-select">
-                <option className="optionUser" value="">
-                  --Choisissez votre gâteau préféré--
-                </option>
-                <option className="optionUser" value="dog">
-                  Dog
-                </option>
-                <option className="optionUser" value="cat">
-                  Cat
-                </option>
-                <option className="optionUser" value="hamster">
-                  Hamster
-                </option>
-                <option className="optionUser" value="parrot">
-                  Parrot
-                </option>
-                <option className="optionUser" value="spider">
-                  Spider
-                </option>
-                <option className="optionUser" value="goldfish">
-                  Goldfish
-                </option>
+              <br />
+              <select
+                name="id_cake"
+                value={form.id_cake}
+                onChange={handleChange}
+                required
+              >
+                <option value="">--Choisissez un gâteau préféré--</option>
+                {cakes.map((cake) => (
+                  <option key={cake.id_cake} value={cake.id_cake}>
+                    {cake.name}
+                  </option>
+                ))}
               </select>
               <br />
               <br />
@@ -262,26 +272,31 @@ function UserDataManagement() {
           <table className="cakeTable">
             <thead>
               <tr>
-                <th>ID</th>
+                {/* <th>ID</th> */}
                 <th>Nom</th>
                 <th>Prénom</th>
                 <th>email</th>
                 <th>Téléphone</th>
                 <th>Newsletter</th>
                 <th>Gâteau préféré</th>
+                <th>Actions</th>
               </tr>
             </thead>
             <tbody>
               {users.map((user) => (
                 <tr key={user.id_user} className="tableRank2">
-                  <td>{user.id_user}</td>
+                  {/* <td>{user.id_user}</td> */}
                   <td>{user.lastname}</td>
                   <td>{user.firstname}</td>
                   <td>{user.email}</td>
                   <td>{user.tel}</td>
-                  <td>{user.newsletter}</td>
+                  <td>
+                    {user.newsletter === "1" || user.newsletter === 1
+                      ? "Oui"
+                      : "Non"}
+                  </td>
 
-                  <td>{user.id_cake}</td>
+                  <td>{user.cake_name}</td>
                   <td>
                     <button onClick={() => handleEdit(user)}>Modifier</button>
                     <button onClick={() => handleDelete(user.id_user)}>

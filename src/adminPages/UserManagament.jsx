@@ -5,6 +5,9 @@ function UserManagement() {
   return (
     <div className="PastryManager">
       <div className="menuManagement">
+        <a href="/admin/dashboard">
+          <button className="backButtonDash">Retour au Tableau de Bord</button>
+        </a>
         <h1>Gestion des utilisateurs</h1>
         <UserDataManagement />
       </div>
