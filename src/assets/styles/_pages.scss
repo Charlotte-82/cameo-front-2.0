@@ -759,15 +759,6 @@
   height: 45px;
 }
 
-.cakePhotoDiv {
-  height: 5em;
-}
-
-.cakePhoto {
-  height: 100%;
-  object-fit: cover;
-}
-
 .backButtonDash {
   position: relative;
   top: 5px;
@@ -776,4 +767,117 @@
   border: $dark-color solid 2px;
   color: $light-color;
   background-color: $text-color;
+}
+
+.userManagementCompo {
+  background-color: $light-color;
+  padding: 1em;
+}
+
+.userManagementCompo h2 {
+  color: $text-color;
+  font-weight: 700;
+}
+
+.userManagementCompo h3 {
+  color: $text-color;
+  padding-bottom: 1em;
+  padding-top: 1em;
+}
+
+.adminForm3 {
+  display: flex;
+  justify-content: center;
+}
+
+.adminForm3 fieldset {
+  border: $dark-color 2px solid;
+  padding: 2em;
+  width: 70%;
+}
+
+.adminForm3 ::placeholder {
+  font-family: $font-main;
+  color: $lightorange-color;
+}
+
+.adminForm3 label {
+  font-family: $font-main;
+  color: $text-color;
+}
+
+.adminForm3 legend {
+  font-family: $font-titleh2;
+  color: $text-color;
+  text-align: center;
+}
+
+.adminForm3 input[type="file"] {
+  font-family: $font-main;
+}
+
+.adminForm3 button {
+  font-family: $font-titleh2;
+  border: $dark-color solid 2px;
+  color: $light-color;
+  background-color: $text-color;
+}
+
+.adminForm3 button:hover {
+  color: $lightorange-color;
+}
+
+.allUserDiv {
+  display: flex;
+  flex-direction: row;
+}
+
+.userAddDiv {
+  width: 35%;
+}
+
+.cakeTable {
+  border: solid $text-color 2px;
+  margin: 2em;
+  gap: 2px;
+  width: 90%;
+}
+
+.userTableDiv {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  width: 65%;
+}
+
+.userTable th {
+  text-align: center;
+  font-family: $font-titleh2;
+  color: $light-color;
+  background-color: $text-color;
+  border: $lightorange-color 2px solid;
+}
+
+.userTable th,
+.userTable td {
+  padding-left: 1em;
+  font-family: $font-main;
+}
+
+.userTable td {
+  border: $dark-color 2px solid;
+  color: $text-color;
+}
+
+.userTable button {
+  margin-left: 1.5em;
+  margin-right: 1.5em;
+  font-family: $font-titleh2;
+  border: $dark-color solid 2px;
+  color: $light-color;
+  background-color: $text-color;
+}
+
+.tableRank3 {
+  height: 45px;
 }

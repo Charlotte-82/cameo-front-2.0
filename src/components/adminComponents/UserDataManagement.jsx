@@ -167,14 +167,14 @@ function UserDataManagement() {
   };
 
   return (
-    <div className="cakeManagementCompo">
+    <div className="userManagementCompo">
       <h2>Gestion des Utilisateurs</h2>
-      <div className="allCakeDiv">
-        <div className="cakeAddDiv">
+      <div className="allUserDiv">
+        <div className="userAddDiv">
           <h3>
             {editingId ? "Modifier un utilisateur" : "Ajouter un utilisateur"}
           </h3>
-          <form onSubmit={handleSubmit} className="adminForm2">
+          <form onSubmit={handleSubmit} className="adminForm3">
             <fieldset>
               <label>Nom</label>
               <br />
@@ -225,7 +225,7 @@ function UserDataManagement() {
               <input
                 name="newsletter"
                 type="radio"
-                value={form.newsletter}
+                checked={form.newsletter}
                 onChange={handleChange}
                 required
               />
@@ -266,10 +266,10 @@ function UserDataManagement() {
             </fieldset>
           </form>
         </div>
-        <div className="cakeTableDiv">
+        <div className="userTableDiv">
           <h3>Liste des utilisateurs</h3>
 
-          <table className="cakeTable">
+          <table className="userTable">
             <thead>
               <tr>
                 {/* <th>ID</th> */}
@@ -284,7 +284,7 @@ function UserDataManagement() {
             </thead>
             <tbody>
               {users.map((user) => (
-                <tr key={user.id_user} className="tableRank2">
+                <tr key={user.id_user} className="tableRank3">
                   {/* <td>{user.id_user}</td> */}
                   <td>{user.lastname}</td>
                   <td>{user.firstname}</td>
