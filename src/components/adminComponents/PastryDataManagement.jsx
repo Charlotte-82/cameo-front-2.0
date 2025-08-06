@@ -77,9 +77,11 @@ function PastryManagement() {
       });
       const result = await res.json();
       console.log("Supprimé :", result);
+      alert(`Vous avez supprimé le gâteau.`);
       fetchData();
     } catch (err) {
       console.error("Erreur de suppression :", err);
+      alert("Erreur lors de la suppression.");
     }
   };
 

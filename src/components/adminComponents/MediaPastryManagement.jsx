@@ -9,6 +9,13 @@ function PastryManagement() {
   const [selectedVideo, setSelectedVideo] = useState(null);
   const [youtubeUrl, setYoutubeUrl] = useState("");
 
+  const fetchMedia = () => {
+    fetch(`${API_BASE}/media`)
+      .then((res) => res.json())
+      .then(setMedia)
+      .catch(console.error);
+  };
+
   useEffect(() => {
     fetch(`${API_BASE}/media`)
       .then((res) => res.json())
@@ -28,7 +35,16 @@ function PastryManagement() {
     formData.append("photo", selectedPhoto);
 
     if (videoInputMode === "upload" && selectedVideo) {
-      formData.append("video", selectedVideo);
+      const originalVideoName = selectedVideo.name;
+      const extension = originalVideoName.split(".").pop();
+      const safeVideoName = `video-${Date.now()}.${extension}`;
+
+      // Créer un nouveau fichier avec le nom sécurisé
+      const safeVideoFile = new File([selectedVideo], safeVideoName, {
+        type: selectedVideo.type,
+      });
+
+      formData.append("video", safeVideoFile);
       formData.append("type", "video");
     } else if (videoInputMode === "youtube" && youtubeUrl.trim()) {
       formData.append("youtube_url", youtubeUrl.trim());
@@ -55,39 +71,65 @@ function PastryManagement() {
       const updated = await fetch(`${API_BASE}/media`).then((r) => r.json());
       setMedia(updated);
 
-      // Reset
       setSelectedPhoto(null);
       setSelectedVideo(null);
       setYoutubeUrl("");
       setVideoInputMode("none");
       e.target.reset();
     } catch (err) {
-      console.error("Erreur d'upload :", err);
+      console.error("Erreur d'upload :", err); // Montre toute l'erreur
+      if (err.response) {
+        console.error("Réponse serveur :", await err.response.text());
+      }
       alert("Erreur d'upload : " + err.message);
     }
   };
 
   const handleDelete = async (id) => {
-    if (!window.confirm("Supprimer ce média ?")) return;
-
     try {
       const res = await fetch(`${API_BASE}/media/${id}`, {
         method: "DELETE",
       });
 
-      if (!res.ok) throw new Error("Erreur serveur");
+      // La suppression a réussi, peu importe le statut 204 ou 200
+      if (res.ok) {
+        // res.ok est vrai pour un statut 200 à 299
+        alert("Le fichier a bien été supprimé.");
+        fetchMedia(); // refresh de la liste
+        return;
+      }
 
-      setMedia((prev) => prev.filter((item) => item.id_media !== id));
+      // Si la requête a échoué (statut 4xx, 5xx), on lit l'erreur si elle existe
+      const errData = await res.json().catch(() => null);
+      throw new Error(errData?.error || `Erreur ${res.status}`);
     } catch (err) {
       console.error("Erreur de suppression :", err);
-      alert("Erreur de suppression : " + err.message);
+      alert("Erreur lors de la suppression : " + err.message);
     }
+  };
+
+  const getYouTubeThumbnail = (url) => {
+    if (!url) return null;
+
+    const regExp =
+      /(?:youtube\.com\/(?:watch\?v=|embed\/)|youtu\.be\/)([a-zA-Z0-9_-]{11})/;
+    const match = url.match(regExp);
+    const videoId = match?.[1];
+
+    if (videoId) {
+      const thumbnailUrl = `https://img.youtube.com/vi/${videoId}/hqdefault.jpg`;
+      console.log("🎬 Thumbnail URL:", thumbnailUrl);
+      return thumbnailUrl;
+    }
+
+    console.warn("❌ URL YouTube invalide :", url);
+    return null;
   };
 
   return (
     <div className="cakeManagementCompo">
       <h2>Gestion des visuels associés à la pâtisserie</h2>
-      <div className="allCakeDiv">
+      <div className="allCakeDiv2">
         <div className="cakeAddDiv">
           <form onSubmit={handleSubmit} className="adminForm2">
             <fieldset>
@@ -187,42 +229,50 @@ function PastryManagement() {
               </tr>
             </thead>
             <tbody>
-              {media.map((item) => (
-                <tr key={item.id_media} className="tableRank2">
-                  <td>
-                    <img
-                      src={`${API_BASE}/uploads/${item.photo_filename}`}
-                      alt="Photo"
-                      style={{ width: "100px" }}
-                    />
-                  </td>
-                  <td>
-                    {item.type === "youtube" && item.youtube_url ? (
-                      <a
-                        href={item.youtube_url}
-                        target="_blank"
-                        rel="noreferrer"
-                      >
-                        Voir YouTube
-                      </a>
-                    ) : item.video_filename ? (
-                      <video
-                        src={`${API_BASE}/uploads/${item.video_filename}`}
-                        width="150"
-                        controls
-                      />
-                    ) : (
-                      "-"
-                    )}
-                  </td>
+              {media.map((item) => {
+                console.log("📦 ITEM :", item);
 
-                  <td>
-                    <button onClick={() => handleDelete(item.id_media)}>
-                      Supprimer
-                    </button>
-                  </td>
-                </tr>
-              ))}
+                return (
+                  <tr key={item.id_media} className="tableRank2">
+                    <td>
+                      <img
+                        src={`${API_BASE}/uploads/${item.photo_filename}`}
+                        alt="Photo"
+                        style={{ width: "100px" }}
+                      />
+                    </td>
+
+                    <td>
+                      {item.type === "youtube" && item.youtube_url ? (
+                        <>
+                          <img
+                            src={getYouTubeThumbnail(item.youtube_url)}
+                            alt="Miniature YouTube"
+                            onClick={() =>
+                              window.open(item.youtube_url, "_blank")
+                            }
+                          />
+                          <div>{getYouTubeThumbnail(item.youtube_url)}</div>
+                        </>
+                      ) : item.video_filename ? (
+                        <video
+                          src={`${API_BASE}/uploads/${item.video_filename}`}
+                          width="150"
+                          controls
+                        />
+                      ) : (
+                        "-"
+                      )}
+                    </td>
+
+                    <td>
+                      <button onClick={() => handleDelete(item.id_media)}>
+                        Supprimer
+                      </button>
+                    </td>
+                  </tr>
+                );
+              })}
             </tbody>
           </table>
         </div>

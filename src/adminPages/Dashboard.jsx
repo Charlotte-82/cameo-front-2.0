@@ -24,7 +24,7 @@ function Dashboard() {
       <div className="dashboardGrid">
         <div className="weeklyPastryDiv">
           <a className="adminLink" href="/admin/dashboard/pastry">
-            <h3>Gestion des Pâtisseries de la Semaine</h3>
+            <h3>Gestion des Actualités</h3>
             <PastrySVG />
           </a>
         </div>

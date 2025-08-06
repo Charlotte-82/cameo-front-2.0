@@ -94,35 +94,22 @@ function CakeManagement() {
       method: "DELETE",
     })
       .then((res) => {
+        if (res.status === 204) return null; // Pas de contenu, mais succès
         if (!res.ok) {
-          if (res.status === 204) return null;
-
-          return res
-            .json()
-            .then((errorData) => {
-              throw new Error(
-                errorData.error ||
-                  `Erreur lors de la suppression: ${res.status}`
-              );
-            })
-            .catch(() => {
-              return res.text().then((text) => {
-                throw new Error(
-                  text || `Erreur lors de la suppression: ${res.status}`
-                );
-              });
-            });
+          return res.text().then((text) => {
+            throw new Error(text || `Erreur serveur : ${res.status}`);
+          });
         }
-        return res.text();
+        return res.text(); // Réponse texte (optionnel)
       })
       .then((text) => {
-        if (text) console.log("Suppression réussie, réponse:", text);
-        else console.log("Gâteau supprimé avec succès.");
-        fetchCakes();
+        alert("Le gâteau a bien été supprimé.");
+        fetchCakes(); // rechargement de la liste
       })
-      .catch((err) =>
-        console.error("Erreur lors de la suppression du gâteau :", err)
-      );
+      .catch((err) => {
+        console.error("Erreur lors de la suppression :", err);
+        alert("Une erreur est survenue lors de la suppression.");
+      });
   };
 
   return (

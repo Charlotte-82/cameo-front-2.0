@@ -225,7 +225,8 @@ function UserDataManagement() {
               <input
                 name="newsletter"
                 type="radio"
-                checked={form.newsletter}
+                value="1"
+                checked={form.newsletter === "1"}
                 onChange={handleChange}
                 required
               />
@@ -233,7 +234,8 @@ function UserDataManagement() {
               <input
                 name="newsletter"
                 type="radio"
-                value={form.newsletter}
+                value="0"
+                checked={form.newsletter === "0"}
                 onChange={handleChange}
                 required
               />
