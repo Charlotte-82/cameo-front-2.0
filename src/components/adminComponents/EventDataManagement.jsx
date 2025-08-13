@@ -226,7 +226,7 @@ function EventDataManagement() {
               />
               <br />
               <br />
-              <label>Description de l'atelier</label>
+              <label>Description de l'événement</label>
               <br />
               <input
                 name="description"
@@ -245,7 +245,7 @@ function EventDataManagement() {
           </form>
         </div>
         <div className="userTableDiv">
-          <h3>Liste des ateliers</h3>
+          <h3>Liste des événements</h3>
 
           <table className="userTable">
             <thead>

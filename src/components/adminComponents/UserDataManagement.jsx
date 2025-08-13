@@ -10,6 +10,7 @@ function UserDataManagement() {
     tel: "",
     newsletter: "",
     id_cake: "",
+    is_admin: "",
   });
   const [editingId, setEditingId] = useState(null);
 
@@ -64,6 +65,7 @@ function UserDataManagement() {
       tel: form.tel,
       newsletter: form.newsletter,
       id_cake: form.id_cake,
+      is_admin: form.is_admin,
     };
 
     if (editingId) {
@@ -113,6 +115,7 @@ function UserDataManagement() {
         tel: "",
         newsletter: "",
         id_cake: "",
+        is_admin: "",
       });
       setEditingId(null);
     }
@@ -126,6 +129,7 @@ function UserDataManagement() {
       tel: user.tel,
       newsletter: user.newsletter,
       id_cake: user.id_cake,
+      is_admin: user.is_admin,
     });
     setEditingId(user.id_user);
   };
@@ -240,10 +244,8 @@ function UserDataManagement() {
                 required
               />
               <label className="labelRadioNews">non</label>
-
               <br />
               <br />
-
               <label>Gâteau préféré</label>
               <br />
               <select
@@ -261,7 +263,26 @@ function UserDataManagement() {
               </select>
               <br />
               <br />
-
+              <label>L'utilisateur est-il un administrateur ?</label>
+              <br />
+              <input
+                type="radio"
+                name="is_admin"
+                value="1"
+                checked={form.is_admin === "1"}
+                onChange={handleChange}
+              />{" "}
+              <label className="labelRadioNews">oui</label>
+              <input
+                type="radio"
+                name="is_admin"
+                value="0"
+                checked={form.is_admin === "0"}
+                onChange={handleChange}
+              />{" "}
+              <label className="labelRadioNews">non</label>
+              <br></br>
+              <br></br>
               <button type="submit">
                 {editingId ? "Modifier" : "Ajouter"}
               </button>
@@ -281,6 +302,7 @@ function UserDataManagement() {
                 <th>Téléphone</th>
                 <th>Newsletter</th>
                 <th>Gâteau préféré</th>
+                <th>Admin ?</th>
                 <th>Actions</th>
               </tr>
             </thead>
@@ -297,8 +319,12 @@ function UserDataManagement() {
                       ? "Oui"
                       : "Non"}
                   </td>
-
                   <td>{user.cake_name}</td>
+                  <td>
+                    {user.is_admin === "1" || user.is_admin === 1
+                      ? "Oui"
+                      : "Non"}
+                  </td>
                   <td>
                     <button onClick={() => handleEdit(user)}>Modifier</button>
                     <button onClick={() => handleDelete(user.id_user)}>

@@ -2,7 +2,13 @@ import React, { useState, useEffect } from "react";
 
 function PastryManagement() {
   const API_BASE = import.meta.env.VITE_API_BASE_URL;
-  const [form, setForm] = useState({ name: "", price: "" });
+  const [form, setForm] = useState({
+    name: "",
+    price: "",
+    film_title: "",
+    film_director: "",
+    film_release_date: "",
+  });
   const [wpastry, setWpastry] = useState([]);
   const [isEditing, setIsEditing] = useState(false);
   const [editId, setEditId] = useState(null);
@@ -32,6 +38,9 @@ function PastryManagement() {
       const payload = {
         name: form.name,
         price: form.price,
+        film_title: form.film_title,
+        film_director: form.film_director,
+        film_release_date: form.film_release_date,
       };
 
       let url = `${API_BASE}/wpastry`;
@@ -52,7 +61,13 @@ function PastryManagement() {
       const result = await res.json();
       console.log(isEditing ? "Modifié :" : "Créé :", result);
 
-      setForm({ name: "", price: "" });
+      setForm({
+        name: "",
+        price: "",
+        film_title: "",
+        film_director: "",
+        film_release_date: "",
+      });
       setIsEditing(false);
       setEditId(null);
 
@@ -65,7 +80,13 @@ function PastryManagement() {
   };
 
   const handleEdit = (wpastry) => {
-    setForm({ name: wpastry.name, price: wpastry.price });
+    setForm({
+      name: wpastry.name,
+      price: wpastry.price,
+      film_title: wpastry.film_title,
+      film_director: wpastry.film_director,
+      film_release_date: wpastry.film_release_date,
+    });
     setEditId(wpastry.id_pastry);
     setIsEditing(true);
   };
@@ -120,6 +141,45 @@ function PastryManagement() {
               />
               <br />
               <br />
+              <label>Titre de l'oeuvre associée</label>
+              <br />
+              <input
+                name="film_title"
+                placeholder="Titre de l'oeuvre associée"
+                value={form.film_title}
+                onChange={(e) =>
+                  setForm({ ...form, film_title: e.target.value })
+                }
+                required
+              />
+              <br />
+              <br />
+              <label>Réalisateur·rice / Auteur·rice de l'oeuvre</label>
+              <br />
+              <input
+                name="film_director"
+                placeholder="Réalisateur·rice / Auteur·rice"
+                value={form.film_director}
+                onChange={(e) =>
+                  setForm({ ...form, film_director: e.target.value })
+                }
+                required
+              />
+              <br />
+              <br />
+              <label>Date de sortie</label>
+              <br />
+              <input
+                name="film_release_date"
+                placeholder="Date de sortie"
+                value={form.film_release_date}
+                onChange={(e) =>
+                  setForm({ ...form, film_release_date: e.target.value })
+                }
+                required
+              />
+              <br />
+              <br />
               <button type="submit">{editId ? "Modifier" : "Créer"}</button>
             </fieldset>
           </form>
@@ -131,6 +191,9 @@ function PastryManagement() {
               <tr>
                 <th>Nom</th>
                 <th>Prix</th>
+                <th>Titre</th>
+                <th>Réal/Aut</th>
+                <th>Date</th>
                 <th>Actions</th>
               </tr>
             </thead>
@@ -139,6 +202,9 @@ function PastryManagement() {
                 <tr key={item.id_pastry} className="tableRank2">
                   <td>{item.name}</td>
                   <td>{item.price} €</td>
+                  <td>{item.film_title}</td>
+                  <td>{item.film_director}</td>
+                  <td>{item.film_release_date}</td>
                   <td>
                     <button onClick={() => handleEdit(item)}>Modifier</button>
                     <button onClick={() => handleDelete(item.id_pastry)}>

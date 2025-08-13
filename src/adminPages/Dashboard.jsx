@@ -1,22 +1,25 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 import PastrySVG from "../components/imagesSVG/PastrySVG";
 import ReservSVG from "../components/imagesSVG/ReservSVG";
 import UserSVG from "../components/imagesSVG/userSVG";
 import WorkshopSVG from "../components/imagesSVG/WorkshopSVG";
 import EventSVG from "../components/imagesSVG/EventSVG";
 import CakeSVG from "../components/imagesSVG/cakeSVG";
-// import axios from "axios";
-
-// useEffect(() => {
-//   axios
-//     .get("http://localhost:8000/api/ateliers")
-//     .then((response) => setAteliers(response.data))
-//     .catch((error) => console.error(error));
-// }, []);
 
 function Dashboard() {
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+    localStorage.removeItem("authToken");
+    navigate("/admin");
+  };
+
   return (
     <div className="dashboard">
+      <button className="backButtonDash" onClick={handleLogout}>
+        Déconnexion
+      </button>
       <h1>Bienvenue Mathilde !</h1>
       <div className="divH2">
         <h2>TABLEAU DE BORD</h2>

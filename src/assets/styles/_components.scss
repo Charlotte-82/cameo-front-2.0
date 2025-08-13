@@ -286,6 +286,12 @@ i {
   }
 }
 
+.videoExtrait video {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
 .videoEmbed {
   width: 100%;
   height: auto;
@@ -366,7 +372,7 @@ i {
 }
 
 .imageNewsDiv {
-  width: 50%;
+  width: 35%;
   height: auto;
   align-content: start;
   @include mobile {
@@ -382,7 +388,7 @@ i {
   border-radius: 10px;
 
   @include desktop {
-    height: 50em;
+    height: 20em;
   }
 }
 
@@ -528,4 +534,80 @@ strong {
 .labelRadioNews {
   padding-left: 1em;
   padding-right: 2em;
+}
+
+.highlightUploadSection {
+  display: flex;
+  flex-direction: column;
+  border: 2px solid $text-color;
+  margin-left: 3em;
+  width: 40%;
+  padding-bottom: 1em;
+}
+
+.cakeManagementCompo2 {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  background-color: $light-color;
+  padding: 1em;
+}
+
+.cakeManagementCompo2 h2 {
+  color: $text-color;
+  font-weight: 700;
+}
+
+.cakeManagementCompo2 h3 {
+  color: $text-color;
+  padding-bottom: 1em;
+  padding-top: 1em;
+}
+
+.cakeManagementCompo2 button {
+  font-family: $font-titleh2;
+  border: $dark-color solid 2px;
+  color: $light-color;
+  background-color: $text-color;
+  width: 10%;
+  margin-top: 2em;
+}
+
+.cakeManagementCompo2 button:hover {
+  color: $lightorange-color;
+}
+
+.highlightImage {
+  width: 20%;
+}
+
+.highlightImageDiv {
+  display: flex;
+  justify-content: center;
+}
+
+.highlightSectionRight h4 {
+  text-align: center;
+  color: $dark-color;
+  font-family: $font-main;
+}
+
+.cakeTable button:hover {
+  color: $lightorange-color;
+}
+
+.highlightSectionRight {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+}
+
+.highlightSectionRight input {
+  margin-top: 2em;
+}
+
+.allCakeDiv3 {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
 }

@@ -191,6 +191,7 @@ function PastryManagement() {
                 <>
                   <input
                     type="file"
+                    name="video"
                     accept="video/*"
                     onChange={(e) => setSelectedVideo(e.target.files[0])}
                     required

@@ -12,7 +12,9 @@ function UserManagement() {
         </a>
         <h1>Gestion des Actualités</h1>
         <PastryDataManagement />
+        <hr></hr>
         <MediaPastryManagement />
+        <hr></hr>
         <NewsDataManagement />
       </div>
     </div>

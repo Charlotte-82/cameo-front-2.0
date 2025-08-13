@@ -17,6 +17,7 @@ import Workshop from "./adminPages/WorkshopManagement.jsx";
 import User from "./adminPages/UserManagament.jsx";
 import Reserv from "./adminPages/ReservManagement.jsx";
 import MenuManagement from "./adminPages/MenuManagement.jsx";
+import PrivateRoute from "./components/PrivateRoute.jsx";
 
 function App() {
   return (
@@ -30,24 +31,26 @@ function App() {
           <Route path="/agenda" element={<Program />}></Route>
           <Route path="/partenaires" element={<Partnership />}></Route>
           <Route path="/404" element={<Travaux />}></Route>
-          <Route path="/admin" element={<Admin />}></Route>
-          <Route path="/admin/dashboard" element={<Dashboard />}></Route>
           <Route path="/mentions" element={<Mentions />}></Route>
-          <Route path="/admin/dashboard/pastry" element={<Pastry />}></Route>
-          <Route path="/admin/dashboard/event" element={<Event />}></Route>
-          <Route
-            path="/admin/dashboard/workshop"
-            element={<Workshop />}
-          ></Route>
-          <Route path="/admin/dashboard/user" element={<User />}></Route>
-          <Route
-            path="/admin/dashboard/reservation"
-            element={<Reserv />}
-          ></Route>
-          <Route
-            path="/admin/dashboard/carte"
-            element={<MenuManagement />}
-          ></Route>
+          <Route path="/admin" element={<Admin />}></Route>
+          <Route element={<PrivateRoute />}>
+            <Route path="/admin/dashboard" element={<Dashboard />}></Route>
+            <Route path="/admin/dashboard/pastry" element={<Pastry />}></Route>
+            <Route path="/admin/dashboard/event" element={<Event />}></Route>
+            <Route
+              path="/admin/dashboard/workshop"
+              element={<Workshop />}
+            ></Route>
+            <Route path="/admin/dashboard/user" element={<User />}></Route>
+            <Route
+              path="/admin/dashboard/reservation"
+              element={<Reserv />}
+            ></Route>
+            <Route
+              path="/admin/dashboard/carte"
+              element={<MenuManagement />}
+            ></Route>
+          </Route>
         </Routes>
         <Footer />
       </div>
