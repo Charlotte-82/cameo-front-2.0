@@ -704,9 +704,22 @@
   color: $lightorange-color;
 }
 
+.adminForm3 {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+}
+
+.adminForm3 fieldset {
+  border: $dark-color 2px solid;
+  padding: 3em;
+  width: 60%;
+}
+
 .allCakeDiv {
   display: flex;
   flex-direction: row;
+  justify-content: center;
 }
 
 .allCakeDiv2 {

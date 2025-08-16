@@ -52,6 +52,13 @@ function News() {
     return new Date(dateString).toLocaleDateString("fr-FR", options);
   };
 
+  const formatEndDate = (dateString, duration) => {
+    const startDate = new Date(dateString);
+    const endDate = new Date(startDate.getTime() + duration * 60000);
+    const options = { hour: "2-digit", minute: "2-digit" };
+    return endDate.toLocaleTimeString("fr-FR", options);
+  };
+
   return (
     <div className="newsDiv">
       <div className="imageNewsDiv">
@@ -70,28 +77,42 @@ function News() {
         {highlight.type === "event" ? (
           <div>
             <p>
-              <strong>Du:</strong> {formatDate(highlight.start_date)}
+              Du: <strong>{formatDate(highlight.start_date)} </strong>
+              Au: <strong>{formatDate(highlight.end_date)}</strong>
             </p>
             <p>
-              <strong>Au:</strong> {formatDate(highlight.end_date)}
+              Intervenant·e: <strong>{highlight.contributor}</strong>
+            </p>
+            <p>
+              Places disponibles restantes: <strong>{highlight.places}</strong>
             </p>
           </div>
         ) : (
           <div>
             <p>
-              <strong>Date:</strong> {formatDate(highlight.date)}
+              Date: le <strong>{formatDate(highlight.date)} </strong>
+              jusqu'à{" "}
+              <strong>
+                {formatEndDate(highlight.date, highlight.duration)}
+              </strong>
             </p>
             <p>
-              <strong>Durée:</strong> {highlight.duration} minutes
+              Intervenant·e: <strong>{highlight.contributor}</strong>
+            </p>
+            <p>
+              Places disponibles restantes: <strong>{highlight.places}</strong>
             </p>
           </div>
         )}
         <p>{highlight.description}</p>
+      </div>
+      <div className="boutonDiv">
+        <h4>Pour réserver:</h4>
+        <br></br>
         <button className="boutonReservation">
           <a href="/agenda">Voir l'agenda</a>
         </button>
       </div>
-      <div className="col-12"></div>
     </div>
   );
 }
