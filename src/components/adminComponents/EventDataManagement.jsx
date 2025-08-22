@@ -9,6 +9,7 @@ function EventDataManagement() {
     start_date: "",
     end_date: "",
     places: "",
+    price: "",
   });
   const [editingId, setEditingId] = useState(null);
 
@@ -50,6 +51,7 @@ function EventDataManagement() {
       start_date: form.start_date,
       end_date: form.end_date,
       places: form.places,
+      price: form.price,
     };
 
     if (editingId) {
@@ -100,6 +102,7 @@ function EventDataManagement() {
         start_date: "",
         end_date: "",
         places: "",
+        price: "",
       });
       setEditingId(null);
     }
@@ -113,6 +116,7 @@ function EventDataManagement() {
       start_date: event.start_date,
       end_date: event.end_date,
       places: event.places,
+      price: event.price,
     });
     setEditingId(event.id_event);
   };
@@ -123,29 +127,13 @@ function EventDataManagement() {
     fetch(`${API_BASE_URL}/events/${id}`, {
       method: "DELETE",
     })
-      .then(async (res) => {
-        if (res.status === 204) {
-          console.log("Événement supprimé avec succès.");
-          return;
+      .then((res) => {
+        if (!res.ok) {
+          return res.json().then((errorData) => {
+            throw new Error(errorData.error || `Erreur HTTP: ${res.status}`);
+          });
         }
-
-        const text = await res.text();
-
-        try {
-          const data = JSON.parse(text);
-          if (!res.ok) {
-            throw new Error(
-              data.error || `Erreur lors de la suppression: ${res.status}`
-            );
-          }
-          return data;
-        } catch (e) {
-          if (!res.ok) {
-            throw new Error(
-              text || `Erreur lors de la suppression: ${res.status}`
-            );
-          }
-        }
+        console.log("Événement supprimé avec succès.");
       })
       .then(() => {
         fetchEvents();
@@ -214,7 +202,19 @@ function EventDataManagement() {
 
               <br />
               <br />
-
+              <label>Prix de l'événement'</label>
+              <br />
+              <input
+                name="price"
+                type="number"
+                step="0.01"
+                placeholder="Prix"
+                value={form.price}
+                onChange={handleChange}
+                required
+              />
+              <br />
+              <br />
               <label>Places disponibles</label>
               <br />
               <input
@@ -253,8 +253,9 @@ function EventDataManagement() {
                 {/* <th>ID</th> */}
                 <th>Titre</th>
                 <th>Contributeur</th>
-                <th>date et heure de début</th>
-                <th>date et heure de fin</th>
+                <th>Date et heure de début</th>
+                <th>Date et heure de fin</th>
+                <th>Prix</th>
                 <th>Places disponibles</th>
                 <th>Description</th>
                 <th>Actions</th>
@@ -268,6 +269,7 @@ function EventDataManagement() {
                   <td>{event.contributor}</td>
                   <td>{event.start_date}</td>
                   <td>{event.end_date}</td>
+                  <td>{event.price} €</td>
                   <td>{event.places}</td>
                   <td>{event.description}</td>
                   <td>

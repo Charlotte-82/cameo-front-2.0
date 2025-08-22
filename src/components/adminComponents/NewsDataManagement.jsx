@@ -9,7 +9,6 @@ function NewsDataManagement() {
 
   // Chargement des activités + highlight
   useEffect(() => {
-    // URL corrigée : ajoute le chemin '/highlight' pour correspondre au routeur PHP
     fetch(`${API_BASE_URL}/upcoming`)
       .then((res) => {
         if (!res.ok) {

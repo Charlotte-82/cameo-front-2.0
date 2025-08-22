@@ -19,6 +19,10 @@
   justify-content: center;
 }
 
+.bi-person-circle:hover {
+  cursor: pointer;
+}
+
 i {
   color: $light-color;
   margin: 0.2em;
@@ -41,6 +45,34 @@ i {
   position: absolute;
   top: 40px;
   left: 5px;
+}
+
+.bienvenue span {
+  font-family: $font-titleh2;
+  color: $light-color;
+  font-size: larger;
+  margin-right: 1em;
+}
+
+.bienvenue a {
+  text-decoration: none;
+  color: $text-color;
+}
+
+.bienvenue a:hover {
+  color: $light-color;
+}
+
+.bienvenue button {
+  font-family: $font-titleh2;
+  border: $light-color solid 2px;
+  color: $text-color;
+  background-color: $lightorange-color;
+  margin-right: 1em;
+}
+
+.bienvenue button:hover {
+  color: $light-color;
 }
 
 // Navigation
@@ -618,4 +650,102 @@ strong {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
+}
+
+// modale d'authentification
+
+.modal-title {
+  color: $text-color;
+}
+
+.modal-header {
+  background-color: $light-color;
+  border-top: solid 2px $dark-color;
+  border-left: solid 2px $dark-color;
+  border-right: solid 2px $dark-color;
+  border-bottom: none !important;
+}
+
+.modal-body {
+  background-color: $light-color;
+  border-left: solid 2px $dark-color;
+  border-right: solid 2px $dark-color;
+  border-bottom: solid 2px $dark-color;
+  border-top: none;
+
+  border-bottom-left-radius: 7px;
+  border-bottom-right-radius: 7px;
+}
+
+.modal-backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 1040; /* Doit être en dessous de la modale, qui a un z-index plus élevé */
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(
+    0,
+    0,
+    0,
+    0.7
+  ) !important; /* Noir avec 50% de transparence */
+}
+
+.adminForm4 {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.adminForm4 input {
+  width: 60%;
+}
+
+.adminForm4 ::placeholder {
+  font-family: $font-main;
+  color: $lightorange-color;
+}
+
+.adminForm4 label {
+  font-family: $font-main;
+  color: $text-color;
+}
+
+.adminForm4 legend {
+  font-family: $font-titleh2;
+  color: $text-color;
+  text-align: center;
+}
+
+.adminForm4 button {
+  font-family: $font-titleh2;
+  border: $dark-color solid 2px;
+  color: $light-color;
+  background-color: $text-color;
+}
+
+.adminForm4 button:hover {
+  color: $lightorange-color;
+}
+
+.toggle-form-link {
+  margin-top: 1em;
+}
+
+.toggle-form-link span {
+  color: $logo-color;
+  font-family: $font-main;
+}
+
+.toggle-form-link span:hover {
+  cursor: pointer;
+  color: $darkorange-color;
+  font-weight: 700;
+}
+
+.inputRadioRegister {
+  display: flex;
+  flex-direction: row;
 }

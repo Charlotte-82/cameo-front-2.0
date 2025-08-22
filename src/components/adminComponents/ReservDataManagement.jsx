@@ -8,6 +8,7 @@ function ReservDataManagement() {
   const [mode, setMode] = useState("existing");
   const [form, setForm] = useState({
     userId: "",
+    // Revenir aux noms de clés d'origine pour la saisie
     firstname: "",
     lastname: "",
     activityId: "",
@@ -19,17 +20,14 @@ function ReservDataManagement() {
   const fetchData = async () => {
     setLoading(true);
     try {
-      // 1. Récupérer toutes les réservations (avec les jointures)
       const reservationsRes = await fetch(`${API_BASE_URL}/reservations`);
       const reservationsData = await reservationsRes.json();
       setReservations(reservationsData);
 
-      // 2. Récupérer tous les utilisateurs
       const usersRes = await fetch(`${API_BASE_URL}/users`);
       const usersData = await usersRes.json();
       setUsers(usersData);
 
-      // 3. Récupérer toutes les activités (events et workshops)
       const activitiesRes = await fetch(`${API_BASE_URL}/upcoming`);
       const activitiesData = await activitiesRes.json();
       setActivities(activitiesData);
@@ -62,8 +60,8 @@ function ReservDataManagement() {
       setForm({
         ...form,
         userId: selectedUserId,
-        firstname: selectedUser.firstname,
-        lastname: selectedUser.lastname,
+        firstname: "",
+        lastname: "",
       });
     } else {
       setForm({
@@ -78,12 +76,22 @@ function ReservDataManagement() {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    // Construction du corps de la requête
+    let finalUserId;
+    let finalFirstname = null;
+    let finalLastname = null;
+
+    if (mode === "existing") {
+      finalUserId = form.userId;
+    } else {
+      finalUserId = 3;
+      finalFirstname = form.firstname;
+      finalLastname = form.lastname;
+    }
+
     const reservationData = {
-      // Si c'est un utilisateur existant, on envoie son ID
-      user_id: mode === "existing" ? form.userId : 0, // 0 si c'est un invité
-      firstname: mode === "guest" ? form.firstname : undefined,
-      lastname: mode === "guest" ? form.lastname : undefined,
+      user_id: finalUserId,
+      guest_firstname: finalFirstname,
+      guest_lastname: finalLastname,
       activity_id: form.activityId,
       places_count: parseInt(form.placesCount),
     };
@@ -104,7 +112,6 @@ function ReservDataManagement() {
       const result = await response.json();
       console.log("Réservation créée avec succès:", result.message);
 
-      // Réinitialise le formulaire et recharge les données
       setForm({
         userId: "",
         firstname: "",
@@ -118,7 +125,6 @@ function ReservDataManagement() {
       console.error("Erreur lors de la création d'une réservation:", error);
     }
   };
-
   const handleDelete = async (id) => {
     if (
       !window.confirm("Êtes-vous sûr de vouloir supprimer cette réservation ?")
@@ -136,7 +142,11 @@ function ReservDataManagement() {
       }
 
       console.log("Réservation supprimée avec succès.");
-      fetchData(); // Recharge la liste pour mettre à jour l'affichage
+      setReservations((prevReservations) =>
+        prevReservations.filter(
+          (reservation) => reservation.id_reservation !== id
+        )
+      );
     } catch (err) {
       console.error("Erreur lors de la suppression de la réservation:", err);
     }
@@ -172,7 +182,6 @@ function ReservDataManagement() {
           <form onSubmit={handleSubmit} className="adminForm3">
             <fieldset>
               {/* Choix du mode : Utilisateur existant ou invité */}
-
               <input
                 type="radio"
                 value="existing"
@@ -203,11 +212,13 @@ function ReservDataManagement() {
                     required
                   >
                     <option value="">-- Sélectionnez un utilisateur --</option>
-                    {users.map((user) => (
-                      <option key={user.id_user} value={user.id_user}>
-                        {user.firstname} {user.lastname}
-                      </option>
-                    ))}
+                    {users
+                      .filter((user) => user.id_user !== 3)
+                      .map((user) => (
+                        <option key={user.id_user} value={user.id_user}>
+                          {user.firstname} {user.lastname}
+                        </option>
+                      ))}
                   </select>
                   <br></br>
                   <br></br>
@@ -250,19 +261,25 @@ function ReservDataManagement() {
                   required
                 >
                   <option value="">-- Sélectionnez une activité --</option>
-                  {activities.map((activity) => (
-                    <option
-                      key={`${activity.type}-${
-                        activity.id_event || activity.id_workshop
-                      }`}
-                      value={`${activity.type}-${
-                        activity.id_event || activity.id_workshop
-                      }`}
-                    >
-                      {activity.title} ({activity.type}) - {activity.places}{" "}
-                      places restantes
+                  {Array.isArray(activities) && activities.length > 0 ? (
+                    activities.map((activity) => (
+                      <option
+                        key={`${activity.type}-${
+                          activity.id_event || activity.id_workshop
+                        }`}
+                        value={`${activity.type}-${
+                          activity.id_event || activity.id_workshop
+                        }`}
+                      >
+                        {activity.title} ({activity.type}) - {activity.places}{" "}
+                        places restantes
+                      </option>
+                    ))
+                  ) : (
+                    <option value="" disabled>
+                      Aucune activité disponible
                     </option>
-                  ))}
+                  )}
                 </select>
                 <br></br>
                 <br></br>
@@ -294,7 +311,7 @@ function ReservDataManagement() {
           <table className="cakeTable">
             <thead>
               <tr>
-                <th>ID</th>
+                {/* <th>ID</th> */}
                 <th>Nom de l'utilisateur</th>
                 <th>Activité</th>
                 <th>Type d'activité</th>
@@ -307,7 +324,7 @@ function ReservDataManagement() {
               {reservations.length > 0 ? (
                 reservations.map((reservation) => (
                   <tr key={reservation.id_reservation}>
-                    <td>{reservation.id_reservation}</td>
+                    {/* <td>{reservation.id_reservation}</td> */}
                     <td>
                       {reservation.user_firstname && reservation.user_lastname
                         ? `${reservation.user_firstname} ${reservation.user_lastname}`

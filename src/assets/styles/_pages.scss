@@ -2,7 +2,7 @@
 
 .home {
   margin-bottom: 0;
-  background-color: $light-color;
+  @extend %component-style;
 }
 
 .home *:last-child {
@@ -12,29 +12,20 @@
 // home-bande 1
 
 .bande1 {
-  background-color: $light-color;
+  @extend %component-style;
   margin-left: 5em;
   margin-right: 5em;
   margin-bottom: 2em;
 }
 
 .bande1 h1 {
-  color: $text-color;
-  padding: 0.5em;
-  letter-spacing: 0.1em;
-  font-size: 4em;
-  @include tablette {
-    font-size: 3.2em;
-  }
-  @include mobile {
-    font-size: 2.5em;
-  }
+  @extend %heading-h1-style;
 }
 
 // home-bande 2
 
 .bande2 {
-  background-color: $light-color;
+  @extend %component-style;
   border: solid 10px $text-color;
   border-radius: 25px;
   margin-left: 5em;
@@ -367,7 +358,33 @@
 // Programme
 
 .program {
-  background-color: $light-color;
+  @extend %component-style;
+}
+
+.schedule-list {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.program ul {
+  list-style-type: none;
+}
+
+.schedule-list li {
+  color: $text-color;
+  border: solid 2px $darkorange-color;
+  margin: 2em;
+  padding: 1em;
+  width: 20%;
+  background-color: #fab97b9f;
+}
+
+.reservButtonProgram {
+  @extend %button-style;
+}
+
+.item-info h3 {
+  text-align: center;
 }
 
 // Page Travaux
@@ -406,20 +423,18 @@
 // Admin Login
 
 .adminLogin {
-  background-color: $light-color;
-  height: 55vh;
+  @extend %component-style;
+  @include desktop {
+    min-height: 55vh;
+  }
 }
 
 .adminLogin h1 {
-  color: $text-color;
-  font-weight: 700;
-  padding-top: 1em;
+  @extend %heading-h1-style;
 }
 
 .adminLogin h2 {
-  color: $text-color;
-  font-weight: 700;
-  padding: 0.2em;
+  @extend %heading-h2-style;
 }
 
 .adminFormDiv {
@@ -429,30 +444,23 @@
 }
 
 .adminForm fieldset {
-  border: $dark-color 2px solid;
-  padding: 0.5em;
+  @extend %fieldset-style;
 }
 
 .adminForm label {
-  font-family: $font-main;
-  color: $text-color;
+  @extend %label-style;
 }
 
 .adminForm legend {
-  font-family: $font-titleh2;
-  color: $text-color;
-  text-align: center;
+  @extend %legend-style;
 }
 
 .adminForm button {
-  font-family: $font-titleh2;
-  border: $dark-color solid 2px;
-  color: $light-color;
-  background-color: $text-color;
-}
-
-.adminForm button:hover {
-  color: $lightorange-color;
+  @extend %button-style;
+  &:hover {
+    @extend %button-hover;
+  }
+  @extend %button-active;
 }
 
 // Dashboard
@@ -901,4 +909,34 @@
 
 .tableRank3 {
   height: 45px;
+}
+
+// Page de profil utilisateur
+
+.profile {
+  @extend %component-style;
+  padding-bottom: 2em;
+}
+
+.profile h1 {
+  color: $logo-color;
+}
+
+.profile h2 {
+  color: $text-color;
+  margin-bottom: 1em;
+}
+
+.profileInfo {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  @include mobile {
+    flex-direction: column;
+  }
+}
+
+.catInfo {
+  font-weight: 700;
+  color: $darkorange-color;
 }

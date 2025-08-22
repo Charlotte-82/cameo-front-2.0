@@ -9,6 +9,7 @@ function WorkshopDataManagement() {
     duration: "",
     places: "",
     description: "",
+    price: "",
   });
   const [editingId, setEditingId] = useState(null);
 
@@ -50,6 +51,7 @@ function WorkshopDataManagement() {
       duration: form.duration,
       places: form.places,
       description: form.description,
+      price: form.price,
     };
 
     if (editingId) {
@@ -99,6 +101,7 @@ function WorkshopDataManagement() {
         duration: "",
         places: "",
         description: "",
+        price: "",
       });
       setEditingId(null);
     }
@@ -112,6 +115,7 @@ function WorkshopDataManagement() {
       duration: workshop.duration,
       places: workshop.places,
       description: workshop.description,
+      price: workshop.price,
     });
     setEditingId(workshop.id_workshop);
   };
@@ -190,6 +194,19 @@ function WorkshopDataManagement() {
               />
               <br />
               <br />
+              <label>Prix de l'atelier</label>
+              <br />
+              <input
+                name="price"
+                type="number"
+                step="0.01"
+                placeholder="Prix"
+                value={form.price}
+                onChange={handleChange}
+                required
+              />
+              <br />
+              <br />
               <label>Date et heure</label>
               <br />
               <input
@@ -254,8 +271,9 @@ function WorkshopDataManagement() {
                 {/* <th>ID</th> */}
                 <th>Titre</th>
                 <th>Contributeur</th>
-                <th>date</th>
-                <th>fin</th>
+                <th>Date</th>
+                <th>Fin</th>
+                <th>Prix</th>
                 <th>Places disponibles</th>
                 <th>Description</th>
                 <th>Actions</th>
@@ -269,6 +287,7 @@ function WorkshopDataManagement() {
                   <td>{workshop.contributor}</td>
                   <td>{workshop.date}</td>
                   <td>{calculateEnd(workshop.date, workshop.duration)}</td>
+                  <td>{workshop.price} €</td>
                   <td>{workshop.places}</td>
                   <td>{workshop.description}</td>
                   <td>

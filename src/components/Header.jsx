@@ -1,8 +1,25 @@
-import React from "react";
+import React, { useState } from "react";
 import LogoHeaderRouge from "../assets/images/logos/Logo baseline beige.png";
 import Navigation from "./Navigation";
+import AuthModal from "./AuthModal";
+import { useAuth } from "../contexts/AuthContext";
 
 function Header() {
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const { user, logout } = useAuth();
+
+  const toggleModal = () => {
+    setIsModalOpen(!isModalOpen);
+  };
+
+  const handleLogout = () => {
+    logout();
+  };
+
+  const onLoginSuccess = () => {
+    setIsModalOpen(false);
+  };
+
   return (
     <div className="header">
       <div className="iconI">
@@ -15,7 +32,17 @@ function Header() {
         </a>
       </div>
       <div className="iconU">
-        <i className="bi bi-person-circle"></i>
+        {user ? (
+          <div className="bienvenue">
+            <span>Bonjour {user.firstname} !</span>
+            <button>
+              <a href="/profile">Ton compte</a>
+            </button>
+            <button onClick={handleLogout}>Déconnexion</button>
+          </div>
+        ) : (
+          <i className="bi bi-person-circle" onClick={toggleModal}></i>
+        )}
       </div>
       <div className="iconFB">
         <a
@@ -26,7 +53,6 @@ function Header() {
           <i className="bi bi-facebook"></i>
         </a>
       </div>
-
       <div className="logo">
         <a href="/">
           <img
@@ -37,6 +63,9 @@ function Header() {
         </a>
       </div>
       <Navigation />
+      {isModalOpen && (
+        <AuthModal onClose={toggleModal} onLoginSuccess={onLoginSuccess} />
+      )}
     </div>
   );
 }
