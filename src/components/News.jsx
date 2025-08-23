@@ -40,7 +40,6 @@ function News() {
     );
   }
 
-  // Fonction pour formater la date
   const formatDate = (dateString) => {
     const options = {
       year: "numeric",
@@ -73,39 +72,38 @@ function News() {
 
       <div className="texteNews">
         <h3>{highlight.title}</h3>
-        {/* Affichage des dates selon le type d'activité */}
         {highlight.type === "event" ? (
-          <div>
-            <p>
+          <div className="infosNewsDiv">
+            <p className="infosNews">
               Du: <strong>{formatDate(highlight.start_date)} </strong>
               Au: <strong>{formatDate(highlight.end_date)}</strong>
             </p>
-            <p>
+            <p className="infosNews">
               Intervenant·e: <strong>{highlight.contributor}</strong>
             </p>
-            <p>
+            <p className="infosNews">
               Places disponibles restantes: <strong>{highlight.places}</strong>
             </p>
-            <p>
+            <p className="infosNews">
               Prix: <strong>{highlight.price}</strong>
             </p>
           </div>
         ) : (
-          <div>
-            <p>
+          <div className="infosNewsDiv">
+            <p className="infosNews">
               Date: le <strong>{formatDate(highlight.date)} </strong>
               jusqu'à{" "}
               <strong>
                 {formatEndDate(highlight.date, highlight.duration)}
               </strong>
             </p>
-            <p>
+            <p className="infosNews">
               Intervenant·e: <strong>{highlight.contributor}</strong>
             </p>
-            <p>
+            <p className="infosNews">
               Places disponibles restantes: <strong>{highlight.places}</strong>
             </p>
-            <p>
+            <p className="infosNews">
               Prix: <strong>{highlight.price} €</strong> / personne
             </p>
           </div>

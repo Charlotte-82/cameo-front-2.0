@@ -17,10 +17,10 @@ body {
   font-family: $font-titleh1;
   text-align: center;
   @include tablette {
-    font-size: 3.2em;
+    font-size: 2.8em;
   }
   @include mobile {
-    font-size: 2.5em;
+    font-size: 1.8em;
   }
 }
 
@@ -94,4 +94,25 @@ button {
 
 %component-style {
   background-color: $light-color;
+}
+
+%bande-style {
+  margin-left: 5em;
+  margin-right: 5em;
+  margin-bottom: 2em;
+  @include mobile {
+    margin-left: 3em;
+    margin-right: 3em;
+    margin-bottom: 1em;
+  }
+}
+
+%component-div-style {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  @include mobile {
+    display: flex;
+    flex-direction: column;
+  }
 }

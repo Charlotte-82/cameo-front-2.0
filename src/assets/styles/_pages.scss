@@ -1,6 +1,6 @@
 // Home
 
-.home {
+.page {
   margin-bottom: 0;
   @extend %component-style;
 }
@@ -13,9 +13,7 @@
 
 .bande1 {
   @extend %component-style;
-  margin-left: 5em;
-  margin-right: 5em;
-  margin-bottom: 2em;
+  @extend %bande-style;
 }
 
 .bande1 h1 {
@@ -26,16 +24,9 @@
 
 .bande2 {
   @extend %component-style;
-  border: solid 10px $text-color;
+  border: solid 5px $text-color;
   border-radius: 25px;
-  margin-left: 5em;
-  margin-right: 5em;
-  margin-bottom: 2em;
-  @include mobile {
-    margin-left: 3em;
-    margin-right: 3em;
-    margin-bottom: 1em;
-  }
+  @extend %bande-style;
 }
 
 .bande2:hover {
@@ -63,9 +54,7 @@
   padding-bottom: 1.5rem;
   padding-left: 1.5em;
   padding-right: 1.5em;
-  margin-left: 5em;
-  margin-right: 5em;
-  margin-bottom: 2em;
+  @extend %bande-style;
   @include mobile {
     padding-left: 1rem;
     padding-right: 1rem;

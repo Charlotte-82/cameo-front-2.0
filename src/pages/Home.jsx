@@ -9,7 +9,7 @@ import News from "../components/News";
 
 function Home() {
   return (
-    <div className="home">
+    <div className="page">
       <section className="bande1">
         <h1>La pâtisserie de la semaine</h1>
         <PatisserieSemaine />

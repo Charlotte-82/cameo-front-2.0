@@ -103,7 +103,6 @@ i {
   font-family: $font-titleh2;
 }
 
-/* Responsive */
 @include mobile {
   .burger {
     display: block;
@@ -243,25 +242,18 @@ i {
 // Pâtisserie de la semaine
 
 .patSemaine {
-  display: flex;
-  flex-wrap: wrap;
-  flex-direction: row;
+  @extend %component-div-style;
   justify-content: center;
+  align-items: center;
   padding: 3em;
   padding-top: 0;
   gap: 3em;
-
   @include mobile {
-    display: flex;
-    flex-direction: column;
+    flex-wrap: wrap;
     align-content: center;
   }
-}
-
-.PatDivSemaine {
-  width: 80%;
-  @include mobile {
-    width: 80%;
+  @include tablette {
+    flex-wrap: wrap;
   }
 }
 
@@ -276,7 +268,8 @@ i {
     height: 15em;
   }
 
-  width: 100%;
+  width: auto;
+  height: 10em;
   border: solid 3px $text-color;
   border-radius: 10px;
 }
@@ -304,17 +297,27 @@ i {
 .cadrePat {
   border: dashed 3px $dark-color;
   border-radius: 12px;
-  background-color: $light-color;
   padding: 1em;
   @include mobile {
-    margin-top: 1em;
+    padding: 0.2em;
   }
+}
+
+.cadrePat:hover {
+  border: dashed 3px $logo-color;
 }
 
 .videoExtrait {
   width: 30%;
+  @include tablette {
+    width: 95%;
+    display: flex;
+    justify-content: center;
+  }
   @include mobile {
-    width: 80%;
+    display: flex;
+    justify-content: center;
+    width: 90%;
   }
 }
 
@@ -324,37 +327,27 @@ i {
   display: block;
 }
 
-.videoEmbed {
-  width: 100%;
-  height: auto;
-  aspect-ratio: 16 / 9;
-  display: block;
-}
-
-.videoDirect {
-  width: 100%;
-  height: auto;
-  display: block;
-  object-fit: contain;
-}
-
-.imageDirect {
-  width: 100%;
-  height: auto;
-  display: block;
-  object-fit: contain;
+.videoExtrait iframe {
+  width: 20em;
+  height: 13em;
+  @include mobile {
+    width: 18em;
+    height: auto;
+  }
+  @include tablette {
+    width: 100%;
+  }
 }
 
 .titreFilm {
+  display: inline-block;
   margin: 0;
   font-size: xx-large;
   text-align: end;
   font-style: italic;
   color: $text-color;
-  @include desktop {
-    margin-top: 1rem;
-  }
   @include tablette {
+    display: inline-block;
     font-size: x-large;
   }
   @include mobile {
@@ -369,6 +362,7 @@ i {
   font-size: large;
 
   @include tablette {
+    display: inline-block;
     font-size: medium;
   }
   @include mobile {
@@ -384,22 +378,26 @@ i {
   text-align: end;
   font-size: medium;
   margin: 0;
-
+  @include tablette {
+    display: inline-block;
+  }
   @include mobile {
     text-align: center;
+  }
+}
+
+.globalFilmDIv {
+  @include tablette {
+    width: 100%;
   }
 }
 
 // News
 
 .newsDiv {
-  display: flex;
-  flex-wrap: nowrap;
-  flex-direction: row;
+  @extend %component-div-style;
   padding: 2em;
   @include mobile {
-    display: flex;
-    flex-direction: column;
     align-items: center;
   }
 }
@@ -430,9 +428,6 @@ i {
   padding-right: 2em;
   padding-left: 2em;
   color: $text-color;
-  display: inline-block;
-  flex-direction: column;
-  justify-content: center;
   text-align: center;
 
   @include mobile {
@@ -449,6 +444,12 @@ i {
     font-size: large;
     line-height: 1.7em;
   }
+}
+
+.infosNewsDiv {
+  display: flex;
+  flex-direction: column;
+  line-height: 0.8em;
 }
 
 .texteNews h3 {
