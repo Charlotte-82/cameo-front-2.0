@@ -74,7 +74,6 @@ function Profile() {
     }
   };
 
-  // NOUVELLE FONCTION : pour annuler une réservation
   const handleCancelReservation = async (reservationId) => {
     if (
       !window.confirm("Êtes-vous sûr de vouloir annuler cette réservation ?")
@@ -96,14 +95,12 @@ function Profile() {
       }
 
       console.log("Réservation annulée avec succès.");
-      // Mettre à jour la liste des réservations après la suppression
       fetchReservations(user.id_user);
     } catch (err) {
       console.error("Erreur lors de l'annulation de la réservation:", err);
     }
   };
 
-  // Fonction pour formater les dates (réutilisée)
   const formatDate = (dateString) => {
     const options = {
       year: "numeric",
@@ -305,38 +302,48 @@ function Profile() {
           {loadingReservations ? (
             <p>Chargement de vos réservations...</p>
           ) : reservations.length > 0 ? (
-            <table className="reservationTable">
-              <thead>
-                <tr>
-                  <th>Activité</th>
-                  <th>Date</th>
-                  <th>Places réservées</th>
-                  <th>Statut</th>
-                  <th>Actions</th>
-                </tr>
-              </thead>
-              <tbody>
-                {reservations.map((reservation) => (
-                  <tr key={reservation.id_reservation}>
-                    <td>{reservation.activity_title}</td>
-                    <td>{formatDate(reservation.activity_date)}</td>
-                    <td>{reservation.places_count}</td>
-                    <td>{reservation.is_canceled ? "Annulée" : "Confirmée"}</td>
-                    <td>
-                      {!reservation.is_canceled && (
-                        <button
-                          onClick={() =>
-                            handleCancelReservation(reservation.id_reservation)
-                          }
-                        >
-                          Annuler
-                        </button>
-                      )}
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
+            <ul className="reservationList">
+              {reservations.map((reservation) => (
+                <li
+                  key={reservation.id_reservation}
+                  className="reservationItem"
+                >
+                  <div className="reservationDetail">
+                    <span className="label">Activité:</span>
+                    <span className="value">
+                      <strong>{reservation.activity_title}</strong>
+                    </span>
+                  </div>
+                  <div className="reservationDetail">
+                    <span className="label">Date:</span>
+                    <span className="value">
+                      {formatDate(reservation.activity_date)}
+                    </span>
+                  </div>
+                  <div className="reservationDetail">
+                    <span className="label">Places réservées:</span>
+                    <span className="value">{reservation.places_count}</span>
+                  </div>
+                  <div className="reservationDetail">
+                    <span className="label">Statut:</span>
+                    <span className="value">
+                      {reservation.is_canceled ? "Annulée" : "Confirmée"}
+                    </span>
+                  </div>
+                  <div className="reservationActions">
+                    {!reservation.is_canceled && (
+                      <button
+                        onClick={() =>
+                          handleCancelReservation(reservation.id_reservation)
+                        }
+                      >
+                        Annuler
+                      </button>
+                    )}
+                  </div>
+                </li>
+              ))}
+            </ul>
           ) : (
             <p>Vous n'avez aucune réservation pour le moment.</p>
           )}

@@ -15,6 +15,7 @@
 }
 
 .logo {
+  margin-top: 2.5em;
   display: flex;
   justify-content: center;
 }
@@ -251,6 +252,8 @@ i {
   @include mobile {
     flex-wrap: wrap;
     align-content: center;
+    gap: 1em;
+    padding-bottom: 1em;
   }
   @include tablette {
     flex-wrap: wrap;
@@ -268,8 +271,8 @@ i {
     height: 15em;
   }
 
-  width: auto;
-  height: 10em;
+  width: 15em;
+  height: 12em;
   border: solid 3px $text-color;
   border-radius: 10px;
 }
@@ -289,6 +292,7 @@ i {
   }
   @include mobile {
     font-size: large;
+    margin-bottom: 0;
   }
   font-weight: 700;
   font-family: $font-titleh2;
@@ -299,6 +303,7 @@ i {
   border-radius: 12px;
   padding: 1em;
   @include mobile {
+    width: 100%;
     padding: 0.2em;
   }
 }
@@ -315,23 +320,25 @@ i {
     justify-content: center;
   }
   @include mobile {
-    display: flex;
-    justify-content: center;
     width: 90%;
   }
 }
 
 .videoExtrait video {
-  width: 100%;
+  width: 25em;
   height: auto;
   display: block;
+  object-fit: cover;
+  @include mobile {
+    width: 17em;
+  }
 }
 
 .videoExtrait iframe {
   width: 20em;
   height: 13em;
   @include mobile {
-    width: 18em;
+    width: 17em;
     height: auto;
   }
   @include tablette {
@@ -351,7 +358,6 @@ i {
     font-size: x-large;
   }
   @include mobile {
-    padding-top: 1em;
     font-size: large;
     text-align: center;
   }
@@ -386,6 +392,14 @@ i {
   }
 }
 
+.infosFilm {
+  @include mobile {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+  }
+}
+
 .globalFilmDIv {
   @include tablette {
     width: 100%;
@@ -394,20 +408,46 @@ i {
 
 // News
 
+.affichageNewsMobile {
+  @include tablette {
+    display: none;
+  }
+  @include desktop {
+    display: none;
+  }
+}
+
+.card-title {
+  @extend %heading-h2-style;
+  color: $logo-color !important;
+}
+
+.card-body {
+  background-color: $light-color;
+}
+
+.bootstrapButtonDiv {
+  margin: 0.4em;
+  display: flex;
+  justify-content: center;
+}
+
 .newsDiv {
   @extend %component-div-style;
-  padding: 2em;
+
+  padding-bottom: 2em;
+  align-items: center;
   @include mobile {
     align-items: center;
+    padding-bottom: 0;
   }
 }
 
 .imageNewsDiv {
-  width: 35%;
+  width: 55%;
   height: auto;
-  align-content: start;
   @include mobile {
-    width: 80%;
+    display: none;
   }
 }
 
@@ -417,24 +457,17 @@ i {
   height: auto;
   border: solid 3px $text-color;
   border-radius: 10px;
-
-  @include desktop {
-    height: 20em;
-  }
 }
 
 .texteNews {
-  width: 50%;
-  padding-right: 2em;
-  padding-left: 2em;
+  width: 90%;
+  padding-right: 1em;
+  padding-left: 1em;
   color: $text-color;
-  text-align: center;
+  text-align: left;
 
   @include mobile {
-    font-size: smaller;
-    width: 80%;
-    padding-right: 0.2em;
-    padding-left: 0.2em;
+    display: none;
   }
   @include desktop {
     font-size: x-large;
@@ -452,12 +485,20 @@ i {
   line-height: 0.8em;
 }
 
-.texteNews h3 {
+.imageNewsDiv h3 {
   text-align: center;
   font-weight: 700;
   color: $logo-color;
   font-size: xx-large;
-  margin-top: 1em;
+  @include mobile {
+    font-size: larger;
+  }
+}
+
+.descriptionNews {
+  color: $text-color;
+  text-align: center;
+  font-size: x-large;
 }
 
 .boutonDiv {
@@ -466,15 +507,18 @@ i {
   flex-direction: column;
   margin-top: 3.5em;
   margin-right: 3.5em;
+  @include mobile {
+    display: none;
+  }
 }
 
 .boutonDiv h4 {
-  font-family: $font-main;
+  font-family: $font-titleh2;
+  font-weight: 700;
   color: $logo-color;
 }
 
 .boutonReservation {
-  visibility: visible;
   width: 15em;
   border: solid 2px $lightorange-color;
   border-radius: 10px;
@@ -489,6 +533,10 @@ i {
   @include mobile {
     font-size: medium;
   }
+}
+
+.boutonReservation a:hover {
+  color: $lightorange-color;
 }
 
 strong {
@@ -749,4 +797,25 @@ strong {
 .inputRadioRegister {
   display: flex;
   flex-direction: row;
+}
+
+// Accordéon - Accueil
+
+.accordion-content {
+  padding: 0 18px;
+  background-color: $light-color;
+  max-height: 0;
+  transition: max-height 0.3s ease-out;
+}
+
+.accordion-content.active {
+  max-height: 500px;
+}
+
+.accordion-content-inner {
+  padding: 10px 0;
+}
+
+.accordion-button.active {
+  background-color: $text-color;
 }

@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import * as bootstrap from "bootstrap";
 
 function News() {
   const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
@@ -23,6 +24,17 @@ function News() {
       )
       .finally(() => setLoading(false));
   }, []);
+
+  useEffect(() => {
+    if (!loading && highlight) {
+      const popoverTriggerList = document.querySelectorAll(
+        '[data-bs-toggle="popover"]'
+      );
+      const popoverList = [...popoverTriggerList].map(
+        (popoverTriggerEl) => new bootstrap.Popover(popoverTriggerEl)
+      );
+    }
+  }, [loading, highlight]);
 
   if (loading) {
     return (
@@ -60,7 +72,88 @@ function News() {
 
   return (
     <div className="newsDiv">
+      <div className="affichageNewsMobile">
+        <div className="card border-0">
+          <img
+            src={`${API_BASE_URL.replace(/\/$/, "")}/uploads/highlight/${
+              highlight.photo_filename
+            }`}
+            className="card-img-top"
+            alt="illustration de l'actualité"
+          />
+          <div className="card-body">
+            <h3 className="card-title">{highlight.title}</h3>
+            {highlight.type === "event" ? (
+              <div className="infosNewsDiv">
+                <p className="infosNews">
+                  Du: <strong>{formatDate(highlight.start_date)} </strong>
+                  Au: <strong>{formatDate(highlight.end_date)}</strong>
+                </p>
+                <p className="infosNews">
+                  Intervenant·e: <strong>{highlight.contributor}</strong>
+                </p>
+                <p className="infosNews">
+                  Places disponibles restantes:{" "}
+                  <strong>{highlight.places}</strong>
+                </p>
+                <p className="infosNews">
+                  Prix: <strong>{highlight.price}</strong>
+                </p>
+              </div>
+            ) : (
+              <div className="infosNewsDiv">
+                <p className="infosNews">
+                  Date: le <strong>{formatDate(highlight.date)} </strong>
+                  jusqu'à{" "}
+                  <strong>
+                    {formatEndDate(highlight.date, highlight.duration)}
+                  </strong>
+                </p>
+                <p className="infosNews">
+                  Intervenant·e: <strong>{highlight.contributor}</strong>
+                </p>
+                <p className="infosNews">
+                  Places disponibles restantes:{" "}
+                  <strong>{highlight.places}</strong>
+                </p>
+                <p className="infosNews">
+                  Prix: <strong>{highlight.price} €</strong> / personne
+                </p>
+              </div>
+            )}
+            <div className="bootstrapButtonDiv">
+              <a
+                href="/agenda"
+                className="btn bootstrapButton"
+                style={{ backgroundColor: "#6c1304", color: "#ffdfb7" }}
+              >
+                Voir l'agenda
+              </a>
+            </div>
+            <div
+              style={{
+                margin: "0.4em",
+                display: "flex",
+                justifyContent: "center",
+              }}
+            >
+              <button
+                type="button"
+                className="btn"
+                data-bs-container="body"
+                data-bs-toggle="popover"
+                data-bs-placement="bottom"
+                data-bs-content={highlight.description}
+                style={{ backgroundColor: "#6c1304", color: "#ffdfb7" }}
+              >
+                Description
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
       <div className="imageNewsDiv">
+        <h3>{highlight.title}</h3>
         <img
           className="imageNews"
           src={`${API_BASE_URL.replace(/\/$/, "")}/uploads/highlight/${
@@ -71,7 +164,6 @@ function News() {
       </div>
 
       <div className="texteNews">
-        <h3>{highlight.title}</h3>
         {highlight.type === "event" ? (
           <div className="infosNewsDiv">
             <p className="infosNews">
@@ -108,9 +200,9 @@ function News() {
             </p>
           </div>
         )}
-        <p>{highlight.description}</p>
       </div>
       <div className="boutonDiv">
+        <p className="descriptionNews">{highlight.description}</p>
         <h4>Pour réserver:</h4>
         <br></br>
         <button className="boutonReservation">

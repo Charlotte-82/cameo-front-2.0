@@ -20,7 +20,7 @@ body {
     font-size: 2.8em;
   }
   @include mobile {
-    font-size: 1.8em;
+    font-size: 1.5em;
   }
 }
 
@@ -115,4 +115,12 @@ button {
     display: flex;
     flex-direction: column;
   }
+}
+
+%grid-div-style {
+  margin-top: 2em;
+  margin-bottom: 2em;
+  margin-left: 4em;
+  margin-right: 4em;
+  border: dotted 1px $text-color;
 }
