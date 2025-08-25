@@ -2,19 +2,19 @@ import React, { useState, useEffect } from "react";
 import ReactDOM from "react-dom";
 
 function ReservationModal({ item, onClose, onReserve }) {
-  const [placesCount, setPlacesCount] = useState(1); // Gère l'envoi du formulaire de réservation
+  const [placesCount, setPlacesCount] = useState(1);
 
   const handleSubmit = (e) => {
-    e.preventDefault(); // Appel de la fonction de réservation passée en prop par le parent (Program.jsx)
+    e.preventDefault();
     onReserve(placesCount);
-  }; // Hook pour gérer le blocage du défilement du corps de la page
+  };
 
   useEffect(() => {
-    document.body.style.overflow = "hidden"; // Fonction de nettoyage pour réactiver le défilement lorsque le composant est démonté
+    document.body.style.overflow = "hidden";
     return () => {
       document.body.style.overflow = "unset";
     };
-  }, []); // On utilise un portal pour que la modale s'affiche au-dessus de tout, // et non à la fin du composant `Program`.
+  }, []);
 
   const modalContent = (
     <div className="modal-backdrop" onClick={onClose}>

@@ -64,7 +64,6 @@ const Accordion = () => {
         </div>
       </div>
 
-      {/* Section 2 */}
       <div
         className="accordion-item"
         style={{

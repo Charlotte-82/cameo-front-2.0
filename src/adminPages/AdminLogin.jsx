@@ -1,4 +1,3 @@
-// src/adminPages/AdminLogin.jsx
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
@@ -29,11 +28,9 @@ function AdminLogin() {
       const data = await response.json();
 
       if (response.ok) {
-        // Connexion réussie, stocke le token et redirige
         localStorage.setItem("authToken", data.jwt);
         navigate("/admin/dashboard");
       } else {
-        // Gère les erreurs de connexion
         setError(data.message || "Erreur de connexion.");
       }
     } catch (err) {

@@ -87,11 +87,11 @@ function AuthModal({ onClose, onLoginSuccess }) {
         id_cake: "",
       });
 
-      onClose(); // Fermer la modale en cas de succès
-      alert("Enregistrement réussi !"); // Optionnel : message de confirmation
+      onClose();
+      alert("Enregistrement réussi !");
     } catch (error) {
       console.error("Erreur:", error);
-      alert(`Échec de l'enregistrement: ${error.message}`); // Optionnel : message d'erreur
+      alert(`Échec de l'enregistrement: ${error.message}`);
     }
   };
   const modalContent = (
@@ -111,7 +111,6 @@ function AuthModal({ onClose, onLoginSuccess }) {
             </div>
             <div className="modal-body">
               {isLoginMode ? (
-                // Formulaire de Connexion
                 <div className="auth-form login-form">
                   <form onSubmit={handleLoginSubmit} className="adminForm4">
                     <label>Email:</label>
@@ -148,7 +147,6 @@ function AuthModal({ onClose, onLoginSuccess }) {
                   </p>
                 </div>
               ) : (
-                // Formulaire d'Enregistrement
                 <div className="auth-form register-form">
                   <h3>S'enregistrer</h3>
                   <form onSubmit={handleRegisterSubmit} className="adminForm4">
