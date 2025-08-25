@@ -10,6 +10,7 @@ function UserDataManagement() {
     tel: "",
     newsletter: "",
     id_cake: "",
+    password: "",
     is_admin: "",
   });
   const [editingId, setEditingId] = useState(null);
@@ -65,11 +66,13 @@ function UserDataManagement() {
       tel: form.tel,
       newsletter: form.newsletter,
       id_cake: form.id_cake,
+      password: form.password,
       is_admin: form.is_admin,
     };
 
     if (editingId) {
       method = "PUT";
+      url = `${API_BASE_URL}/users/${editingId}`;
       userData.id_user = editingId;
     }
 
@@ -115,6 +118,7 @@ function UserDataManagement() {
         tel: "",
         newsletter: "",
         id_cake: "",
+        password: "",
         is_admin: "",
       });
       setEditingId(null);
@@ -129,6 +133,7 @@ function UserDataManagement() {
       tel: user.tel,
       newsletter: user.newsletter,
       id_cake: user.id_cake,
+      password: user.password,
       is_admin: user.is_admin,
     });
     setEditingId(user.id_user);
@@ -263,6 +268,18 @@ function UserDataManagement() {
               </select>
               <br />
               <br />
+              <label>Mot de passe</label>
+              <br />
+              <input
+                name="password"
+                placeholder="Mot de passe"
+                type="password"
+                value={form.password}
+                onChange={handleChange}
+                required={!editingId}
+              />
+              <br />
+              <br />
               <label>L'utilisateur est-il un administrateur ?</label>
               <br />
               <input
@@ -307,32 +324,34 @@ function UserDataManagement() {
               </tr>
             </thead>
             <tbody>
-              {users.map((user) => (
-                <tr key={user.id_user} className="tableRank3">
-                  {/* <td>{user.id_user}</td> */}
-                  <td>{user.lastname}</td>
-                  <td>{user.firstname}</td>
-                  <td>{user.email}</td>
-                  <td>{user.tel}</td>
-                  <td>
-                    {user.newsletter === "1" || user.newsletter === 1
-                      ? "Oui"
-                      : "Non"}
-                  </td>
-                  <td>{user.cake_name}</td>
-                  <td>
-                    {user.is_admin === "1" || user.is_admin === 1
-                      ? "Oui"
-                      : "Non"}
-                  </td>
-                  <td>
-                    <button onClick={() => handleEdit(user)}>Modifier</button>
-                    <button onClick={() => handleDelete(user.id_user)}>
-                      Supprimer
-                    </button>
-                  </td>
-                </tr>
-              ))}
+              {users
+                .filter((user) => user.id_user !== 3)
+                .map((user) => (
+                  <tr key={user.id_user} className="tableRank3">
+                    {/* <td>{user.id_user}</td> */}
+                    <td>{user.lastname}</td>
+                    <td>{user.firstname}</td>
+                    <td>{user.email}</td>
+                    <td>{user.tel}</td>
+                    <td>
+                      {user.newsletter === "1" || user.newsletter === 1
+                        ? "Oui"
+                        : "Non"}
+                    </td>
+                    <td>{user.cake_name}</td>
+                    <td>
+                      {user.is_admin === "1" || user.is_admin === 1
+                        ? "Oui"
+                        : "Non"}
+                    </td>
+                    <td>
+                      <button onClick={() => handleEdit(user)}>Modifier</button>
+                      <button onClick={() => handleDelete(user.id_user)}>
+                        Supprimer
+                      </button>
+                    </td>
+                  </tr>
+                ))}
             </tbody>
           </table>
         </div>

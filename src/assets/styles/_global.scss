@@ -9,19 +9,89 @@ body {
   height: 100%;
 }
 
-h1 {
+%heading-h1-style {
+  color: $logo-color;
+  padding: 0.5em;
+  letter-spacing: 0.1em;
+  font-size: 4em;
   font-family: $font-titleh1;
   text-align: center;
+  @include tablette {
+    font-size: 3.2em;
+  }
+  @include mobile {
+    font-size: 2.5em;
+  }
+}
+
+%heading-h2-style {
   color: $text-color;
+  font-weight: 700;
+  padding: 0.2em;
+  font-family: $font-titleh2;
+  text-align: center;
+  @include tablette {
+    font-size: 2.5em;
+  }
+  @include mobile {
+    font-size: 1.5em;
+  }
+}
+
+h1 {
+  @extend %heading-h1-style;
 }
 
 h2,
 h3 {
-  font-family: $font-titleh2;
-  font-weight: 700;
-  text-align: center;
+  @extend %heading-h2-style;
 }
 
 p {
   font-family: $font-main;
+}
+
+button {
+  @extend %button-style;
+}
+
+%button-style {
+  font-family: $font-titleh2;
+  border: $dark-color solid 2px;
+  color: $light-color;
+  background-color: $text-color;
+}
+
+%button-hover {
+  color: $lightorange-color;
+  cursor: pointer;
+}
+
+%button-active {
+  @include mobile {
+    color: $lightorange-color;
+  }
+  @include tablette {
+    color: $lightorange-color;
+  }
+}
+
+%fieldset-style {
+  border: $dark-color 2px solid;
+  padding: 0.5em;
+}
+
+%label-style {
+  font-family: $font-main;
+  color: $text-color;
+}
+
+%legend-style {
+  font-family: $font-titleh2;
+  color: $text-color;
+  text-align: center;
+}
+
+%component-style {
+  background-color: $light-color;
 }

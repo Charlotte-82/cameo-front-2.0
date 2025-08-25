@@ -86,6 +86,9 @@ function News() {
             <p>
               Places disponibles restantes: <strong>{highlight.places}</strong>
             </p>
+            <p>
+              Prix: <strong>{highlight.price}</strong>
+            </p>
           </div>
         ) : (
           <div>
@@ -101,6 +104,9 @@ function News() {
             </p>
             <p>
               Places disponibles restantes: <strong>{highlight.places}</strong>
+            </p>
+            <p>
+              Prix: <strong>{highlight.price} €</strong> / personne
             </p>
           </div>
         )}
