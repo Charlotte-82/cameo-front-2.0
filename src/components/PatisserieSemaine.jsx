@@ -80,27 +80,19 @@ function PatisserieSemaine() {
 
   return (
     <div className="patSemaine">
-      {/* {patisserie.image_de_la_patisserie?.url && (
-        <div className="imagePatSemaineDiv">
-          <img
-            src={patisserie.image_de_la_patisserie.url}
-            alt={patisserie.nom_de_la_patisserie}
-            className="imagePatisserieSemaine"
-          />
-        </div>
-      )}
+      <div className="imagePatSemaineDiv"></div>
 
       <div className="PatSemaineDiv">
         <div className="cadrePat">
-          <h2 className="titrePatSemaine">{patisserie.nom_de_la_patisserie}</h2>
-          <p className="titrePatSemaine">{patisserie.prix}</p>
+          <h2 className="titrePatSemaine"></h2>
+          <p className="titrePatSemaine"></p>
         </div>
-        <p className="titreFilm">{patisserie.titre_du_film}</p>
-        <p className="realFilm">{patisserie.auteur_de_loeuvre}</p>
-        <p className="dateFilm">{patisserie.date_de_sortie_de_loeuvre}</p>
+        <p className="titreFilm"></p>
+        <p className="realFilm"></p>
+        <p className="dateFilm"></p>
       </div>
 
-      <div className="videoExtrait">{renderMedia(mediaSourceUrl)} </div> */}
+      <div className="videoExtrait"></div>
     </div>
   );
 }
