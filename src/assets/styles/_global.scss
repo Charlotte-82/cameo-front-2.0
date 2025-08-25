@@ -1,0 +1,27 @@
+html {
+  background-color: $light-color;
+  height: 100%;
+}
+
+body {
+  font-family: $font-main;
+  background-color: $light-color;
+  height: 100%;
+}
+
+h1 {
+  font-family: $font-titleh1;
+  text-align: center;
+  color: $text-color;
+}
+
+h2,
+h3 {
+  font-family: $font-titleh2;
+  font-weight: 700;
+  text-align: center;
+}
+
+p {
+  font-family: $font-main;
+}
