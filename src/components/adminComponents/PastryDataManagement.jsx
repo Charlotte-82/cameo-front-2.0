@@ -59,7 +59,7 @@ function PastryManagement() {
       });
 
       const result = await res.json();
-      console.log(isEditing ? "Modifié :" : "Créé :", result);
+      // console.log(isEditing ? "Modifié :" : "Créé :", result);
 
       setForm({
         name: "",
@@ -97,7 +97,7 @@ function PastryManagement() {
         method: "DELETE",
       });
       const result = await res.json();
-      console.log("Supprimé :", result);
+      // console.log("Supprimé :", result);
       alert(`Vous avez supprimé le gâteau.`);
       fetchData();
     } catch (err) {

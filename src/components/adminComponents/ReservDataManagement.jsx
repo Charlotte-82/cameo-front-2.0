@@ -110,7 +110,7 @@ function ReservDataManagement() {
       }
 
       const result = await response.json();
-      console.log("Réservation créée avec succès:", result.message);
+      // console.log("Réservation créée avec succès:", result.message);
 
       setForm({
         userId: "",
@@ -141,7 +141,7 @@ function ReservDataManagement() {
         throw new Error(`Erreur lors de la suppression: ${response.status}`);
       }
 
-      console.log("Réservation supprimée avec succès.");
+      // console.log("Réservation supprimée avec succès.");
       setReservations((prevReservations) =>
         prevReservations.filter(
           (reservation) => reservation.id_reservation !== id

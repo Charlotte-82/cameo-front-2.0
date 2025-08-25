@@ -5,7 +5,7 @@ function PastryManagement() {
   const [media, setMedia] = useState([]);
 
   const [selectedPhoto, setSelectedPhoto] = useState(null);
-  const [videoInputMode, setVideoInputMode] = useState("none"); // "none", "upload", "youtube"
+  const [videoInputMode, setVideoInputMode] = useState("none");
   const [selectedVideo, setSelectedVideo] = useState(null);
   const [youtubeUrl, setYoutubeUrl] = useState("");
 
@@ -39,7 +39,6 @@ function PastryManagement() {
       const extension = originalVideoName.split(".").pop();
       const safeVideoName = `video-${Date.now()}.${extension}`;
 
-      // Créer un nouveau fichier avec le nom sécurisé
       const safeVideoFile = new File([selectedVideo], safeVideoName, {
         type: selectedVideo.type,
       });
@@ -77,7 +76,7 @@ function PastryManagement() {
       setVideoInputMode("none");
       e.target.reset();
     } catch (err) {
-      console.error("Erreur d'upload :", err); // Montre toute l'erreur
+      console.error("Erreur d'upload :", err);
       if (err.response) {
         console.error("Réponse serveur :", await err.response.text());
       }
@@ -91,15 +90,12 @@ function PastryManagement() {
         method: "DELETE",
       });
 
-      // La suppression a réussi, peu importe le statut 204 ou 200
       if (res.ok) {
-        // res.ok est vrai pour un statut 200 à 299
         alert("Le fichier a bien été supprimé.");
-        fetchMedia(); // refresh de la liste
+        fetchMedia();
         return;
       }
 
-      // Si la requête a échoué (statut 4xx, 5xx), on lit l'erreur si elle existe
       const errData = await res.json().catch(() => null);
       throw new Error(errData?.error || `Erreur ${res.status}`);
     } catch (err) {
@@ -118,7 +114,7 @@ function PastryManagement() {
 
     if (videoId) {
       const thumbnailUrl = `https://img.youtube.com/vi/${videoId}/hqdefault.jpg`;
-      console.log("🎬 Thumbnail URL:", thumbnailUrl);
+      // console.log("🎬 Thumbnail URL:", thumbnailUrl);
       return thumbnailUrl;
     }
 
@@ -231,7 +227,7 @@ function PastryManagement() {
             </thead>
             <tbody>
               {media.map((item) => {
-                console.log("📦 ITEM :", item);
+                // console.log("📦 ITEM :", item);
 
                 return (
                   <tr key={item.id_media} className="tableRank2">

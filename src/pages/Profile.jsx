@@ -94,7 +94,7 @@ function Profile() {
         );
       }
 
-      console.log("Réservation annulée avec succès.");
+      // console.log("Réservation annulée avec succès.");
       fetchReservations(user.id_user);
     } catch (err) {
       console.error("Erreur lors de l'annulation de la réservation:", err);

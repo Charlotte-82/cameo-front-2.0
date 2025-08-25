@@ -85,10 +85,10 @@ function WorkshopDataManagement() {
         throw new Error(errorMessage);
       }
 
-      console.log(
-        "Opération réussie. Message du serveur :",
-        result.message || "Aucun message spécifique."
-      );
+      // console.log(
+      //   "Opération réussie. Message du serveur :",
+      //   result.message || "Aucun message spécifique."
+      // );
 
       fetchWorkshops();
     } catch (error) {
@@ -121,7 +121,7 @@ function WorkshopDataManagement() {
   };
 
   const handleDelete = (id) => {
-    console.log("Suppression atelier ID:", id);
+    // console.log("Suppression atelier ID:", id);
 
     fetch(`${API_BASE_URL}/workshops/${id}`, {
       method: "DELETE",
