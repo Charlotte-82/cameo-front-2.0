@@ -246,6 +246,19 @@ function AuthModal({ onClose, onLoginSuccess }) {
                       Se connecter
                     </span>
                   </p>
+                  <div style={{ display: "flex", justifyContent: "center" }}>
+                    <a
+                      href="/politique"
+                      target="_blank"
+                      style={{
+                        fontSize: "xx-small",
+                        textAlign: "center",
+                        color: "#b21a00",
+                      }}
+                    >
+                      Politique de Confidentialité
+                    </a>
+                  </div>
                 </div>
               )}
             </div>

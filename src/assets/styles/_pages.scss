@@ -1,6 +1,6 @@
 // Home
 
-.home {
+.page {
   margin-bottom: 0;
   @extend %component-style;
 }
@@ -12,10 +12,7 @@
 // home-bande 1
 
 .bande1 {
-  @extend %component-style;
-  margin-left: 5em;
-  margin-right: 5em;
-  margin-bottom: 2em;
+  @extend %bande-style;
 }
 
 .bande1 h1 {
@@ -25,21 +22,17 @@
 // home-bande 2
 
 .bande2 {
-  @extend %component-style;
-  border: solid 10px $text-color;
+  border: solid 5px $text-color;
   border-radius: 25px;
-  margin-left: 5em;
-  margin-right: 5em;
-  margin-bottom: 2em;
+  padding-left: 2em;
+  @extend %bande-style;
   @include mobile {
-    margin-left: 3em;
-    margin-right: 3em;
-    margin-bottom: 1em;
+    padding: 0.8em;
   }
 }
 
 .bande2:hover {
-  border: solid 10px $darkorange-color;
+  border: solid 7px $darkorange-color;
 }
 
 .bande2 h2 {
@@ -48,6 +41,9 @@
   letter-spacing: 0.1em;
   text-align: center;
   font-size: 3em;
+  @include mobile {
+    font-size: 2em;
+  }
 }
 
 .bande2 h2:hover {
@@ -57,18 +53,33 @@
 
 // home-bande 3
 
+.bande3Mobile {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  @include desktop {
+    display: none;
+  }
+  @include tablette {
+    display: none;
+  }
+}
+
+.bande3Mobile h2 {
+  font-weight: 700;
+  color: $text-color;
+  text-align: center;
+}
+
 .bande3 {
   background-color: $light-color;
   padding-top: 1.5rem;
   padding-bottom: 1.5rem;
   padding-left: 1.5em;
   padding-right: 1.5em;
-  margin-left: 5em;
-  margin-right: 5em;
-  margin-bottom: 2em;
+  @extend %bande-style;
   @include mobile {
-    padding-left: 1rem;
-    padding-right: 1rem;
+    display: none;
   }
 }
 
@@ -215,15 +226,7 @@
 // home-bande 4
 
 .bande4 {
-  background-color: $light-color;
-  margin-left: 5em;
-  margin-right: 5em;
-  margin-bottom: 2em;
-  @include mobile {
-    margin-left: 3em;
-    margin-right: 3em;
-    margin-bottom: 1em;
-  }
+  @extend %bande-style;
 }
 
 .bande4 h2 {
@@ -296,9 +299,7 @@
   justify-content: center;
   align-content: center;
   @include mobile {
-    width: 100%;
-    margin-top: 1em;
-    margin-bottom: 1em;
+    display: none;
   }
   @include tablette {
     width: 80%;
@@ -337,9 +338,6 @@
   color: $dark-color;
   text-align: center;
   font-size: medium;
-  @include mobile {
-    font-size: x-small;
-  }
 }
 
 .avis h3 {
@@ -353,6 +351,18 @@
 
 .avis {
   padding: 1.5em;
+  @include mobile {
+    display: none;
+  }
+}
+
+.avisMobileDiv {
+  @include desktop {
+    display: none;
+  }
+  @include tablette {
+    display: none;
+  }
 }
 
 // Programme
@@ -370,6 +380,10 @@
   list-style-type: none;
 }
 
+.program h1 {
+  color: $logo-color;
+}
+
 .schedule-list li {
   color: $text-color;
   border: solid 2px $darkorange-color;
@@ -377,6 +391,12 @@
   padding: 1em;
   width: 20%;
   background-color: #fab97b9f;
+  @include tablette {
+    width: 35%;
+  }
+  @include mobile {
+    width: 80%;
+  }
 }
 
 .reservButtonProgram {
@@ -511,11 +531,7 @@
 }
 
 .weeklyPastryDiv {
-  margin-top: 2em;
-  margin-bottom: 2em;
-  margin-left: 4em;
-  margin-right: 4em;
-  border: dotted 1px $text-color;
+  @extend %grid-div-style;
   grid-row: 1;
   grid-column: 1;
 }
@@ -525,11 +541,7 @@
 }
 
 .workshopManagementDiv {
-  margin-top: 2em;
-  margin-bottom: 2em;
-  margin-left: 4em;
-  margin-right: 4em;
-  border: dotted 1px $text-color;
+  @extend %grid-div-style;
   grid-row: 1;
   grid-column: 2;
 }
@@ -539,11 +551,7 @@
 }
 
 .eventManagementDiv {
-  margin-top: 2em;
-  margin-bottom: 2em;
-  margin-left: 4em;
-  margin-right: 4em;
-  border: dotted 1px $text-color;
+  @extend %grid-div-style;
   grid-row: 1;
   grid-column: 3;
 }
@@ -553,11 +561,7 @@
 }
 
 .userManagementDiv {
-  margin-top: 2em;
-  margin-bottom: 2em;
-  margin-left: 4em;
-  margin-right: 4em;
-  border: dotted 1px $text-color;
+  @extend %grid-div-style;
   grid-row: 2;
   grid-column: 1;
 }
@@ -567,11 +571,7 @@
 }
 
 .reservationManagementDiv {
-  margin-top: 2em;
-  margin-bottom: 2em;
-  margin-left: 4em;
-  margin-right: 4em;
-  border: dotted 1px $text-color;
+  @extend %grid-div-style;
   grid-row: 2;
   grid-column: 2;
 }
@@ -581,11 +581,7 @@
 }
 
 .cakeManagementDiv {
-  margin-top: 2em;
-  margin-bottom: 2em;
-  margin-left: 4em;
-  margin-right: 4em;
-  border: dotted 1px $text-color;
+  @extend %grid-div-style;
   grid-row: 2;
   grid-column: 3;
 }
@@ -933,10 +929,98 @@
   justify-content: space-evenly;
   @include mobile {
     flex-direction: column;
+    padding: 1em;
   }
 }
 
 .catInfo {
   font-weight: 700;
   color: $darkorange-color;
+}
+
+.userInformationsDiv {
+  @include mobile {
+    margin-bottom: 1em;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+}
+
+.userInformationsDiv button {
+  @include mobile {
+    width: 60%;
+  }
+}
+
+.userReservationsDiv h3,
+.userReservationsDiv p,
+.userReservationsDiv th {
+  color: $text-color;
+  text-align: center;
+}
+
+.reservationDetail .value {
+  color: $darkorange-color;
+  margin-left: 1em;
+}
+
+.reservationItem {
+  margin-bottom: 1.5em;
+}
+
+.reservationActions button {
+  margin-top: 0.8em;
+}
+
+// Mentions légales et politique de confidentialité
+
+.sousTitre {
+  background-color: rgba(108, 19, 4, 0.25);
+}
+
+.sousTitre h1 {
+  color: $logo-color;
+  @include mobile {
+    font-size: large;
+  }
+}
+
+.sousTitre h2 {
+  color: $dark-color;
+  font-weight: 700;
+}
+
+.paraMentions {
+  width: 60%;
+  text-align: center;
+  @include desktop {
+    font-size: x-large;
+  }
+}
+
+.paraDiv {
+  display: flex;
+  justify-content: center;
+}
+
+.paraMentions a {
+  color: $logo-color;
+}
+
+.politicSpan {
+  font-weight: 700;
+}
+
+.politicDiv {
+  width: 65%;
+  display: flex;
+  justify-self: center;
+  @include mobile {
+    width: 90%;
+  }
+}
+
+.politicDiv ol li {
+  font-size: smaller;
 }

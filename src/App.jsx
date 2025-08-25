@@ -19,6 +19,7 @@ import Reserv from "./adminPages/ReservManagement.jsx";
 import MenuManagement from "./adminPages/MenuManagement.jsx";
 import PrivateRoute from "./components/PrivateRoute.jsx";
 import Profile from "./pages/Profile.jsx";
+import Politique from "./pages/Politics.jsx";
 import { AuthProvider, useAuth } from "./contexts/AuthContext.jsx";
 
 function App() {
@@ -39,6 +40,7 @@ function App() {
         <Route path="/partenaires" element={<Partnership />}></Route>
         <Route path="/404" element={<Travaux />}></Route>
         <Route path="/mentions" element={<Mentions />}></Route>
+        <Route path="/politique" element={<Politique />}></Route>
         <Route path="/admin" element={<Admin />}></Route>
         <Route element={<PrivateRoute />}>
           <Route path="/admin/dashboard" element={<Dashboard />}></Route>

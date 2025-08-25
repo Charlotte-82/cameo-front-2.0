@@ -121,7 +121,7 @@ function Program() {
 
   return (
     <div className="program">
-      <h2>Toutes les activités à venir</h2>
+      <h1>Activités à venir</h1>
       <ul className="schedule-list">
         {items.map((item) => (
           <li
@@ -131,7 +131,7 @@ function Program() {
             <div className="item-info">
               <h3>{item.title}</h3>
               <p>Intervenant:</p>
-              <p>
+              <p className="infortantes">
                 <strong>{item.contributor}</strong>
               </p>
 
