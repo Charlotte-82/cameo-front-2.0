@@ -10,6 +10,10 @@
   height: 10em;
 }
 
+.logoHeader:hover {
+  height: 10.5em;
+}
+
 .logo {
   display: flex;
   justify-content: center;
@@ -282,6 +286,12 @@ i {
   }
 }
 
+.videoExtrait video {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
 .videoEmbed {
   width: 100%;
   height: auto;
@@ -352,7 +362,8 @@ i {
 
 .newsDiv {
   display: flex;
-  flex-wrap: wrap;
+  flex-wrap: nowrap;
+  flex-direction: row;
   padding: 2em;
   @include mobile {
     display: flex;
@@ -362,7 +373,7 @@ i {
 }
 
 .imageNewsDiv {
-  width: 50%;
+  width: 35%;
   height: auto;
   align-content: start;
   @include mobile {
@@ -378,7 +389,7 @@ i {
   border-radius: 10px;
 
   @include desktop {
-    height: 50em;
+    height: 20em;
   }
 }
 
@@ -416,18 +427,25 @@ i {
   margin-top: 1em;
 }
 
+.boutonDiv {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  margin-top: 3.5em;
+  margin-right: 3.5em;
+}
+
+.boutonDiv h4 {
+  font-family: $font-main;
+  color: $logo-color;
+}
+
 .boutonReservation {
-  visibility: hidden;
-  width: 35%;
+  visibility: visible;
+  width: 15em;
   border: solid 2px $lightorange-color;
   border-radius: 10px;
   background-color: $dark-color;
-  @include mobile {
-    width: 50%;
-  }
-  @include desktop {
-    margin-top: 2em;
-  }
 }
 
 .boutonReservation a {
@@ -492,4 +510,112 @@ strong {
   font-size: 1.5rem;
   color: $text-color;
   font-family: $font-titleh1;
+}
+
+// PastrySVG
+
+.pastryIMG {
+  color: $text-color;
+  height: 10em;
+  width: 8em;
+}
+
+.pastryIMG:hover {
+  color: $darkorange-color;
+  cursor: pointer;
+}
+
+.flexSVG {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+// Gestion utilisateurs composant
+
+.inputRadioNews {
+  padding-right: 1em;
+  margin-right: 1em;
+  accent-color: $logo-color;
+}
+
+.labelRadioNews {
+  padding-left: 1em;
+  padding-right: 2em;
+}
+
+.highlightUploadSection {
+  display: flex;
+  flex-direction: column;
+  border: 2px solid $text-color;
+  margin-left: 3em;
+  width: 40%;
+  padding-bottom: 1em;
+}
+
+.cakeManagementCompo2 {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  background-color: $light-color;
+  padding: 1em;
+}
+
+.cakeManagementCompo2 h2 {
+  color: $text-color;
+  font-weight: 700;
+}
+
+.cakeManagementCompo2 h3 {
+  color: $text-color;
+  padding-bottom: 1em;
+  padding-top: 1em;
+}
+
+.cakeManagementCompo2 button {
+  font-family: $font-titleh2;
+  border: $dark-color solid 2px;
+  color: $light-color;
+  background-color: $text-color;
+  width: 10%;
+  margin-top: 2em;
+}
+
+.cakeManagementCompo2 button:hover {
+  color: $lightorange-color;
+}
+
+.highlightImage {
+  width: 20%;
+}
+
+.highlightImageDiv {
+  display: flex;
+  justify-content: center;
+}
+
+.highlightSectionRight h4 {
+  text-align: center;
+  color: $dark-color;
+  font-family: $font-main;
+}
+
+.cakeTable button:hover {
+  color: $lightorange-color;
+}
+
+.highlightSectionRight {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+}
+
+.highlightSectionRight input {
+  margin-top: 2em;
+}
+
+.allCakeDiv3 {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
 }

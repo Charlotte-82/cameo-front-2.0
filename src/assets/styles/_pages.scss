@@ -366,130 +366,8 @@
 
 // Programme
 
-.program *:last-child {
-  margin-bottom: 0;
-}
-
 .program {
-  background-color: $lightorange-color;
-}
-
-.program h1 {
-  color: $text-color;
-  border-bottom: solid 3px $dark-color;
-  margin-bottom: 0;
-}
-
-.postProgram {
-  display: flex;
-  flex-direction: row;
-  border-bottom: solid 3px $dark-color;
-  padding-left: 1em;
-  @include mobile {
-    flex-direction: column;
-  }
-}
-
-.postProgram.light-bg {
   background-color: $light-color;
-}
-
-.postProgram.orange-bg {
-  background-color: $lightorange-color;
-}
-
-.imageEventDiv {
-  width: 25%;
-  height: 15em;
-  overflow: hidden;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin-right: 1em;
-  padding: 0.5em;
-  @include tablette {
-    display: none;
-  }
-  @include mobile {
-    display: none;
-  }
-}
-
-.imageEvent {
-  display: block;
-  object-fit: contain;
-  width: 100%;
-  height: 100%;
-  margin: 0;
-  padding: 0;
-  border-radius: 15px;
-}
-
-.noEvent {
-  font-family: $font-titleh1;
-  padding: 1em;
-  text-align: center;
-  color: $text-color;
-}
-
-.infoEvent {
-  padding: 0.5em;
-  width: 20em;
-  font-size: larger;
-  @include mobile {
-    text-align: center;
-  }
-}
-
-.infoEvent p {
-  color: $text-color;
-  font-size: larger;
-  @include mobile {
-    font-size: medium;
-  }
-}
-
-.infoEvent strong {
-  color: $dark-color;
-}
-
-.infoEvent h3 {
-  font-size: xx-large;
-  font-weight: 700;
-  color: $logo-color;
-  @include mobile {
-    font-size: larger;
-  }
-}
-
-.textEventReserv {
-  padding: 1em;
-  font-size: x-large;
-  width: 40%;
-  color: $text-color;
-  display: flex;
-  align-items: center;
-  @include mobile {
-    width: 100%;
-    flex-direction: column;
-  }
-  @include tablette {
-    width: 50%;
-  }
-}
-
-.textEventReserv p {
-  @include tablette {
-    font-size: medium;
-  }
-  @include mobile {
-    font-size: small;
-    text-align: center;
-  }
-}
-
-.calendarProgram {
-  display: none;
 }
 
 // Page Travaux
@@ -523,4 +401,504 @@
   @include tablette {
     font-size: 3em;
   }
+}
+
+// Admin Login
+
+.adminLogin {
+  background-color: $light-color;
+  height: 55vh;
+}
+
+.adminLogin h1 {
+  color: $text-color;
+  font-weight: 700;
+  padding-top: 1em;
+}
+
+.adminLogin h2 {
+  color: $text-color;
+  font-weight: 700;
+  padding: 0.2em;
+}
+
+.adminFormDiv {
+  display: flex;
+  justify-content: center;
+  padding-bottom: 1em;
+}
+
+.adminForm fieldset {
+  border: $dark-color 2px solid;
+  padding: 0.5em;
+}
+
+.adminForm label {
+  font-family: $font-main;
+  color: $text-color;
+}
+
+.adminForm legend {
+  font-family: $font-titleh2;
+  color: $text-color;
+  text-align: center;
+}
+
+.adminForm button {
+  font-family: $font-titleh2;
+  border: $dark-color solid 2px;
+  color: $light-color;
+  background-color: $text-color;
+}
+
+.adminForm button:hover {
+  color: $lightorange-color;
+}
+
+// Dashboard
+
+.dashboard {
+  background-color: $light-color;
+}
+
+.dashboard p {
+  color: $text-color;
+}
+
+.dashboard h3 {
+  color: $text-color;
+}
+
+.dashboard h2 {
+  color: $text-color;
+  font-weight: 700;
+  padding: 0.2em;
+}
+
+.divH2 {
+  width: 25%;
+  display: flex;
+  justify-self: center;
+  justify-content: center;
+  margin: 1em;
+}
+
+.dashboard h1 {
+  color: $text-color;
+  font-weight: 700;
+  padding-top: 1em;
+}
+
+.imageMenuDashboard {
+  height: 10em;
+  display: flex;
+  justify-content: center;
+}
+
+.dashboardGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-rows: 1fr 1fr;
+  justify-content: center;
+}
+
+.weeklyPastryDiv {
+  margin-top: 2em;
+  margin-bottom: 2em;
+  margin-left: 4em;
+  margin-right: 4em;
+  border: dotted 1px $text-color;
+  grid-row: 1;
+  grid-column: 1;
+}
+
+.weeklyPastryDiv:hover {
+  border: dotted 2px $darkorange-color;
+}
+
+.workshopManagementDiv {
+  margin-top: 2em;
+  margin-bottom: 2em;
+  margin-left: 4em;
+  margin-right: 4em;
+  border: dotted 1px $text-color;
+  grid-row: 1;
+  grid-column: 2;
+}
+
+.workshopManagementDiv:hover {
+  border: dotted 2px $darkorange-color;
+}
+
+.eventManagementDiv {
+  margin-top: 2em;
+  margin-bottom: 2em;
+  margin-left: 4em;
+  margin-right: 4em;
+  border: dotted 1px $text-color;
+  grid-row: 1;
+  grid-column: 3;
+}
+
+.eventManagementDiv:hover {
+  border: dotted 2px $darkorange-color;
+}
+
+.userManagementDiv {
+  margin-top: 2em;
+  margin-bottom: 2em;
+  margin-left: 4em;
+  margin-right: 4em;
+  border: dotted 1px $text-color;
+  grid-row: 2;
+  grid-column: 1;
+}
+
+.userManagementDiv:hover {
+  border: dotted 2px $darkorange-color;
+}
+
+.reservationManagementDiv {
+  margin-top: 2em;
+  margin-bottom: 2em;
+  margin-left: 4em;
+  margin-right: 4em;
+  border: dotted 1px $text-color;
+  grid-row: 2;
+  grid-column: 2;
+}
+
+.reservationManagementDiv:hover {
+  border: dotted 2px $darkorange-color;
+}
+
+.cakeManagementDiv {
+  margin-top: 2em;
+  margin-bottom: 2em;
+  margin-left: 4em;
+  margin-right: 4em;
+  border: dotted 1px $text-color;
+  grid-row: 2;
+  grid-column: 3;
+}
+
+.cakeManagementDiv:hover {
+  border: dotted 2px $darkorange-color;
+}
+
+.cakeManagementDiv h3:hover {
+  color: $darkorange-color;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.weeklyPastryDiv h3:hover {
+  color: $darkorange-color;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.workshopManagementDiv h3:hover {
+  color: $darkorange-color;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.eventManagementDiv h3:hover {
+  color: $darkorange-color;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.userManagementDiv h3:hover {
+  color: $darkorange-color;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.reservationManagementDiv h3:hover {
+  color: $darkorange-color;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.adminLink {
+  text-decoration: none;
+}
+
+// Pages d'administration
+
+.menuManagement {
+  background-color: $light-color;
+}
+
+.menuManagement h1 {
+  padding-top: 0.5em;
+  color: $text-color;
+}
+
+.menuManagement hr {
+  border: 2px solid $text-color;
+  opacity: 100;
+  color: $dark-color;
+  width: 75%;
+  display: block;
+  justify-self: center;
+}
+
+.cakeManagementCompo {
+  background-color: $light-color;
+  padding: 1em;
+}
+
+.cakeManagementCompo h2 {
+  color: $text-color;
+  font-weight: 700;
+}
+
+.cakeManagementCompo h3 {
+  color: $text-color;
+  padding-bottom: 1em;
+  padding-top: 1em;
+}
+
+.adminForm2 {
+  display: flex;
+  justify-content: center;
+}
+
+.adminForm2 fieldset {
+  border: $dark-color 2px solid;
+  padding: 3em;
+  width: 60%;
+}
+
+.adminForm2 ::placeholder {
+  font-family: $font-main;
+  color: $lightorange-color;
+}
+
+.adminForm2 label {
+  font-family: $font-main;
+  color: $text-color;
+}
+
+.adminForm2 legend {
+  font-family: $font-titleh2;
+  color: $text-color;
+  text-align: center;
+}
+
+.adminForm2 input[type="file"] {
+  font-family: $font-main;
+}
+
+.adminForm2 button {
+  font-family: $font-titleh2;
+  border: $dark-color solid 2px;
+  color: $light-color;
+  background-color: $text-color;
+}
+
+.adminForm2 button:hover {
+  color: $lightorange-color;
+}
+
+.adminForm3 {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+}
+
+.adminForm3 fieldset {
+  border: $dark-color 2px solid;
+  padding: 3em;
+  width: 60%;
+}
+
+.allCakeDiv {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+
+.allCakeDiv2 {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.cakeAddDiv {
+  width: 40%;
+}
+
+.cakeTable {
+  border: solid $text-color 2px;
+  margin: 2em;
+  gap: 2px;
+  width: 90%;
+}
+
+.cakeTable img {
+  display: block;
+  max-width: 100%;
+  height: auto;
+}
+
+.cakeTableDiv {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  width: 50%;
+}
+
+.cakeTable th {
+  text-align: center;
+  font-family: $font-titleh2;
+  color: $light-color;
+  background-color: $text-color;
+  border: $lightorange-color 2px solid;
+}
+
+.cakeTable th,
+.cakeTable td {
+  padding-left: 1em;
+  font-family: $font-main;
+}
+
+.cakeTable td {
+  border: $dark-color 2px solid;
+  color: $text-color;
+}
+
+.cakeTable button {
+  margin-left: 1.5em;
+  margin-right: 1.5em;
+  font-family: $font-titleh2;
+  border: $dark-color solid 2px;
+  color: $light-color;
+  background-color: $text-color;
+}
+
+.backButtonDash {
+  position: relative;
+  top: 5px;
+  left: 5px;
+  font-family: $font-titleh2;
+  border: $dark-color solid 2px;
+  color: $light-color;
+  background-color: $text-color;
+}
+
+.userManagementCompo {
+  background-color: $light-color;
+  padding: 1em;
+}
+
+.userManagementCompo h2 {
+  color: $text-color;
+  font-weight: 700;
+}
+
+.userManagementCompo h3 {
+  color: $text-color;
+  padding-bottom: 1em;
+  padding-top: 1em;
+}
+
+.adminForm3 {
+  display: flex;
+  justify-content: center;
+}
+
+.adminForm3 fieldset {
+  border: $dark-color 2px solid;
+  padding: 2em;
+  width: 70%;
+}
+
+.adminForm3 ::placeholder {
+  font-family: $font-main;
+  color: $lightorange-color;
+}
+
+.adminForm3 label {
+  font-family: $font-main;
+  color: $text-color;
+}
+
+.adminForm3 legend {
+  font-family: $font-titleh2;
+  color: $text-color;
+  text-align: center;
+}
+
+.adminForm3 input[type="file"] {
+  font-family: $font-main;
+}
+
+.adminForm3 button {
+  font-family: $font-titleh2;
+  border: $dark-color solid 2px;
+  color: $light-color;
+  background-color: $text-color;
+}
+
+.adminForm3 button:hover {
+  color: $lightorange-color;
+}
+
+.allUserDiv {
+  display: flex;
+  flex-direction: row;
+}
+
+.userAddDiv {
+  width: 35%;
+}
+
+.cakeTable {
+  border: solid $text-color 2px;
+  margin: 2em;
+  gap: 2px;
+  width: 90%;
+}
+
+.userTableDiv {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  width: 65%;
+}
+
+.userTable th {
+  text-align: center;
+  font-family: $font-titleh2;
+  color: $light-color;
+  background-color: $text-color;
+  border: $lightorange-color 2px solid;
+}
+
+.userTable th,
+.userTable td {
+  padding-left: 1em;
+  font-family: $font-main;
+}
+
+.userTable td {
+  border: $dark-color 2px solid;
+  color: $text-color;
+}
+
+.userTable button {
+  margin-left: 1.5em;
+  margin-right: 1.5em;
+  font-family: $font-titleh2;
+  border: $dark-color solid 2px;
+  color: $light-color;
+  background-color: $text-color;
+}
+
+.tableRank3 {
+  height: 45px;
 }

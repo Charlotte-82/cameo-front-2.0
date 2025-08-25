@@ -1,98 +1,98 @@
 import React from "react";
 import { useEffect, useState } from "react";
-import axios from "axios";
 
 function PatisserieSemaine() {
-  // const [patisserie, setPatisserie] = useState(null);
-  // const baseURL = process.env.REACT_APP_API_URL;
+  const [wpastry, setWpastry] = useState(null);
+  const [media, setMedia] = useState(null);
+  const API_BASE = import.meta.env.VITE_API_BASE_URL;
 
-  // useEffect(() => {
-  //   axios
-  //     .get(
-  //       `${baseURL}/wp-json/wp/v2/patisserie_semaine?per_page=1&orderby=date&order=desc`
-  //     )
-  //     .then((res) => {
-  //       if (res.data && res.data.length > 0) {
-  //         setPatisserie(res.data[0].acf);
-  //       }
-  //     })
-  //     .catch((err) => {
-  //       console.error("Erreur chargement pâtisserie", err);
-  //     });
-  // }, []);
-  // console.log(process.env.REACT_APP_API_URL);
-  // if (!patisserie) return <p>Chargement...</p>;
+  useEffect(() => {
+    fetch(`${API_BASE}/wpastry/latest`)
+      .then((res) => res.json())
+      .then(setWpastry)
+      .catch(console.error);
 
-  // const mediaSourceUrl = patisserie.extrait_video_ou_image;
+    fetch(`${API_BASE}/media/latest`)
+      .then((res) => res.json())
+      .then((data) => {
+        // Vérification rapide de la réponse
+        console.log("Media latest:", data);
 
-  // const renderMedia = (url) => {
-  //   if (!url) return null;
+        // On ajoute un champ 'videoOrYoutube' pour simplifier l'affichage
+        if (data.video_filename) {
+          data.videoOrYoutube = `${API_BASE}/uploads/${data.video_filename}`;
+        } else if (data.youtube_url) {
+          // Générer l'URL miniature YouTube
+          // Ex: https://img.youtube.com/vi/VIDEO_ID/hqdefault.jpg
+          const videoIdMatch = data.youtube_url.match(
+            /(?:v=|\.be\/)([a-zA-Z0-9_-]{11})/
+          );
+          if (videoIdMatch) {
+            data.videoOrYoutube = `https://img.youtube.com/vi/${videoIdMatch[1]}/hqdefault.jpg`;
+          }
+        }
 
-  //   const youtubeMatch = url.match(
-  //     /(?:https?:\/\/)?(?:www\.)?(?:youtube\.com\/(?:embed\/|v\/|watch\?v=|watch\?.+&v=|.+youtu.be\/)|m\.youtube\.com\/watch\?v=)([^&?/\s]+)/
-  //   );
+        setMedia(data);
+      })
+      .catch(console.error);
+  }, []);
 
-  //   if (youtubeMatch && youtubeMatch[1]) {
-  //     const videoId = youtubeMatch[1];
+  if (!wpastry || !media) {
+    return <p>Chargement...</p>;
+  }
 
-  //     const embedSrc = `https://www.youtube.com/embed/${videoId}?autoplay=0&controls=1&showinfo=0&rel=0`;
-  //     return (
-  //       <iframe
-  //         src={embedSrc}
-  //         title={`Vidéo YouTube ${patisserie.nom_de_la_patisserie}`}
-  //         frameBorder="0"
-  //         className="videoEmbed"
-  //         allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-  //         allowFullScreen
-  //       ></iframe>
-  //     );
-  //   }
-
-  //   const isVideoUrl =
-  //     typeof url === "string" &&
-  //     (url.includes("cloudinary.com") || /\.(mp4|webm|ogg|mov)$/i.test(url));
-
-  //   if (isVideoUrl) {
-  //     return (
-  //       <video controls className="videoDirect">
-  //         <source src={url} type="video/mp4" />
-  //         Votre navigateur ne supporte pas la lecture de vidéos.
-  //       </video>
-  //     );
-  //   }
-
-  //   const imageFileMatch = url.match(/\.(jpg|jpeg|png|gif|svg)$/i);
-  //   if (imageFileMatch) {
-  //     return (
-  //       <img
-  //         src={url}
-  //         alt={`Extrait ${patisserie.nom_de_la_patisserie}`}
-  //         className="imageDirect"
-  //       />
-  //     );
-  //   }
-
-  //   console.warn(
-  //     `Type de média non reconnu ou URL invalide pour l'extrait: "${url}"`
-  //   );
-  //   return null;
-  // };
+  const getYoutubeId = (url) => {
+    const match = url.match(
+      /(?:youtube\.com\/(?:[^/]+\/.+\/|(?:v|e(?:mbed)?)\/|.*[?&]v=)|youtu\.be\/)([^"&?/\s]{11})/
+    );
+    return match ? match[1] : null;
+  };
 
   return (
     <div className="patSemaine">
-      <div className="imagePatSemaineDiv"></div>
+      <div className="imagePatSemaineDiv">
+        <img
+          src={`${API_BASE}/uploads/${media.photo_filename}`}
+          alt={wpastry.name}
+          className="imagePatisserieSemaine"
+        />
+      </div>
 
       <div className="PatSemaineDiv">
         <div className="cadrePat">
-          <h2 className="titrePatSemaine"></h2>
-          <p className="titrePatSemaine"></p>
+          <h2 className="titrePatSemaine">{wpastry.name}</h2>
+          <p className="titrePatSemaine">{wpastry.price} €</p>
         </div>
-        <p className="titreFilm"></p>
-        <p className="realFilm"></p>
-        <p className="dateFilm"></p>
+        <p className="titreFilm">{wpastry.film_title}</p>
+        <p className="realFilm">{wpastry.film_director}</p>
+        <p className="dateFilm">{wpastry.film_release_date}</p>
       </div>
+      {media.video_filename && (
+        <div className="videoExtrait">
+          <video controls>
+            <source
+              src={`${API_BASE}/uploads/${media.video_filename}`}
+              type="video/mp4"
+            />
+          </video>
+        </div>
+      )}
 
-      <div className="videoExtrait"></div>
+      {!media.video_filename && media.youtube_url && (
+        <div className="videoExtrait">
+          <iframe
+            width="560"
+            height="315"
+            src={`https://www.youtube.com/embed/${getYoutubeId(
+              media.youtube_url
+            )}`}
+            title="YouTube video player"
+            frameBorder="0"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+            allowFullScreen
+          ></iframe>
+        </div>
+      )}
     </div>
   );
 }

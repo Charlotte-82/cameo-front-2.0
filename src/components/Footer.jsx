@@ -39,19 +39,19 @@ function Footer() {
         </div>
         <div className="col footerCol4">
           <p className="pFooter">
-            <a href="../pages/Program.js">Programme</a>
+            <a href="/agenda">Programme</a>
           </p>
           <p className="pFooter">
-            <a href="../pages/Shop.js">Boutique</a>
+            <a href="/boutique">Boutique</a>
           </p>
           <p className="pFooter">
-            <a href="../pages/Blog.js">Blog</a>
+            <a href="/blog">Blog</a>
           </p>
           <p className="pFooter">
-            <a href="../pages/Partnership.js">Partenaires</a>
+            <a href="/partenaires">Partenaires</a>
           </p>
           <p className="pFooter">
-            <a href="../pages/Mentions.js">Mentions légales</a>
+            <a href="/mentions">Mentions légales</a>
           </p>
         </div>
         <div className="col footerCol5">
