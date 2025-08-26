@@ -632,6 +632,12 @@ strong {
   margin-left: 3em;
   width: 40%;
   padding-bottom: 1em;
+  @include mobile {
+    width: 80%;
+  }
+  @include tablette {
+    width: 80%;
+  }
 }
 
 .cakeManagementCompo2 {
@@ -668,6 +674,12 @@ strong {
 
 .highlightImage {
   width: 20%;
+  @include mobile {
+    width: 50%;
+  }
+  @include tablette {
+    width: 50%;
+  }
 }
 
 .highlightImageDiv {
@@ -699,6 +711,12 @@ strong {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
+  @include mobile {
+    flex-direction: column;
+  }
+  @include tablette {
+    flex-direction: column;
+  }
 }
 
 // modale d'authentification

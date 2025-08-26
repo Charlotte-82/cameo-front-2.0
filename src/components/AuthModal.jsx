@@ -75,7 +75,7 @@ function AuthModal({ onClose, onLoginSuccess }) {
       }
 
       const result = await response.json();
-      console.log("Enregistrement réussi:", result);
+      // console.log("Enregistrement réussi:", result);
 
       setForm({
         lastname: "",

@@ -72,10 +72,10 @@ function BoissonsFroidesManagement() {
         throw new Error(errorMessage);
       }
 
-      console.log(
-        "Opération réussie. Message du serveur :",
-        result.message || "Aucun message spécifique."
-      );
+      // console.log(
+      //   "Opération réussie. Message du serveur :",
+      //   result.message || "Aucun message spécifique."
+      // );
 
       fetchBoissonsfroides();
     } catch (error) {
@@ -210,6 +210,35 @@ function BoissonsFroidesManagement() {
               ))}
             </tbody>
           </table>
+          <ul className="glaceList">
+            {boissonsfroides.map((boissonsfroides, index) => (
+              <li
+                key={boissonsfroides.id_boissonsfroides || index}
+                className="glaceItem"
+              >
+                <div className="itemDetails">
+                  <span className="label">Nom:</span>
+                  <span className="value">{boissonsfroides.name}</span>
+                </div>
+                <div className="itemDetails">
+                  <span className="label">Prix:</span>
+                  <span className="value">{boissonsfroides.price} €</span>
+                </div>
+                <div className="itemActions">
+                  <button onClick={() => handleEdit(boissonsfroides)}>
+                    Modifier
+                  </button>
+                  <button
+                    onClick={() =>
+                      handleDelete(boissonsfroides.id_boissonsfroides)
+                    }
+                  >
+                    Supprimer
+                  </button>
+                </div>
+              </li>
+            ))}
+          </ul>
         </div>
       </div>
     </div>

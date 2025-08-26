@@ -528,6 +528,11 @@
   grid-template-columns: 1fr 1fr 1fr;
   grid-template-rows: 1fr 1fr;
   justify-content: center;
+  @include mobile {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+  }
 }
 
 .weeklyPastryDiv {
@@ -675,6 +680,10 @@
   border: $dark-color 2px solid;
   padding: 3em;
   width: 60%;
+  @include mobile {
+    width: 85%;
+    padding: 1em;
+  }
 }
 
 .adminForm2 ::placeholder {
@@ -724,16 +733,36 @@
   display: flex;
   flex-direction: row;
   justify-content: center;
+  @include mobile {
+    display: flex;
+    flex-direction: column;
+  }
+  @include tablette {
+    display: flex;
+    flex-direction: column;
+  }
 }
 
 .allCakeDiv2 {
   display: flex;
   flex-direction: row;
   align-items: center;
+  @include mobile {
+    flex-direction: column;
+  }
+  @include tablette {
+    flex-direction: column;
+  }
 }
 
 .cakeAddDiv {
   width: 40%;
+  @include mobile {
+    width: 100%;
+  }
+  @include tablette {
+    width: 80%;
+  }
 }
 
 .cakeTable {
@@ -741,6 +770,9 @@
   margin: 2em;
   gap: 2px;
   width: 90%;
+  @include mobile {
+    display: none;
+  }
 }
 
 .cakeTable img {
@@ -749,11 +781,26 @@
   height: auto;
 }
 
+.glaceList {
+  @include desktop {
+    display: none;
+  }
+  @include tablette {
+    display: none;
+  }
+}
+
 .cakeTableDiv {
   display: flex;
   flex-direction: column;
   justify-content: center;
   width: 50%;
+  @include mobile {
+    width: 95%;
+  }
+  @include tablette {
+    width: 95%;
+  }
 }
 
 .cakeTable th {
@@ -784,6 +831,62 @@
   background-color: $text-color;
 }
 
+.cakeListDiv {
+  display: flex;
+  flex-direction: column;
+  @include desktop {
+    display: none;
+  }
+  @include tablette {
+    display: none;
+  }
+}
+
+.cakeList li {
+  margin-bottom: 0.5em;
+}
+
+.cakeDetail {
+  margin-bottom: 0.5em;
+  color: $text-color;
+}
+
+.cakeDetail .value {
+  font-weight: 700;
+}
+
+.cakeActions button {
+  margin-bottom: 0.5em;
+  @include tablette {
+    margin-right: 0.5em;
+  }
+}
+
+.visualMediaList {
+  @include desktop {
+    display: none;
+  }
+  @include tablette {
+    display: none;
+  }
+}
+
+.mediaItem {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.mediaItem h4 {
+  color: $text-color;
+  font-family: $font-main;
+  text-decoration: underline;
+}
+
+.pastryPhoto {
+  margin-bottom: 1em;
+}
+
 .backButtonDash {
   position: relative;
   top: 5px;
@@ -810,15 +913,13 @@
   padding-top: 1em;
 }
 
-.adminForm3 {
-  display: flex;
-  justify-content: center;
-}
-
 .adminForm3 fieldset {
   border: $dark-color 2px solid;
   padding: 2em;
   width: 70%;
+  @include mobile {
+    width: 90%;
+  }
 }
 
 .adminForm3 ::placeholder {
@@ -842,10 +943,7 @@
 }
 
 .adminForm3 button {
-  font-family: $font-titleh2;
-  border: $dark-color solid 2px;
-  color: $light-color;
-  background-color: $text-color;
+  @extend %button-style;
 }
 
 .adminForm3 button:hover {
@@ -855,17 +953,44 @@
 .allUserDiv {
   display: flex;
   flex-direction: row;
+  @include mobile {
+    display: flex;
+    flex-direction: column;
+  }
+  @include tablette {
+    display: flex;
+    flex-direction: column;
+  }
 }
 
 .userAddDiv {
   width: 35%;
+  @include mobile {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-content: center;
+  }
+  @include tablette {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-content: center;
+  }
 }
 
-.cakeTable {
-  border: solid $text-color 2px;
-  margin: 2em;
-  gap: 2px;
-  width: 90%;
+.userItem {
+  margin-bottom: 1em;
+}
+
+.userTable {
+  display: none;
+}
+
+.userList {
+  @include desktop {
+    display: none;
+  }
 }
 
 .userTableDiv {
@@ -873,6 +998,17 @@
   flex-direction: column;
   justify-content: center;
   width: 65%;
+}
+
+.userCard {
+  display: flex;
+  flex-wrap: wrap;
+  @include tablette {
+    display: none;
+  }
+  @include mobile {
+    display: none;
+  }
 }
 
 .userTable th {
@@ -897,10 +1033,11 @@
 .userTable button {
   margin-left: 1.5em;
   margin-right: 1.5em;
-  font-family: $font-titleh2;
-  border: $dark-color solid 2px;
-  color: $light-color;
-  background-color: $text-color;
+  @extend %button-style;
+}
+
+.itemDetail .value {
+  font-weight: 700;
 }
 
 .tableRank3 {

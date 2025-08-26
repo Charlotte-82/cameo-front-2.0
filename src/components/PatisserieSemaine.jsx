@@ -15,7 +15,7 @@ function PatisserieSemaine() {
     fetch(`${API_BASE}/media/latest`)
       .then((res) => res.json())
       .then((data) => {
-        console.log("Media latest:", data);
+        // console.log("Media latest:", data);
         if (data.video_filename) {
           data.videoOrYoutube = `${API_BASE}/uploads/${data.video_filename}`;
         } else if (data.youtube_url) {

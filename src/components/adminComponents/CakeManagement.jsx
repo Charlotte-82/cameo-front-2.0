@@ -70,10 +70,10 @@ function CakeManagement() {
         throw new Error(errorMessage);
       }
 
-      console.log(
-        "Opération réussie. Message du serveur :",
-        result.message || "Aucun message spécifique."
-      );
+      // console.log(
+      //   "Opération réussie. Message du serveur :",
+      //   result.message || "Aucun message spécifique."
+      // );
 
       fetchCakes();
     } catch (error) {
@@ -180,6 +180,26 @@ function CakeManagement() {
               ))}
             </tbody>
           </table>
+          <ul className="glaceList">
+            {cakes.map((cake, index) => (
+              <li key={cake.id_cake || index} className="glaceItem">
+                <div className="itemDetails">
+                  <span className="label">Nom:</span>
+                  <span className="value">{cake.name}</span>
+                </div>
+                <div className="itemDetails">
+                  <span className="label">Prix:</span>
+                  <span className="value">{cake.price} €</span>
+                </div>
+                <div className="itemActions">
+                  <button onClick={() => handleEdit(cake)}>Modifier</button>
+                  <button onClick={() => handleDelete(cake.id_cake)}>
+                    Supprimer
+                  </button>
+                </div>
+              </li>
+            ))}
+          </ul>
         </div>
       </div>
     </div>

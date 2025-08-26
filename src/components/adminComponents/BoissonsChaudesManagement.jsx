@@ -72,10 +72,10 @@ function BoissonsChaudesManagement() {
         throw new Error(errorMessage);
       }
 
-      console.log(
-        "Opération réussie. Message du serveur :",
-        result.message || "Aucun message spécifique."
-      );
+      // console.log(
+      //   "Opération réussie. Message du serveur :",
+      //   result.message || "Aucun message spécifique."
+      // );
 
       fetchBoissonschaudes();
     } catch (error) {
@@ -210,6 +210,35 @@ function BoissonsChaudesManagement() {
               ))}
             </tbody>
           </table>
+          <ul className="glaceList">
+            {boissonschaudes.map((boissonschaudes, index) => (
+              <li
+                key={boissonschaudes.id_boissonschaudes || index}
+                className="glaceItem"
+              >
+                <div className="itemDetails">
+                  <span className="label">Nom:</span>
+                  <span className="value">{boissonschaudes.name}</span>
+                </div>
+                <div className="itemDetails">
+                  <span className="label">Prix:</span>
+                  <span className="value">{boissonschaudes.price} €</span>
+                </div>
+                <div className="itemActions">
+                  <button onClick={() => handleEdit(boissonschaudes)}>
+                    Modifier
+                  </button>
+                  <button
+                    onClick={() =>
+                      handleDelete(boissonschaudes.id_boissonschaudes)
+                    }
+                  >
+                    Supprimer
+                  </button>
+                </div>
+              </li>
+            ))}
+          </ul>
         </div>
       </div>
     </div>

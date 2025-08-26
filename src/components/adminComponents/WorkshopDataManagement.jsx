@@ -166,7 +166,6 @@ function WorkshopDataManagement() {
 
   return (
     <div className="userManagementCompo">
-      <h2>Gestion des Ateliers</h2>
       <div className="allUserDiv">
         <div className="userAddDiv">
           <h3>{editingId ? "Modifier un atelier" : "Ajouter un atelier"}</h3>
@@ -302,6 +301,111 @@ function WorkshopDataManagement() {
               ))}
             </tbody>
           </table>
+          <div className="userCard">
+            <div
+              className="card"
+              style={{
+                width: "90%",
+                display: "flex",
+                flexDirection: "row",
+                flexWrap: "wrap",
+              }}
+            >
+              {workshop.map((workshop) => (
+                <div
+                  key={workshop.id_workshop}
+                  className="card-body"
+                  style={{ width: "30%" }}
+                >
+                  <h5 className="card-title">{workshop.title}</h5>
+                  <p className="card-text">
+                    <div className="itemDetail">
+                      <span className="label">Contributeur:</span>
+                      <span className="value">{workshop.contributor}</span>
+                    </div>
+                    <div className="itemDetail">
+                      <span className="label">Date:</span>
+                      <span className="value">{workshop.date}</span>
+                    </div>
+                    <div className="itemDetail">
+                      <span className="label">Fin:</span>
+                      <span className="value">
+                        {calculateEnd(workshop.date, workshop.duration)}
+                      </span>
+                    </div>
+                    <div className="itemDetail">
+                      <span className="label">Prix:</span>
+                      <span className="value">{workshop.price} €</span>
+                    </div>
+                    <div className="itemDetail">
+                      <span className="label">Places disponibles:</span>
+                      <span className="value">{workshop.places}</span>
+                    </div>
+                    <div className="itemDetail">
+                      <span className="label">Description:</span>
+                      <span className="value">{workshop.description}</span>
+                    </div>
+                  </p>
+                  <button
+                    onClick={() => handleEdit(workshop)}
+                    style={{ marginRight: "1em" }}
+                  >
+                    Modifier
+                  </button>
+                  <button onClick={() => handleDelete(workshop.id_workshop)}>
+                    Supprimer
+                  </button>
+                </div>
+              ))}
+            </div>
+          </div>
+          <ul className="userList">
+            {workshop.map((workshop) => (
+              <li key={workshop.id_workshop} className="userItem">
+                <div className="itemDetail">
+                  <span className="label">Titre:</span>
+                  <span className="value">{workshop.title}</span>
+                </div>
+                <div className="itemDetail">
+                  <span className="label">Contributeur:</span>
+                  <span className="value">{workshop.contributor}</span>
+                </div>
+                <div className="itemDetail">
+                  <span className="label">Date:</span>
+                  <span className="value">{workshop.date}</span>
+                </div>
+                <div className="itemDetail">
+                  <span className="label">Fin:</span>
+                  <span className="value">
+                    {calculateEnd(workshop.date, workshop.duration)}
+                  </span>
+                </div>
+                <div className="itemDetail">
+                  <span className="label">Prix:</span>
+                  <span className="value">{workshop.price} €</span>
+                </div>
+                <div className="itemDetail">
+                  <span className="label">Places disponibles:</span>
+                  <span className="value">{workshop.places}</span>
+                </div>
+                <div className="itemDetail">
+                  <span className="label">Description:</span>
+                  <span className="value">{workshop.description}</span>
+                </div>
+                <div className="itemActions" style={{ marginBottom: "1em" }}>
+                  <button
+                    onClick={() => handleEdit(workshop)}
+                    style={{ marginRight: "1em" }}
+                  >
+                    Modifier
+                  </button>
+                  <button onClick={() => handleDelete(workshop.id_workshop)}>
+                    Supprimer
+                  </button>
+                </div>
+              </li>
+            ))}
+          </ul>
         </div>
       </div>
     </div>

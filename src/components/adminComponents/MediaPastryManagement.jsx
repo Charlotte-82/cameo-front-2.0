@@ -272,6 +272,50 @@ function PastryManagement() {
               })}
             </tbody>
           </table>
+          <div className="visualMediaList">
+            {media.map((item) => (
+              <div key={item.id} className="mediaItem">
+                <div className="mediaContent">
+                  <h4>Photo choisie</h4>
+                  <div className="pastryPhoto">
+                    <img
+                      src={`${API_BASE}/uploads/${item.photo_filename}`}
+                      alt="Photo"
+                      style={{ width: "100px" }}
+                    />
+                  </div>
+                  <h4>Extrait vidéo choisi</h4>
+                  <div className="VideoExtract">
+                    {item.type === "youtube" && item.youtube_url ? (
+                      <>
+                        <img
+                          src={getYouTubeThumbnail(item.youtube_url)}
+                          alt="Miniature YouTube"
+                          onClick={() =>
+                            window.open(item.youtube_url, "_blank")
+                          }
+                        />
+                        <div>{getYouTubeThumbnail(item.youtube_url)}</div>
+                      </>
+                    ) : item.video_filename ? (
+                      <video
+                        src={`${API_BASE}/uploads/${item.video_filename}`}
+                        width="150px"
+                        controls
+                      />
+                    ) : (
+                      "-"
+                    )}
+                  </div>
+                </div>
+                <div className="mediaActions">
+                  <button onClick={() => handleDelete(item.id_media)}>
+                    Supprimer
+                  </button>
+                </div>
+              </div>
+            ))}
+          </div>
         </div>
       </div>
     </div>

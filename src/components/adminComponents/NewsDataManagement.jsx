@@ -32,7 +32,6 @@ function NewsDataManagement() {
         setItems([]);
       });
 
-    // URL corrigée : ajoute le chemin '/highlight' et utilise '/featured'
     fetch(`${API_BASE_URL}/highlight/featured`)
       .then((res) => {
         if (!res.ok) {
@@ -178,8 +177,63 @@ function NewsDataManagement() {
             </tbody>
           </table>
         </div>
+        <div className="cakeListDiv">
+          <ul className="cakeList">
+            {items.map((item) => {
+              let id;
+              if (item.type === "event") {
+                id = `${item.type}-${item.id_event}`;
+              } else if (item.type === "workshop") {
+                id = `${item.type}-${item.id_workshop}`;
+              }
+
+              const isHighlighted =
+                highlight &&
+                highlight.type === item.type &&
+                String(highlight.related_id) === String(id.split("-")[1]);
+
+              return (
+                <li
+                  key={id}
+                  className={`cakeItem ${
+                    isHighlighted ? "highlightedItem" : ""
+                  }`}
+                >
+                  <div className="itemRadio">
+                    <input
+                      type="radio"
+                      name="highlightSelect"
+                      checked={selectedId === id}
+                      onChange={() => setSelectedId(id)}
+                    />
+                  </div>
+                  <div className="itemDetails">
+                    <div className="itemTitle">
+                      <span className="label">Titre:</span>
+                      <span className="value">{item.title}</span>
+                    </div>
+                    <div className="itemDate">
+                      <span className="label">Date:</span>
+                      <span className="value">
+                        {new Date(
+                          item.start_date ?? item.date
+                        ).toLocaleString()}
+                      </span>
+                    </div>
+                    <div className="itemType">
+                      <span className="label">Type:</span>
+                      <span className="value">{item.type}</span>
+                    </div>
+                  </div>
+                </li>
+              );
+            })}
+          </ul>
+        </div>
       </div>
-      <button onClick={handleSaveHighlight}>Sauvegarder</button>
+      <button onClick={handleSaveHighlight} style={{ width: "150px" }}>
+        Sauvegarder
+      </button>
     </div>
   );
 }

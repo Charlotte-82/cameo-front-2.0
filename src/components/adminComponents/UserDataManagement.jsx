@@ -354,6 +354,120 @@ function UserDataManagement() {
                 ))}
             </tbody>
           </table>
+          <div className="userCard">
+            <div
+              className="card"
+              style={{
+                width: "90%",
+                display: "flex",
+                flexDirection: "row",
+              }}
+            >
+              {users
+                .filter((user) => user.id_user !== 3)
+                .map((user) => (
+                  <div key={user.id_user} className="card-body">
+                    <h5 className="card-title">
+                      {user.lastname} {user.firstname}
+                    </h5>
+                    <p className="card-text">
+                      <div className="itemDetail">
+                        <span className="label">Email:</span>
+                        <span className="value">{user.email}</span>
+                      </div>
+                      <div className="itemDetail">
+                        <span className="label">Téléphone:</span>
+                        <span className="value">{user.tel}</span>
+                      </div>
+                      <div className="itemDetail">
+                        <span className="label">Newsletter:</span>
+                        <span className="value">
+                          {user.newsletter === "1" || user.newsletter === 1
+                            ? "Oui"
+                            : "Non"}
+                        </span>
+                      </div>
+                      <div className="itemDetail">
+                        <span className="label">Gâteau préféré:</span>
+                        <span className="value">{user.cake_name}</span>
+                      </div>
+                      <div className="itemDetail">
+                        <span className="label">Admin ?:</span>
+                        <span className="value">
+                          {user.is_admin === "1" || user.is_admin === 1
+                            ? "Oui"
+                            : "Non"}
+                        </span>
+                      </div>
+                    </p>
+                    <button
+                      onClick={() => handleEdit(user)}
+                      style={{ marginRight: "1em" }}
+                    >
+                      Modifier
+                    </button>
+                    <button onClick={() => handleDelete(user.id_user)}>
+                      Supprimer
+                    </button>
+                  </div>
+                ))}
+            </div>
+          </div>
+          <ul className="userList">
+            {users
+              .filter((user) => user.id_user !== 3)
+              .map((user) => (
+                <li key={user.id_user} className="userItem">
+                  <div className="itemDetail">
+                    <span className="label">Nom:</span>
+                    <span className="value">{user.lastname}</span>
+                  </div>
+                  <div className="itemDetail">
+                    <span className="label">Prénom:</span>
+                    <span className="value">{user.firstname}</span>
+                  </div>
+                  <div className="itemDetail">
+                    <span className="label">Email:</span>
+                    <span className="value">{user.email}</span>
+                  </div>
+                  <div className="itemDetail">
+                    <span className="label">Téléphone:</span>
+                    <span className="value">{user.tel}</span>
+                  </div>
+                  <div className="itemDetail">
+                    <span className="label">Newsletter:</span>
+                    <span className="value">
+                      {user.newsletter === "1" || user.newsletter === 1
+                        ? "Oui"
+                        : "Non"}
+                    </span>
+                  </div>
+                  <div className="itemDetail">
+                    <span className="label">Gâteau préféré:</span>
+                    <span className="value">{user.cake_name}</span>
+                  </div>
+                  <div className="itemDetail">
+                    <span className="label">Admin ?:</span>
+                    <span className="value">
+                      {user.is_admin === "1" || user.is_admin === 1
+                        ? "Oui"
+                        : "Non"}
+                    </span>
+                  </div>
+                  <div className="itemActions">
+                    <button
+                      onClick={() => handleEdit(user)}
+                      style={{ marginRight: "1em" }}
+                    >
+                      Modifier
+                    </button>
+                    <button onClick={() => handleDelete(user.id_user)}>
+                      Supprimer
+                    </button>
+                  </div>
+                </li>
+              ))}
+          </ul>
         </div>
       </div>
     </div>

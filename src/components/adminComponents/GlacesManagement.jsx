@@ -41,7 +41,7 @@ function GlacesManagement() {
 
     if (editingId) {
       method = "PUT";
-      glacesData.id_glaces = editingId;
+      glacesData.id_glace = editingId;
     }
 
     try {
@@ -86,7 +86,7 @@ function GlacesManagement() {
 
   const handleEdit = (glaces) => {
     setForm({ name: glaces.name, price: glaces.price });
-    setEditingId(glaces.id_glaces);
+    setEditingId(glaces.id_glace);
   };
 
   const handleDelete = (id) => {
@@ -177,21 +177,52 @@ function GlacesManagement() {
               </tr>
             </thead>
             <tbody>
-              {glaces.map((glaces) => (
-                <tr key={glaces.id_glaces} className="tableRank2">
-                  {/* <td>{glaces.id_glaces}</td> */}
-                  <td>{glaces.name}</td>
-                  <td>{glaces.price} €</td>
-                  <td>
-                    <button onClick={() => handleEdit(glaces)}>Modifier</button>
-                    <button onClick={() => handleDelete(glaces.id_glaces)}>
-                      Supprimer
-                    </button>
-                  </td>
-                </tr>
-              ))}
+              {glaces.map((glaces, index) => {
+                // console.log(
+                //   `Clé pour l'élément à l'index ${index} :`,
+                //   glaces.id_glace
+                // );
+                return (
+                  <tr key={index} className="tableRank2">
+                    {/* <td>{glaces.id_glace}</td> */}
+                    <td>{glaces.name}</td>
+                    <td>{glaces.price} €</td>
+                    <td>
+                      <button
+                        style={{ marginBottom: "1em", marginRight: "1em" }}
+                        onClick={() => handleEdit(glaces)}
+                      >
+                        Modifier
+                      </button>
+                      <button onClick={() => handleDelete(glaces.id_glace)}>
+                        Supprimer
+                      </button>
+                    </td>
+                  </tr>
+                );
+              })}
             </tbody>
           </table>
+          <ul className="glaceList">
+            {glaces.map((glaces, index) => (
+              <li key={glaces.id_glace || index} className="glaceItem">
+                <div className="itemDetails">
+                  <span className="label">Nom:</span>
+                  <span className="value">{glaces.name}</span>
+                </div>
+                <div className="itemDetails">
+                  <span className="label">Prix:</span>
+                  <span className="value">{glaces.price} €</span>
+                </div>
+                <div className="itemActions">
+                  <button onClick={() => handleEdit(glaces)}>Modifier</button>
+                  <button onClick={() => handleDelete(glaces.id_glace)}>
+                    Supprimer
+                  </button>
+                </div>
+              </li>
+            ))}
+          </ul>
         </div>
       </div>
     </div>

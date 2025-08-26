@@ -215,6 +215,40 @@ function PastryManagement() {
               ))}
             </tbody>
           </table>
+          <div className="cakeListDiv">
+            <ul className="cakeList">
+              {wpastry.map((item) => (
+                <li key={item.id_pastry} className="cakeItem">
+                  <div className="cakeDetail">
+                    <span className="label">Nom:</span>
+                    <span className="value">{item.name}</span>
+                  </div>
+                  <div className="cakeDetail">
+                    <span className="label">Prix:</span>
+                    <span className="value">{item.price} €</span>
+                  </div>
+                  <div className="cakeDetail">
+                    <span className="label">Titre:</span>
+                    <span className="value">{item.film_title}</span>
+                  </div>
+                  <div className="cakeDetail">
+                    <span className="label">Réal/Aut:</span>
+                    <span className="value">{item.film_director}</span>
+                  </div>
+                  <div className="cakeDetail">
+                    <span className="label">Date:</span>
+                    <span className="value">{item.film_release_date}</span>
+                  </div>
+                  <div className="cakeActions">
+                    <button onClick={() => handleEdit(item)}>Modifier</button>
+                    <button onClick={() => handleDelete(item.id_pastry)}>
+                      Supprimer
+                    </button>
+                  </div>
+                </li>
+              ))}
+            </ul>
+          </div>
         </div>
       </div>
     </div>

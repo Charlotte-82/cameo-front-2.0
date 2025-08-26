@@ -57,7 +57,7 @@ function EventDataManagement() {
     if (editingId) {
       method = "PUT";
       eventData.id_event = editingId;
-      console.log("Données envoyées :", eventData);
+      // console.log("Données envoyées :", eventData);
     }
 
     try {
@@ -86,10 +86,10 @@ function EventDataManagement() {
         throw new Error(errorMessage);
       }
 
-      console.log(
-        "Opération réussie. Message du serveur :",
-        result.message || "Aucun message spécifique."
-      );
+      // console.log(
+      //   "Opération réussie. Message du serveur :",
+      //   result.message || "Aucun message spécifique."
+      // );
 
       fetchEvents();
     } catch (error) {
@@ -122,7 +122,7 @@ function EventDataManagement() {
   };
 
   const handleDelete = (id) => {
-    console.log("Suppression événement ID:", id);
+    // console.log("Suppression événement ID:", id);
 
     fetch(`${API_BASE_URL}/events/${id}`, {
       method: "DELETE",
@@ -133,7 +133,7 @@ function EventDataManagement() {
             throw new Error(errorData.error || `Erreur HTTP: ${res.status}`);
           });
         }
-        console.log("Événement supprimé avec succès.");
+        // console.log("Événement supprimé avec succès.");
       })
       .then(() => {
         fetchEvents();
@@ -145,7 +145,6 @@ function EventDataManagement() {
 
   return (
     <div className="userManagementCompo">
-      <h2>Gestion des Événements</h2>
       <div className="allUserDiv">
         <div className="userAddDiv">
           <h3>
@@ -282,6 +281,107 @@ function EventDataManagement() {
               ))}
             </tbody>
           </table>
+          <div className="userCard">
+            <div
+              className="card"
+              style={{
+                width: "90%",
+                display: "flex",
+                flexDirection: "row",
+                flexWrap: "wrap",
+              }}
+            >
+              {event.map((event) => (
+                <div
+                  key={event.id_event}
+                  className="card-body"
+                  style={{ width: "30%" }}
+                >
+                  <h5 className="card-title">{event.title}</h5>
+                  <p className="card-text">
+                    <div className="itemDetail">
+                      <span className="label">Contributeur:</span>
+                      <span className="value">{event.contributor}</span>
+                    </div>
+                    <div className="itemDetail">
+                      <span className="label">Date:</span>
+                      <span className="value">{event.start_date}</span>
+                    </div>
+                    <div className="itemDetail">
+                      <span className="label">Fin:</span>
+                      <span className="value">{event.end_date}</span>
+                    </div>
+                    <div className="itemDetail">
+                      <span className="label">Prix:</span>
+                      <span className="value">{event.price} €</span>
+                    </div>
+                    <div className="itemDetail">
+                      <span className="label">Places disponibles:</span>
+                      <span className="value">{event.places}</span>
+                    </div>
+                    <div className="itemDetail">
+                      <span className="label">Description:</span>
+                      <span className="value">{event.description}</span>
+                    </div>
+                  </p>
+                  <button
+                    onClick={() => handleEdit(event)}
+                    style={{ marginRight: "1em" }}
+                  >
+                    Modifier
+                  </button>
+                  <button onClick={() => handleDelete(event.id_event)}>
+                    Supprimer
+                  </button>
+                </div>
+              ))}
+            </div>
+          </div>
+          <ul className="userList">
+            {event.map((event) => (
+              <li key={event.id_event} className="userItem">
+                <div className="itemDetail">
+                  <span className="label">Titre:</span>
+                  <span className="value">{event.title}</span>
+                </div>
+                <div className="itemDetail">
+                  <span className="label">Contributeur:</span>
+                  <span className="value">{event.contributor}</span>
+                </div>
+                <div className="itemDetail">
+                  <span className="label">Date:</span>
+                  <span className="value">{event.start_date}</span>
+                </div>
+                <div className="itemDetail">
+                  <span className="label">Fin:</span>
+                  <span className="value">{event.end_date}</span>
+                </div>
+                <div className="itemDetail">
+                  <span className="label">Prix:</span>
+                  <span className="value">{event.price} €</span>
+                </div>
+                <div className="itemDetail">
+                  <span className="label">Places disponibles:</span>
+                  <span className="value">{event.places}</span>
+                </div>
+                <div className="itemDetail">
+                  <span className="label">Description:</span>
+                  <span className="value">{event.description}</span>
+                </div>
+                <div className="itemActions" style={{ marginBottom: "1em" }}>
+                  <button
+                    onClick={() => handleEdit(event)}
+                    style={{ marginRight: "1em" }}
+                  >
+                    Modifier
+                  </button>
+                  <button onClick={() => handleDelete(event.id_event)}>
+                    Supprimer
+                  </button>
+                </div>
+              </li>
+            ))}
+          </ul>
         </div>
       </div>
     </div>
