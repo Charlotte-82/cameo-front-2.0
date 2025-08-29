@@ -1222,6 +1222,9 @@
   width: 50%;
   padding-left: 2em;
   padding-right: 2em;
+  @include mobile {
+    width: 100%;
+  }
 }
 
 .tImageDiv {
@@ -1254,6 +1257,8 @@
 .fourniParaph2 {
   font-size: larger;
   text-align: end;
+  @include mobile {
+  }
 }
 
 .partnerLink {
@@ -1269,5 +1274,6 @@
   justify-items: center;
   @include mobile {
     flex-direction: column;
+    margin-left: 2em;
   }
 }
