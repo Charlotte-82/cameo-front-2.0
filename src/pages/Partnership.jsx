@@ -1,7 +1,191 @@
 import React from "react";
+import Tea from "../assets/images/teamagine.jpeg";
+import Vache from "../assets/images/Logo_La_Vache_Charentaise_web.png";
+import Mafiore from "../assets/images/mafiore.jpg";
+import Frida from "../assets/images/frida.png";
+import House from "../assets/images/house.png";
 
 function Partnership() {
-  return <div className="partnership"></div>;
+  return (
+    <div className="page">
+      <h1 className="partnerH1">La grande famille du Caméo</h1>
+      <div className="partnerDiv1">
+        <h2>Les Fournisseurs</h2>
+        <hr></hr>
+        <div className="fourniDiv">
+          <div className="teaDiv">
+            <a
+              className="partnerLink"
+              target="_blank"
+              href="https://tea-magine.com/"
+            >
+              <h3>TEA'MAGINE</h3>
+            </a>
+            <div>
+              <p className="fourniParaph">
+                Tea'Magine est une sommellerie française de thés et d'infusions
+                originaux et naturels. Les produits sont faits à partir
+                d'ingrédients issus de la nature, bio, sans polluant ni
+                pesticides. Ces créations toulousaines sont uniques et faites à
+                la main.
+              </p>
+              <p className="fourniParaph">
+                Les thés spécialement créés pour le Caméo sont disponibles à
+                l'achat au café !
+              </p>
+              <div className="tImageDiv">
+                <a
+                  className="partnerLink"
+                  target="_blank"
+                  href="https://tea-magine.com/"
+                >
+                  <img src={Tea} alt="Logo de Tea'Magine" className="tImage" />
+                </a>
+              </div>
+            </div>
+          </div>
+          <div className="teaDiv">
+            <a
+              className="partnerLink"
+              target="_blank"
+              href="https://www.lavachecharentaise.fr/"
+            >
+              <h3>LA VACHE CHARENTAISE</h3>
+            </a>
+            <div>
+              <p className="fourniParaph">
+                Situé en Charente-Maritime, La Vache Charentaise propose toute
+                une gamme de produits à base de laits issus de son propre
+                laboratoire de fabrication. Impliquée dans le bien-être de tous
+                et soucieuse de la qualité de ses produits, La Vache Charentaise
+                s'est engagée aux côtés de l'association Bleu-Blanc-Coeur.
+              </p>
+              <p className="fourniParaph">
+                Retrouvez la crème glacée de la Vache Charentaise au Caméo
+                durant l'été dans de délicieux milkshakes !
+              </p>
+              <div className="tImageDiv">
+                <a
+                  className="partnerLink"
+                  target="_blank"
+                  href="https://www.lavachecharentaise.fr/"
+                >
+                  <img
+                    src={Vache}
+                    alt="Logo de La Vache Charentaise"
+                    className="tImage"
+                  />
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div className="partnerDiv2">
+        <h2>Les Artistes</h2>
+        <hr></hr>
+        <div className="fourniDiv">
+          <div className="teaDiv2">
+            <a
+              className="partnerLink"
+              target="_blank"
+              href="https://www.mafiore.fr/"
+            >
+              <h3>MAFIORE</h3>
+            </a>
+            <div>
+              <p className="fourniParaph2">
+                "J’écris, souvent de la poésie mais pas seulement et slame
+                régulièrement, je fabrique des badges, des cartes postales et
+                d’autres objets poétiques, découpe et colle des mots et des
+                images pour raconter le monde. J’anime des ateliers d’écriture
+                pour vous guider sur les chemins de la créativité, de
+                l’imagination et du plaisir d’écrire, en compagnie de textes et
+                de livres classiques et contemporains que je souhaite partager."
+              </p>
+              <p className="fourniParaph2">
+                Retrouvez Mafiore au Caméo lors des ateliers d'écriture.
+                Surveillez le programme !
+              </p>
+              <div className="tImageDiv2">
+                <a
+                  className="partnerLink"
+                  target="_blank"
+                  href="https://www.mafiore.fr/"
+                >
+                  <img src={Mafiore} alt="Logo de Mafiore" className="tImage" />
+                </a>
+              </div>
+            </div>
+          </div>
+          <div className="teaDiv2">
+            <a
+              className="partnerLink"
+              target="_blank"
+              href="https://www.instagram.com/frida_k.o/"
+            >
+              <h3>FRIDA K.O.</h3>
+            </a>
+            <div>
+              <p className="fourniParaph2">
+                Artiste, créatrice, illustratrice et chanteuse basée sur La
+                Rochelle, Frida K.O. organise des ateliers uniques pour libérer
+                votre créativité. Inspirée par la Pop Culture, elle peut
+                s'inspirer tout autant des studios Ghibli que de Star Wars !
+                Vous ne voudrez pas manquer ça !
+              </p>
+              <p className="fourniParaph2">
+                Certaines des réalisation unique de Frida K.O. sont disponibles
+                à la vente au Caméo !
+              </p>
+              <div className="tImageDiv2">
+                <a
+                  className="partnerLink"
+                  target="_blank"
+                  href="https://www.instagram.com/frida_k.o/"
+                >
+                  <img
+                    src={Frida}
+                    alt="Logo de Frida K.O."
+                    className="tImage"
+                  />
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div className="partnerDiv1">
+        <h2>Les Associations</h2>
+        <hr></hr>
+        <div className="assoDiv">
+          <div className="tImageDiv3">
+            <a
+              className="partnerLink"
+              target="_blank"
+              href="https://lahouse17.wordpress.com/"
+            >
+              {" "}
+              <img src={House} alt="Logo de la House" className="tImage" />
+            </a>
+          </div>
+          <div>
+            <h3 style={{ textAlign: "left" }}>LA HOUSE </h3>
+            <p className="fourniParaph">
+              Association LGBTQIA+ Rochelaise, La House 17 organise des
+              événements festifs pour la communauté et ses allié·e·s. Elle est
+              le lieu de création des Safe Slace où chacun·e peut venir
+              s'exprimer librement.
+            </p>
+            <p className="fourniParaph">
+              {" "}
+              La House 17, c'est plus qu'une association, c'est une famille !
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
 }
 
 export default Partnership;

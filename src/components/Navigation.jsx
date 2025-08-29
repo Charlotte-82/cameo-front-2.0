@@ -24,7 +24,7 @@ function Menu() {
           <a href="/404">Blog</a>
         </p>
         <p className="itemMenu">
-          <a href="/404">Partenaires</a>
+          <a href="/partenaires">Partenaires</a>
         </p>
       </div>
     </nav>
