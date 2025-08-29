@@ -9,7 +9,9 @@ function PatisserieSemaine() {
   useEffect(() => {
     fetch(`${API_BASE}/wpastry/latest`)
       .then((res) => res.json())
-      .then(setWpastry)
+      .then((data) => {
+        setWpastry(data[0]);
+      })
       .catch(console.error);
 
     fetch(`${API_BASE}/media/latest`)

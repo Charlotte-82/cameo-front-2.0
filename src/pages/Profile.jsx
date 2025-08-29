@@ -149,8 +149,12 @@ function Profile() {
         throw new Error(errorData.error || `Erreur HTTP: ${response.status}`);
       }
 
-      const updatedUser = { ...user, ...userData };
-      updateUser(updatedUser);
+      if (typeof updateUser === "function") {
+        const updatedUser = { ...user, ...userData };
+        updateUser(updatedUser);
+      } else {
+        console.error("Erreur: updateUser n'est pas une fonction.");
+      }
 
       setSuccess("Vos informations ont été mises à jour avec succès !");
       setIsEditing(false);

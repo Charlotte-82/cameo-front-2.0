@@ -57,7 +57,7 @@ function AuthModal({ onClose, onLoginSuccess }) {
       is_admin: "0",
     };
 
-    // console.log("Tentative d'enregistrement avec:", userData);
+    console.log("Tentative d'enregistrement avec:", userData);
 
     try {
       const response = await fetch(`${API_BASE_URL}/users`, {

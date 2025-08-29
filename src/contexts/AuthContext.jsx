@@ -68,9 +68,18 @@ export const AuthProvider = ({ children }) => {
   };
 
   const logout = () => {
-    fetch(`${API_BASE_URL}/auth/logout`);
-    setIsAuthenticated(false);
-    setUser(null);
+    fetch(`${API_BASE_URL}/auth/logout`, {
+      method: "POST",
+    })
+      .then(() => {
+        setIsAuthenticated(false);
+        setUser(null);
+      })
+      .catch((error) => {
+        console.error("Erreur lors de la déconnexion:", error);
+        setIsAuthenticated(false);
+        setUser(null);
+      });
   };
 
   const value = {

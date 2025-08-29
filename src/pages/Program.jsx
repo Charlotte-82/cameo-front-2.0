@@ -140,14 +140,14 @@ function Program() {
                   {item.type === "workshop"
                     ? `Le ${new Date(
                         item.date
-                      ).toLocaleDateString()} à ${new Date(
+                      ).toLocaleDateString()} de ${new Date(
                         item.date
                       ).toLocaleString("fr-FR", {
                         timeStyle: "short",
                       })} `
                     : ` Du ${new Date(
                         item.start_date
-                      ).toLocaleDateString()} à ${new Date(
+                      ).toLocaleDateString()} au ${new Date(
                         item.start_date
                       ).toLocaleString("fr-FR", {
                         timeStyle: "short",
