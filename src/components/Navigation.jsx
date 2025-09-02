@@ -18,7 +18,7 @@ function Menu() {
           <a href="/agenda">Programme</a>
         </p>
         <p className="itemMenu">
-          <a href="/404">Boutique</a>
+          <a href="/boutique">Boutique</a>
         </p>
         <p className="itemMenu">
           <a href="/404">Blog</a>
