@@ -4,6 +4,7 @@ import Vache from "../assets/images/Logo_La_Vache_Charentaise_web.png";
 import Mafiore from "../assets/images/mafiore.jpg";
 import Frida from "../assets/images/frida.png";
 import House from "../assets/images/house.png";
+import Mutyne from "../assets/images/logomutyne.png";
 
 function Partnership() {
   return (
@@ -149,6 +150,35 @@ function Partnership() {
                     alt="Logo de Frida K.O."
                     className="tImage"
                   />
+                </a>
+              </div>
+            </div>
+          </div>
+          <div className="teaDiv2">
+            <a
+              className="partnerLink"
+              target="_blank"
+              href="https://www.mafiore.fr/"
+            >
+              <h3>MUTYN.E</h3>
+            </a>
+            <div>
+              <p className="fourniParaph2">
+                Mutyn.e aime le cinéma et s'en inspire pour créer des oeuvres
+                authentiques et sans détour. Les traits francs et le couleurs
+                vives animent ces images d'une intention sincère.
+              </p>
+              <p className="fourniParaph2">
+                À offrir aux autres ou à soi, n'hésitez pas à passer au café
+                pour acquérir une de ces magnifiques cartes.
+              </p>
+              <div className="tImageDiv2">
+                <a
+                  className="partnerLink"
+                  target="_blank"
+                  href="https://www.instagram.com/mutyn.e/"
+                >
+                  <img src={Mutyne} alt="Logo de Mutyne" className="tImage" />
                 </a>
               </div>
             </div>

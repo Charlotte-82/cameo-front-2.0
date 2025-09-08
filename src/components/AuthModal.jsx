@@ -23,9 +23,31 @@ function AuthModal({ onClose, onLoginSuccess }) {
   useEffect(() => {
     const fetchCakes = async () => {
       try {
-        const response = await fetch(`${API_BASE_URL}/cakes`);
-        const data = await response.json();
-        setCakes(data);
+        const [fullRes, slicedRes] = await Promise.all([
+          fetch(`${API_BASE_URL}/fullcakes`),
+          fetch(`${API_BASE_URL}/cakes`),
+        ]);
+
+        const [fullCakes, slicedCakes] = await Promise.all([
+          fullRes.json(),
+          slicedRes.json(),
+        ]);
+
+        // On combine les deux types
+        const combinedCakes = [
+          ...fullCakes.map((c) => ({
+            ...c,
+            id_cake_unique: `full-${c.id}`,
+            type: "full",
+          })),
+          ...slicedCakes.map((c) => ({
+            ...c,
+            id_cake_unique: `sliced-${c.id_cake}`,
+            type: "sliced",
+          })),
+        ];
+
+        setCakes(combinedCakes);
       } catch (error) {
         console.error("Erreur lors du chargement des gâteaux:", error);
       }
@@ -52,31 +74,26 @@ function AuthModal({ onClose, onLoginSuccess }) {
 
   const handleRegisterSubmit = async (e) => {
     e.preventDefault();
+
+    const [cakeType, cakeId] = form.id_cake.split("-");
+
     const userData = {
       ...form,
+      cake_id: cakeId, // ID numérique
+      cake_type: cakeType, // "full" ou "sliced"
       is_admin: "0",
     };
-
-    console.log("Tentative d'enregistrement avec:", userData);
 
     try {
       const response = await fetch(`${API_BASE_URL}/users`, {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify(userData),
       });
 
-      if (!response.ok) {
-        throw new Error(
-          `Erreur lors de l'enregistrement: ${response.statusText}`
-        );
-      }
+      if (!response.ok) throw new Error(`Erreur: ${response.statusText}`);
 
-      const result = await response.json();
-      // console.log("Enregistrement réussi:", result);
-
+      await response.json();
       setForm({
         lastname: "",
         firstname: "",
@@ -86,14 +103,14 @@ function AuthModal({ onClose, onLoginSuccess }) {
         newsletter: "0",
         id_cake: "",
       });
-
       onClose();
       alert("Enregistrement réussi !");
     } catch (error) {
-      console.error("Erreur:", error);
+      console.error(error);
       alert(`Échec de l'enregistrement: ${error.message}`);
     }
   };
+
   const modalContent = (
     <div className="modal-backdrop">
       <div className="modal fade show" style={{ display: "block" }}>
@@ -228,13 +245,17 @@ function AuthModal({ onClose, onLoginSuccess }) {
                       required
                     >
                       <option value="">--Choisissez un gâteau préféré--</option>
-                      {Array.isArray(cakes) &&
-                        cakes.map((cake) => (
-                          <option key={cake.id_cake} value={cake.id_cake}>
-                            {cake.name}
-                          </option>
-                        ))}
+                      {cakes.map((cake) => (
+                        <option
+                          key={cake.id_cake_unique}
+                          value={cake.id_cake_unique}
+                        >
+                          {cake.name} (
+                          {cake.type === "full" ? "Entier" : "À la part"})
+                        </option>
+                      ))}
                     </select>
+
                     <br />
                     <button type="submit">S'enregistrer</button>
                   </form>

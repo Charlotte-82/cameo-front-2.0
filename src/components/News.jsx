@@ -152,54 +152,58 @@ function News() {
           </div>
         </div>
       </div>
-      <div className="imageNewsDiv">
-        <h3>{highlight.title}</h3>
-        <img
-          className="imageNews"
-          src={`${API_BASE_URL.replace(/\/$/, "")}/uploads/highlight/${
-            highlight.photo_filename
-          }`}
-          alt="Actualité à la une"
-        />
-      </div>
+      <div className="affichageNewsTablette">
+        <div className="imageNewsDiv">
+          <h3>{highlight.title}</h3>
+          <img
+            className="imageNews"
+            src={`${API_BASE_URL.replace(/\/$/, "")}/uploads/highlight/${
+              highlight.photo_filename
+            }`}
+            alt="Actualité à la une"
+          />
+        </div>
 
-      <div className="texteNews">
-        {highlight.type === "event" ? (
-          <div className="infosNewsDiv">
-            <p className="infosNews">
-              Du: <strong>{formatDate(highlight.start_date)} </strong>
-              Au: <strong>{formatDate(highlight.end_date)}</strong>
-            </p>
-            <p className="infosNews">
-              Intervenant·e: <strong>{highlight.contributor}</strong>
-            </p>
-            <p className="infosNews">
-              Places disponibles restantes: <strong>{highlight.places}</strong>
-            </p>
-            <p className="infosNews">
-              Prix: <strong>{highlight.price}</strong>
-            </p>
-          </div>
-        ) : (
-          <div className="infosNewsDiv">
-            <p className="infosNews">
-              Date: le <strong>{formatDate(highlight.date)} </strong>
-              jusqu'à{" "}
-              <strong>
-                {formatEndDate(highlight.date, highlight.duration)}
-              </strong>
-            </p>
-            <p className="infosNews">
-              Intervenant·e: <strong>{highlight.contributor}</strong>
-            </p>
-            <p className="infosNews">
-              Places disponibles restantes: <strong>{highlight.places}</strong>
-            </p>
-            <p className="infosNews">
-              Prix: <strong>{highlight.price} €</strong> / personne
-            </p>
-          </div>
-        )}
+        <div className="texteNews">
+          {highlight.type === "event" ? (
+            <div className="infosNewsDiv">
+              <p className="infosNews">
+                Du: <strong>{formatDate(highlight.start_date)} </strong>
+                Au: <strong>{formatDate(highlight.end_date)}</strong>
+              </p>
+              <p className="infosNews">
+                Intervenant·e: <strong>{highlight.contributor}</strong>
+              </p>
+              <p className="infosNews">
+                Places disponibles restantes:{" "}
+                <strong>{highlight.places}</strong>
+              </p>
+              <p className="infosNews">
+                Prix: <strong>{highlight.price}</strong>
+              </p>
+            </div>
+          ) : (
+            <div className="infosNewsDiv">
+              <p className="infosNews">
+                Date: le <strong>{formatDate(highlight.date)} </strong>
+                jusqu'à{" "}
+                <strong>
+                  {formatEndDate(highlight.date, highlight.duration)}
+                </strong>
+              </p>
+              <p className="infosNews">
+                Intervenant·e: <strong>{highlight.contributor}</strong>
+              </p>
+              <p className="infosNews">
+                Places disponibles restantes:{" "}
+                <strong>{highlight.places}</strong>
+              </p>
+              <p className="infosNews">
+                Prix: <strong>{highlight.price} €</strong> / personne
+              </p>
+            </div>
+          )}
+        </div>
       </div>
       <div className="boutonDiv">
         <p className="descriptionNews">{highlight.description}</p>

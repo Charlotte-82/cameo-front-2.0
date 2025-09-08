@@ -424,6 +424,12 @@ i {
 
 .card-body {
   background-color: $light-color;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  @include mobile {
+    flex-direction: column;
+  }
 }
 
 .bootstrapButtonDiv {
@@ -441,6 +447,13 @@ i {
     align-items: center;
     padding-bottom: 0;
   }
+}
+
+.affichageNewsTablette {
+  display: flex;
+  flex-direction: column;
+  gap: 3em;
+  align-items: center;
 }
 
 .imageNewsDiv {
@@ -499,6 +512,9 @@ i {
   color: $text-color;
   text-align: center;
   font-size: x-large;
+  @include tablette {
+    font-size: larger;
+  }
 }
 
 .boutonDiv {
@@ -817,6 +833,38 @@ strong {
   flex-direction: row;
 }
 
+.products-grid-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  font-family: $font-main;
+  color: $text-color;
+  padding: 1em;
+}
+
+.products-grid-container > div {
+  flex: 1 1 15em;
+}
+
+.products-grid-container button {
+  @extend %button-style;
+  margin-right: 2em;
+}
+
+.creation {
+  margin-bottom: 2em;
+  margin-left: 2em;
+  color: $text-color;
+}
+
+.boutonCreation {
+  @extend %button-style;
+  margin-left: 2em;
+}
+
+.h2Collection {
+  @extend %heading-h2-style;
+}
 // Accordéon - Accueil
 
 .accordion-content {
@@ -836,4 +884,316 @@ strong {
 
 .accordion-button.active {
   background-color: $text-color;
+}
+
+// Composition du menu
+
+.collectionDiv {
+  border: 2px solid $text-color;
+  margin: 0.5em;
+  padding: 0.5em;
+  width: 30%;
+  @include mobile {
+    width: 95%;
+  }
+}
+
+.collectionDiv li {
+  font-family: $font-main;
+  color: $text-color;
+  font-size: small;
+}
+
+.collectionGroupDiv {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  @include mobile {
+    flex-direction: column;
+  }
+}
+
+/* Container de la modale pour les produits */
+.modal-products-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(205px, 1fr));
+  gap: 0rem;
+}
+
+/* Style de chaque élément de la grille (un produit) */
+.modal-products-grid-item {
+  display: flex;
+  align-items: center;
+  padding: 0.5rem;
+  background-color: $light-color;
+}
+
+/* Style de la case à cocher */
+.modal-products-grid-item input[type="checkbox"] {
+  height: 0.75rem;
+  width: 0.75rem;
+  cursor: pointer;
+  color: $text-color;
+}
+
+/* Style du label (nom du produit) */
+.modal-products-grid-item label {
+  margin-left: 0.5rem;
+  font-size: x-small;
+  color: $text-color;
+}
+
+.boutonCollection {
+  @extend %button-style;
+}
+
+.boutonCollection:hover {
+  color: $darkorange-color;
+}
+
+// page boutique bande 1
+
+.menuGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1fr 1fr 1fr;
+  gap: 10px;
+  margin: 2em;
+  justify-items: center;
+  @include mobile {
+    grid-template-columns: 1fr;
+    grid-template-rows: 1fr 1fr 1fr 1fr 1fr 1fr;
+  }
+}
+
+.menuCase {
+  display: flex;
+  justify-content: center;
+  border: 2px solid $lightorange-color;
+  border-radius: 15px;
+  background-color: $text-color;
+  width: 80%;
+  height: 60px;
+  color: $light-color;
+  font-family: $font-titleh2;
+  font-size: x-large;
+  line-height: 2.3em;
+  @include mobile {
+    font-size: larger;
+  }
+}
+
+.introMenu {
+  text-align: center;
+  font-family: $font-main;
+  color: $text-color;
+  font-style: italic;
+}
+
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.7);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.modaleMenu {
+  background-color: $light-color !important;
+  padding: 2em;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  max-width: 500px;
+  width: 90%;
+  position: relative;
+  overflow-y: auto;
+  max-height: 90vh;
+}
+
+.menuCase:last-child {
+  display: flex;
+  justify-content: center;
+  border: 2px solid $text-color;
+  border-radius: 15px;
+  background-color: $logo-color;
+  width: 80%;
+  height: 60px;
+  color: $lightorange-color;
+  font-family: $font-titleh2;
+  font-size: xx-large;
+  font-weight: 700;
+  line-height: 1.7em;
+  @include mobile {
+    font-size: x-large;
+  }
+}
+
+.menuModale {
+  list-style-type: none;
+}
+
+.menuModale li {
+  color: $text-color;
+  font-family: $font-main;
+  border-bottom: dotted 1px $text-color;
+  line-height: 30px;
+  margin-right: 2em;
+}
+
+.close-button {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  border: none;
+  background: transparent;
+  font-size: 1.5em;
+  cursor: pointer;
+  color: $logo-color;
+  background-color: $light-color;
+}
+
+.itemMenuDiv {
+  display: flex;
+  justify-content: space-between;
+}
+
+.itemDroit {
+  font-weight: 700;
+}
+
+.titreMenuCollection {
+  text-transform: uppercase;
+  border-top: solid 1px $text-color;
+  border-bottom: solid 1px;
+  color: $text-color;
+  margin-top: 1em;
+  margin-left: 1.5em;
+  margin-right: 1.5em;
+}
+
+.ingredientsText {
+  font-size: smaller;
+  font-style: italic;
+  margin-bottom: 2px;
+  line-height: 1em;
+}
+
+.fullCakeList {
+  @include desktop {
+    display: none;
+  }
+  @include tablette {
+    display: none;
+  }
+  list-style: none;
+}
+
+.fullCakeList li {
+  border: solid 2px $text-color;
+  margin-bottom: 1em;
+  padding: 0.5em;
+}
+
+.itemDetails .value {
+  font-weight: 700;
+  margin-left: 0.2em;
+}
+
+.itemDetails .value img {
+  margin-bottom: 0.5em;
+}
+
+// resaCameo
+
+.ResaCameoDiv h3 {
+  color: $dark-color;
+}
+
+.ResaCameoDiv p {
+  font-family: $font-main;
+  color: $text-color;
+  font-size: larger;
+  text-align: center;
+  @include mobile {
+    font-size: large;
+  }
+}
+
+// Commande de gateaux
+
+.listeGateauxEntiers {
+  column-count: 3;
+  column-gap: 20px;
+  list-style-type: none;
+  text-align: center;
+  @include mobile {
+    column-count: 1;
+  }
+}
+
+.listeGateauxEntiers li {
+  padding: 8px;
+}
+
+.listeGateauxEntiers li button {
+  padding: 10px;
+  padding-left: 15px;
+  padding-right: 15px;
+  border-radius: 7px;
+  border: solid 2px $darkorange-color;
+  text-transform: uppercase;
+}
+
+.FormCommande {
+  margin: 2em;
+  color: $text-color;
+  font-family: $font-main;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  @include mobile {
+    margin: 0.5em;
+  }
+}
+
+.FormCommande label,
+.FormCommande input[type="text"],
+.FormCommande input[type="email"],
+.FormCommande textarea {
+  width: 25em;
+  @include mobile {
+    width: 18em;
+  }
+}
+
+.sousDivGoodies {
+  display: flex;
+  justify-content: space-around;
+  @include mobile {
+    flex-direction: column;
+  }
+}
+
+.divArtisteGoodies {
+  display: flex;
+  flex-direction: column;
+  width: 48%;
+  @include mobile {
+    width: 90%;
+  }
+}
+
+.DivIllusArtiste {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+}
+
+.imgArtiste {
+  height: 300px;
 }

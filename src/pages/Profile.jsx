@@ -3,7 +3,6 @@ import { useAuth } from "../contexts/AuthContext";
 
 function Profile() {
   const { user, updateUser } = useAuth();
-  const [users, setUsers] = useState([]);
   const [cakes, setCakes] = useState([]);
   const [form, setForm] = useState({
     lastname: "",
@@ -30,7 +29,10 @@ function Profile() {
         email: user.email,
         tel: user.tel,
         newsletter: user.newsletter,
-        id_cake: user.id_cake || "",
+        id_cake:
+          user.cake_id && user.cake_type
+            ? `${user.cake_type}-${user.cake_id}`
+            : "",
         password: "",
       });
       fetchCakes();
@@ -42,16 +44,35 @@ function Profile() {
     return <div>Chargement des informations de l'utilisateur...</div>;
   }
 
-  const fetchCakes = () => {
-    fetch(`${API_BASE_URL}/cakes`)
-      .then((res) => {
-        if (!res.ok) {
-          throw new Error(`Erreur HTTP: ${res.status}`);
-        }
-        return res.json();
-      })
-      .then(setCakes)
-      .catch((err) => console.error("Erreur lors du fetch des gâteaux :", err));
+  const fetchCakes = async () => {
+    try {
+      const [fullRes, slicedRes] = await Promise.all([
+        fetch(`${API_BASE_URL}/fullcakes`),
+        fetch(`${API_BASE_URL}/cakes`),
+      ]);
+
+      const [fullCakes, slicedCakes] = await Promise.all([
+        fullRes.json(),
+        slicedRes.json(),
+      ]);
+
+      const combinedCakes = [
+        ...fullCakes.map((c) => ({
+          ...c,
+          id_cake_unique: `full-${c.id}`,
+          type: "full",
+        })),
+        ...slicedCakes.map((c) => ({
+          ...c,
+          id_cake_unique: `sliced-${c.id_cake}`,
+          type: "sliced",
+        })),
+      ];
+
+      setCakes(combinedCakes);
+    } catch (err) {
+      console.error("Erreur lors du fetch des gâteaux :", err);
+    }
   };
 
   const fetchReservations = async (userId) => {
@@ -122,25 +143,26 @@ function Profile() {
     setError(null);
     setSuccess(null);
 
+    const [cakeType, cakeId] = form.id_cake
+      ? form.id_cake.split("-")
+      : [null, null];
+
     const userData = {
       lastname: form.lastname,
       firstname: form.firstname,
       email: form.email,
       tel: form.tel,
       newsletter: form.newsletter,
-      id_cake: form.id_cake,
+      cake_id: cakeId,
+      cake_type: cakeType,
     };
 
-    if (form.password) {
-      userData.password = form.password;
-    }
+    if (form.password) userData.password = form.password;
 
     try {
       const response = await fetch(`${API_BASE_URL}/users/${user.id_user}`, {
         method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-        },
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify(userData),
       });
 
@@ -149,11 +171,21 @@ function Profile() {
         throw new Error(errorData.error || `Erreur HTTP: ${response.status}`);
       }
 
+      // On attend que les cakes soient chargés avant de calculer cake_name
+      let cakeName = "Non spécifié";
+      if (cakes.length > 0 && cakeId && cakeType) {
+        const selectedCake = cakes.find(
+          (c) => c.id_cake_unique === `${cakeType}-${cakeId}`
+        );
+        if (selectedCake) cakeName = selectedCake.name;
+      }
+
       if (typeof updateUser === "function") {
-        const updatedUser = { ...user, ...userData };
-        updateUser(updatedUser);
-      } else {
-        console.error("Erreur: updateUser n'est pas une fonction.");
+        updateUser({
+          ...user,
+          ...userData,
+          cake_name: cakeName,
+        });
       }
 
       setSuccess("Vos informations ont été mises à jour avec succès !");
@@ -195,8 +227,7 @@ function Profile() {
               </li>
               <li>
                 <span className="catInfo">Votre gâteau préféré: </span>
-                {cakes.find((cake) => cake.id_cake === user.id_cake)?.name ||
-                  "Non spécifié"}
+                {user.cake_name || "Non spécifié"}
               </li>
             </ul>
             <button onClick={() => setIsEditing(true)}>
@@ -274,8 +305,12 @@ function Profile() {
                 >
                   <option value="">--Choisissez un gâteau préféré--</option>
                   {cakes.map((cake) => (
-                    <option key={cake.id_cake} value={cake.id_cake}>
-                      {cake.name}
+                    <option
+                      key={cake.id_cake_unique}
+                      value={cake.id_cake_unique}
+                    >
+                      {cake.name} (
+                      {cake.type === "full" ? "Entier" : "À la part"})
                     </option>
                   ))}
                 </select>

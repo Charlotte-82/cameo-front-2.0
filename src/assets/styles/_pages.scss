@@ -744,6 +744,20 @@
   }
 }
 
+.allCakeDiv4 {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  @include mobile {
+    display: flex;
+    flex-direction: column;
+  }
+  @include tablette {
+    display: flex;
+    flex-direction: column;
+  }
+}
+
 .allCakeDiv2 {
   display: flex;
   flex-direction: row;
@@ -796,6 +810,19 @@
   flex-direction: column;
   justify-content: center;
   width: 50%;
+  @include mobile {
+    width: 95%;
+  }
+  @include tablette {
+    width: 95%;
+  }
+}
+
+.cakeTableDiv2 {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  width: 100%;
   @include mobile {
     width: 95%;
   }
@@ -1219,7 +1246,7 @@
   display: flex;
   flex-direction: column;
   align-items: end;
-  width: 50%;
+  width: 33%;
   padding-left: 2em;
   padding-right: 2em;
   @include mobile {
@@ -1275,5 +1302,49 @@
   @include mobile {
     flex-direction: column;
     margin-left: 2em;
+  }
+}
+
+// Boutique
+
+.shopTitle2 {
+  @extend %heading-h2-style;
+}
+
+.shopTitle {
+  @extend %heading-h1-style;
+}
+
+.gridServices {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1fr;
+  margin: 2em;
+  margin-top: 0.5em;
+  padding: 1em;
+  gap: 2em;
+  @include mobile {
+    grid-template-columns: 1fr;
+    grid-template-rows: 1fr 1fr;
+    margin-top: 0.5em;
+  }
+}
+
+.gridCaseCameo {
+  border: 2px solid $text-color;
+  border-radius: 5px;
+  padding: 1em;
+}
+
+.gridCaseCameo2 {
+  border: 2px solid $text-color;
+  border-radius: 5px;
+  padding: 1em;
+  margin: 2.5em;
+  margin-top: 0.5em;
+  width: 50%;
+  justify-self: center;
+  @include mobile {
+    width: 80%;
   }
 }

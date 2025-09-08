@@ -174,6 +174,10 @@ function Home() {
             <p className="adresse">36 avenue LaFayette</p>
             <p className="adresse">17300 Rochefort</p>
           </div>
+          <div>
+            Ouvert du mercredi au samedi au 10h à 18h30 et le dimanche de 10h à
+            18h
+          </div>
           <div className="imageDevantureDiv">
             <img
               src={Exterieur1}

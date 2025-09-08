@@ -1,22 +1,41 @@
 import React from "react";
+import MenuComponent from "../components/MenuComponent";
+import ResaCameo from "../components/ResaCameo";
+import ContactComponent from "../components/ContactComponent";
+import CoutureCameo from "../components/CoutureCameo";
+import CommandeGateau from "../components/CommandeGateau";
+import Goodies from "../components/Goodies";
 
 function Shop() {
   return (
     <div className="page">
-      <h1>La boutique du Caméo</h1>
-      <h2>La carte du salon</h2>
-      <p>Découvrez toutes les douceurs à venir déguster sur place</p>
-      <h3>Carte des thés</h3>
-      <h3>Carte des pâtisseries</h3>
-      <h3>Carte des boissons chaudes</h3>
-      <h3>Carte des boissons froides</h3>
-      <h2>Les services</h2>
-      <h3>Réserver le Caméo</h3>
-      <h3>Commander des gâteaux</h3>
-      <h3>Les travaux de couture</h3>
-      <h2>Les goodies</h2>
-      <h3>Les cartes postales de</h3>
-      <h3>Les broderies de Frida K.O.</h3>
+      <h1 className="shopTitle">La Boutique du Caméo</h1>
+      <MenuComponent />
+      <h2 className="shopTitle2">Les Services du Caméo</h2>
+      <div className="gridServices">
+        <div className="gridCaseCameo">
+          <ResaCameo />
+        </div>
+        <div className="gridCaseCameo">
+          <CoutureCameo />
+        </div>
+      </div>
+      <div
+        className="gridCaseCameo"
+        style={{ margin: "2.5em", marginTop: "0.5em" }}
+      >
+        <CommandeGateau />
+      </div>
+      <div className="gridCaseCameo2">
+        <ContactComponent />
+      </div>
+      <h2 className="shopTitle2">Les goodies</h2>
+      <div
+        className="gridCaseCameo"
+        style={{ margin: "2.5em", marginTop: "0.5em" }}
+      >
+        <Goodies />
+      </div>
     </div>
   );
 }

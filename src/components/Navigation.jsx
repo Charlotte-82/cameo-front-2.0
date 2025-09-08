@@ -21,7 +21,7 @@ function Menu() {
           <a href="/boutique">Boutique</a>
         </p>
         <p className="itemMenu">
-          <a href="/404">Blog</a>
+          <a href="/404">CaméoScope</a>
         </p>
         <p className="itemMenu">
           <a href="/partenaires">Partenaires</a>

@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 
 function UserDataManagement() {
   const [users, setUsers] = useState([]);
-  const [cakes, setCakes] = useState([]);
+  const [allCakes, setAllCakes] = useState([]);
   const [form, setForm] = useState({
     lastname: "",
     firstname: "",
@@ -37,14 +37,29 @@ function UserDataManagement() {
   };
 
   const fetchCakes = () => {
-    fetch(`${API_BASE_URL}/cakes`)
-      .then((res) => {
-        if (!res.ok) {
-          throw new Error(`Erreur HTTP: ${res.status} ${res.statusText}`);
-        }
-        return res.json();
+    Promise.all([
+      fetch(`${API_BASE_URL}/fullcakes`).then((res) => res.json()),
+      fetch(`${API_BASE_URL}/cakes`).then((res) => res.json()),
+    ])
+      .then(([fullcakes, slicedcakes]) => {
+        const combinedCakes = [
+          ...fullcakes.map((cake) => ({
+            ...cake,
+            id_cake: `full-${cake.id}`, // identifiant unique
+            name: cake.name, // nom lisible
+            type: "full",
+            id: cake.id, // garde l’ID original pour comparer plus tard
+          })),
+          ...slicedcakes.map((cake) => ({
+            ...cake,
+            id_cake: `sliced-${cake.id_cake}`,
+            name: cake.name, // ⚠️ ajouté : sinon "undefined" !
+            type: "sliced",
+            id: cake.id_cake, // garde l’ID original pour comparer plus tard
+          })),
+        ];
+        setAllCakes(combinedCakes);
       })
-      .then(setCakes)
       .catch((err) => console.error("Erreur lors du fetch des gâteaux :", err));
   };
 
@@ -59,13 +74,22 @@ function UserDataManagement() {
     let url = `${API_BASE_URL}/users`;
     let method = "POST";
 
+    let cakeId = null;
+    let cakeType = null;
+
+    // Vérifie que l'utilisateur a choisi un gâteau
+    if (form.id_cake) {
+      [cakeType, cakeId] = form.id_cake.split("-");
+    }
+
     const userData = {
       lastname: form.lastname,
       firstname: form.firstname,
       email: form.email,
       tel: form.tel,
       newsletter: form.newsletter,
-      id_cake: form.id_cake,
+      cake_id: cakeId ? parseInt(cakeId) : null,
+      cake_type: cakeType || null,
       password: form.password,
       is_admin: form.is_admin,
     };
@@ -78,39 +102,21 @@ function UserDataManagement() {
 
     try {
       const response = await fetch(url, {
-        method: method,
-        headers: {
-          "Content-Type": "application/json",
-        },
+        method,
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify(userData),
       });
 
-      const textResponse = await response.text();
-      let result = {};
-      try {
-        result = JSON.parse(textResponse);
-      } catch (jsonParseError) {
-        if (response.status !== 204) {
-          console.warn("Réponse non JSON reçue du serveur:", textResponse);
-        }
-      }
-
       if (!response.ok) {
-        const errorMessage =
-          result.error ||
-          `Erreur HTTP: ${response.status} ${response.statusText}`;
-        throw new Error(errorMessage);
+        const errorData = await response.json().catch(() => ({}));
+        throw new Error(errorData.error || "Erreur lors de l’enregistrement");
       }
-
-      // console.log(
-      //   "Opération réussie. Message du serveur :",
-      //   result.message || "Aucun message spécifique."
-      // );
 
       fetchUsers();
     } catch (error) {
-      console.error("Erreur lors de l'envoi ou du rechargement :", error);
+      console.error(error);
     } finally {
+      // Reset du formulaire
       setForm({
         lastname: "",
         firstname: "",
@@ -126,16 +132,24 @@ function UserDataManagement() {
   };
 
   const handleEdit = (user) => {
+    let selectedCakeId = "";
+
+    if (user.cake_id && user.cake_type) {
+      // On reconstruit l'id unique pour le select
+      selectedCakeId = `${user.cake_type}-${user.cake_id}`;
+    }
+
     setForm({
-      lastname: user.lastname,
-      firstname: user.firstname,
-      email: user.email,
-      tel: user.tel,
-      newsletter: user.newsletter,
-      id_cake: user.id_cake,
-      password: user.password,
-      is_admin: user.is_admin,
+      lastname: user.lastname || "",
+      firstname: user.firstname || "",
+      email: user.email || "",
+      tel: user.tel || "",
+      newsletter: user.newsletter?.toString() || "0",
+      id_cake: selectedCakeId,
+      password: "",
+      is_admin: user.is_admin?.toString() || "0",
     });
+
     setEditingId(user.id_user);
   };
 
@@ -173,6 +187,20 @@ function UserDataManagement() {
       .catch((err) =>
         console.error("Erreur lors de la suppression de l'utilisateur :", err)
       );
+  };
+
+  const getCakeName = (cake_id, cake_type) => {
+    if (!cake_id || !cake_type) {
+      return "Non renseigné";
+    }
+
+    const cake = allCakes.find(
+      (c) => c.type === cake_type && c.id?.toString() === cake_id?.toString()
+    );
+
+    return cake
+      ? `${cake.name} ${cake.type === "full" ? "(Entier)" : "(À la part)"}`
+      : "Non renseigné";
   };
 
   return (
@@ -260,9 +288,10 @@ function UserDataManagement() {
                 required
               >
                 <option value="">--Choisissez un gâteau préféré--</option>
-                {cakes.map((cake) => (
+                {allCakes.map((cake) => (
                   <option key={cake.id_cake} value={cake.id_cake}>
-                    {cake.name}
+                    {cake.name} ({cake.type === "full" ? "Entier" : "À la part"}
+                    )
                   </option>
                 ))}
               </select>
@@ -338,7 +367,7 @@ function UserDataManagement() {
                         ? "Oui"
                         : "Non"}
                     </td>
-                    <td>{user.cake_name}</td>
+                    <td>{getCakeName(user.cake_id, user.cake_type)}</td>
                     <td>
                       {user.is_admin === "1" || user.is_admin === 1
                         ? "Oui"
@@ -370,7 +399,7 @@ function UserDataManagement() {
                     <h5 className="card-title">
                       {user.lastname} {user.firstname}
                     </h5>
-                    <p className="card-text">
+                    <div className="card-text">
                       <div className="itemDetail">
                         <span className="label">Email:</span>
                         <span className="value">{user.email}</span>
@@ -389,7 +418,9 @@ function UserDataManagement() {
                       </div>
                       <div className="itemDetail">
                         <span className="label">Gâteau préféré:</span>
-                        <span className="value">{user.cake_name}</span>
+                        <span className="value">
+                          {getCakeName(user.cake_id, user.cake_type)}
+                        </span>
                       </div>
                       <div className="itemDetail">
                         <span className="label">Admin ?:</span>
@@ -399,7 +430,7 @@ function UserDataManagement() {
                             : "Non"}
                         </span>
                       </div>
-                    </p>
+                    </div>
                     <button
                       onClick={() => handleEdit(user)}
                       style={{ marginRight: "1em" }}
@@ -444,7 +475,9 @@ function UserDataManagement() {
                   </div>
                   <div className="itemDetail">
                     <span className="label">Gâteau préféré:</span>
-                    <span className="value">{user.cake_name}</span>
+                    <span className="value">
+                      {getCakeName(user.cake_id, user.cake_type)}
+                    </span>
                   </div>
                   <div className="itemDetail">
                     <span className="label">Admin ?:</span>
