@@ -1225,9 +1225,12 @@
 .fourniDiv {
   display: flex;
   flex-direction: row;
-  flex-wrap: wrap;
+  flex-wrap: nowrap;
   margin-left: 1em;
   margin-right: 1em;
+  @include tablette {
+    flex-wrap: wrap;
+  }
   @include mobile {
     flex-direction: column;
   }
@@ -1240,6 +1243,10 @@
   width: 50%;
   padding-left: 2em;
   padding-right: 2em;
+  @include tablette {
+    padding-left: 1em;
+    padding-right: 1em;
+  }
 }
 
 .teaDiv2 {
@@ -1249,6 +1256,12 @@
   width: 33%;
   padding-left: 2em;
   padding-right: 2em;
+  @include tablette {
+    align-items: start;
+    margin: 2em;
+    padding-left: 1em;
+    padding-right: 1em;
+  }
   @include mobile {
     width: 100%;
   }

@@ -5,6 +5,7 @@ import Mafiore from "../assets/images/mafiore.jpg";
 import Frida from "../assets/images/frida.png";
 import House from "../assets/images/house.png";
 import Mutyne from "../assets/images/logomutyne.png";
+import Meo from "../assets/images/Logo_meo.png";
 
 function Partnership() {
   return (
@@ -41,6 +42,36 @@ function Partnership() {
                   href="https://tea-magine.com/"
                 >
                   <img src={Tea} alt="Logo de Tea'Magine" className="tImage" />
+                </a>
+              </div>
+            </div>
+          </div>
+          <div className="teaDiv">
+            <a
+              className="partnerLink"
+              target="_blank"
+              href="https://tea-magine.com/"
+            >
+              <h3>MÉO</h3>
+            </a>
+            <div>
+              <p className="fourniParaph">
+                Torréfacteur depuis 1928; Méo vous fait profiter de son
+                savoir-faire artisanal et de produits d'exception. Toutes les
+                étapes de la confection du café sont soigneusement réalisées.
+              </p>
+              <p className="fourniParaph">
+                Les cafés Méo sont garantis issus d'une agriculture biologique
+                et adhèrent à la SCAA qui lutte pour les droits de l'homme et
+                contre la corruption.
+              </p>
+              <div className="tImageDiv">
+                <a
+                  className="partnerLink"
+                  target="_blank"
+                  href="https://tea-magine.com/"
+                >
+                  <img src={Meo} alt="Logo de Tea'Magine" className="tImage" />
                 </a>
               </div>
             </div>
