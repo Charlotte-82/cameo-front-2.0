@@ -246,7 +246,7 @@ function EventDataManagement() {
         <div className="userTableDiv">
           <h3>Liste des événements</h3>
 
-          <table className="userTable">
+          <table className="userTable2">
             <thead>
               <tr>
                 {/* <th>ID</th> */}
@@ -281,7 +281,7 @@ function EventDataManagement() {
               ))}
             </tbody>
           </table>
-          <div className="userCard">
+          {/* <div className="userCard">
             <div
               className="card"
               style={{
@@ -336,7 +336,7 @@ function EventDataManagement() {
                 </div>
               ))}
             </div>
-          </div>
+          </div> */}
           <ul className="userList">
             {event.map((event) => (
               <li key={event.id_event} className="userItem">

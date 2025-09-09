@@ -9,12 +9,12 @@ function MenuComponent() {
   const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
   const collectionsData = [
-    { id: 16, name: "Pâtisseries" },
-    { id: 19, name: "Boissons chaudes" },
-    { id: 18, name: "Boissons froides" },
-    { id: 22, name: "Carte des thés et Infusions" },
-    { id: 21, name: "Offre de saison" },
-    { id: 20, name: "Nouveautés" },
+    { id: 1, name: "Pâtisseries" },
+    { id: 3, name: "Boissons chaudes" },
+    { id: 4, name: "Boissons froides" },
+    { id: 2, name: "Carte des Thés et Infusions" },
+    { id: 5, name: "Offre de saison" },
+    { id: 6, name: "Nouveautés" },
   ];
 
   const getProductId = (product) => {
@@ -99,7 +99,7 @@ function MenuComponent() {
                 <ul className="menuModale">
                   {modalData.produits.map((item, index) => (
                     <li key={`${item.type_produit}-${getProductId(item)}`}>
-                      {modalData.info_collection.id === 20 &&
+                      {modalData.info_collection.id === 6 &&
                         item.ingredients && (
                           <p className="NouveauteText">
                             C'est tout nouveau tout chaud ! Venez le découvrir
@@ -108,17 +108,17 @@ function MenuComponent() {
                         )}
                       <div className="itemMenuDiv">
                         <span className="itemGauche">{item.name}</span>
-                        {modalData.info_collection.id !== 22 &&
-                          modalData.info_collection.id !== 20 && (
+                        {modalData.info_collection.id !== 2 &&
+                          modalData.info_collection.id !== 6 && (
                             <span className="itemDroit">{item.price}€</span>
                           )}
                       </div>
-                      {modalData.info_collection.id === 22 &&
+                      {modalData.info_collection.id === 2 &&
                         item.ingredients && (
                           <p className="ingredientsText">{item.ingredients}</p>
                         )}
 
-                      {modalData.info_collection.id === 20 &&
+                      {modalData.info_collection.id === 6 &&
                         item.ingredients && (
                           <p className="ingredientsText">{item.ingredients}</p>
                         )}

@@ -1166,6 +1166,9 @@ strong {
 .FormCommande input[type="email"],
 .FormCommande textarea {
   width: 25em;
+  @include tablette {
+    width: 21em;
+  }
   @include mobile {
     width: 18em;
   }
@@ -1192,8 +1195,14 @@ strong {
   display: flex;
   flex-direction: row;
   justify-content: space-around;
+  @include mobile {
+    flex-direction: column;
+  }
 }
 
 .imgArtiste {
   height: 300px;
+  @include tablette {
+    height: 200px;
+  }
 }

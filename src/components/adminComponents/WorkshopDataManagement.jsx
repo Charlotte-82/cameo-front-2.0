@@ -264,7 +264,7 @@ function WorkshopDataManagement() {
         <div className="userTableDiv">
           <h3>Liste des ateliers</h3>
 
-          <table className="userTable">
+          <table className="userTable2">
             <thead>
               <tr>
                 {/* <th>ID</th> */}
@@ -301,20 +301,12 @@ function WorkshopDataManagement() {
               ))}
             </tbody>
           </table>
-          <div className="userCard">
-            <div
-              className="card"
-              style={{
-                width: "90%",
-                display: "flex",
-                flexDirection: "row",
-                flexWrap: "wrap",
-              }}
-            >
-              {workshop.map((workshop) => (
+          {/* <div className="userCard">
+            {workshop.map((workshop) => (
+              <div className="card" style={{ width: "30%", margin: "0.5em" }}>
                 <div
                   key={workshop.id_workshop}
-                  className="card-body"
+                  className="card-body UserCardBody"
                   style={{ width: "30%" }}
                 >
                   <h5 className="card-title">{workshop.title}</h5>
@@ -348,17 +340,20 @@ function WorkshopDataManagement() {
                   </p>
                   <button
                     onClick={() => handleEdit(workshop)}
-                    style={{ marginRight: "1em" }}
+                    style={{ marginRight: "1em", width: "7em" }}
                   >
                     Modifier
                   </button>
-                  <button onClick={() => handleDelete(workshop.id_workshop)}>
+                  <button
+                    onClick={() => handleDelete(workshop.id_workshop)}
+                    style={{ width: "7em" }}
+                  >
                     Supprimer
                   </button>
                 </div>
-              ))}
-            </div>
-          </div>
+              </div>
+            ))}
+          </div> */}
           <ul className="userList">
             {workshop.map((workshop) => (
               <li key={workshop.id_workshop} className="userItem">

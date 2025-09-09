@@ -384,18 +384,15 @@ function UserDataManagement() {
             </tbody>
           </table>
           <div className="userCard">
-            <div
-              className="card"
-              style={{
-                width: "90%",
-                display: "flex",
-                flexDirection: "row",
-              }}
-            >
-              {users
-                .filter((user) => user.id_user !== 3)
-                .map((user) => (
-                  <div key={user.id_user} className="card-body">
+            {users
+              .filter((user) => user.id_user !== 3)
+              .map((user) => (
+                <div
+                  key={user.id_user}
+                  className="card"
+                  style={{ width: "30%", margin: "0.5em" }}
+                >
+                  <div className="card-body UserCardBody">
                     <h5 className="card-title">
                       {user.lastname} {user.firstname}
                     </h5>
@@ -433,17 +430,21 @@ function UserDataManagement() {
                     </div>
                     <button
                       onClick={() => handleEdit(user)}
-                      style={{ marginRight: "1em" }}
+                      style={{ marginRight: "1em", width: "7em" }}
                     >
                       Modifier
                     </button>
-                    <button onClick={() => handleDelete(user.id_user)}>
+                    <button
+                      onClick={() => handleDelete(user.id_user)}
+                      style={{ width: "7em" }}
+                    >
                       Supprimer
                     </button>
                   </div>
-                ))}
-            </div>
+                </div>
+              ))}
           </div>
+
           <ul className="userList">
             {users
               .filter((user) => user.id_user !== 3)

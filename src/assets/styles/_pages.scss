@@ -1015,6 +1015,15 @@
   display: none;
 }
 
+.userTable2 {
+  @include tablette {
+    display: none;
+  }
+  @include mobile {
+    display: none;
+  }
+}
+
 .userList {
   @include desktop {
     display: none;
@@ -1031,12 +1040,18 @@
 .userCard {
   display: flex;
   flex-wrap: wrap;
+  gap: 1em;
   @include tablette {
     display: none;
   }
   @include mobile {
     display: none;
   }
+}
+
+.UserCardBody {
+  display: flex;
+  flex-direction: column;
 }
 
 .userTable th {

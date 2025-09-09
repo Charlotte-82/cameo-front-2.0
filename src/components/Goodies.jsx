@@ -38,7 +38,7 @@ function Goodies() {
             />
           </div>
         </div>
-        <div className="divArtisteGoodies">
+        <div className="divArtisteGoodies" style={{ display: "none" }}>
           <h3>Les broderies de Frida K.O.</h3>
         </div>
       </div>
