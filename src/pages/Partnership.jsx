@@ -84,7 +84,7 @@ function Partnership() {
             >
               <h3>LA VACHE CHARENTAISE</h3>
             </a>
-            <div>
+            <div className="VacheDiv">
               <p className="fourniParaph">
                 Situé en Charente-Maritime, La Vache Charentaise propose toute
                 une gamme de produits à base de laits issus de son propre
