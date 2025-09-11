@@ -1306,7 +1306,12 @@
 
 .teaDiv2 a,
 .teaDivMut a {
-  justify-self: end;
+  width: 100%;
+}
+
+.teaDiv2 a h3,
+.teaDivMut a h3 {
+  text-align: right;
 }
 
 .teaDivMut {
@@ -1332,6 +1337,9 @@
   display: flex;
   justify-content: start;
   margin-bottom: 2em;
+  @include tablette {
+    margin-bottom: 0.5em;
+  }
 }
 
 .tImageDiv2 {
