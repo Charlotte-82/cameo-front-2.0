@@ -170,15 +170,17 @@ function Home() {
               className="carteGoogle"
             ></iframe>
           </div>
-          <div className="adresseDiv">
-            <p className="adresse">36 avenue LaFayette</p>
-            <p className="adresse">17300 Rochefort</p>
-          </div>
-          <div>
-            <p style={{ color: "#582108", textAlign: "center" }}>
-              Ouvert du mercredi au samedi au 10h à 18h30 et le dimanche de 10h
-              à 18h
-            </p>
+          <div style={{ display: "flex", flexDirection: "column" }}>
+            <div className="adresseDiv">
+              <p className="adresse">36 avenue LaFayette</p>
+              <p className="adresse">17300 Rochefort</p>
+            </div>
+            <div>
+              <p style={{ color: "#582108", textAlign: "center" }}>
+                Ouvert du mercredi au samedi au 10h à 18h30 et le dimanche de
+                10h à 18h
+              </p>
+            </div>
           </div>
           <div className="imageDevantureDiv">
             <img

@@ -189,7 +189,7 @@ function Partnership() {
             <a
               className="partnerLink"
               target="_blank"
-              href="https://www.mafiore.fr/"
+              href="https://www.instagram.com/mutyn.e/"
             >
               <h3>MUTYN.E</h3>
             </a>

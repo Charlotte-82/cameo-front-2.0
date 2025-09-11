@@ -33,7 +33,6 @@ function AuthModal({ onClose, onLoginSuccess }) {
           slicedRes.json(),
         ]);
 
-        // On combine les deux types
         const combinedCakes = [
           ...fullCakes.map((c) => ({
             ...c,
@@ -79,8 +78,8 @@ function AuthModal({ onClose, onLoginSuccess }) {
 
     const userData = {
       ...form,
-      cake_id: cakeId, // ID numérique
-      cake_type: cakeType, // "full" ou "sliced"
+      cake_id: cakeId,
+      cake_type: cakeType,
       is_admin: "0",
     };
 
