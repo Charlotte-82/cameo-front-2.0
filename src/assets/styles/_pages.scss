@@ -1264,6 +1264,13 @@
   }
 }
 
+.VacheDiv {
+  @include tablette {
+    display: flex;
+    flex-direction: row;
+  }
+}
+
 .teaDiv2 {
   display: flex;
   flex-direction: column;
@@ -1273,6 +1280,7 @@
   padding-right: 2em;
   @include tablette {
     align-items: start;
+    width: 45%;
     margin: 2em;
     padding-left: 1em;
     padding-right: 1em;

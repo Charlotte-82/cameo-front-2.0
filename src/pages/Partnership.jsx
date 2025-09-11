@@ -5,7 +5,7 @@ import Mafiore from "../assets/images/mafiore.jpg";
 import Frida from "../assets/images/frida.png";
 import House from "../assets/images/house.png";
 import Mutyne from "../assets/images/logomutyne.png";
-import Meo from "../assets/images/Logo_meo.png";
+import Meo from "../assets/images/logo_meo_blanc.png";
 
 function Partnership() {
   return (
