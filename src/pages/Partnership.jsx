@@ -76,7 +76,7 @@ function Partnership() {
               </div>
             </div>
           </div>
-          <div className="teaDiv">
+          <div className="teaDivVache">
             <a
               className="partnerLink"
               target="_blank"
@@ -185,7 +185,7 @@ function Partnership() {
               </div>
             </div>
           </div>
-          <div className="teaDiv2">
+          <div className="teaDivMut">
             <a
               className="partnerLink"
               target="_blank"
@@ -193,7 +193,7 @@ function Partnership() {
             >
               <h3>MUTYN.E</h3>
             </a>
-            <div>
+            <div className="VacheDiv">
               <p className="fourniParaph2">
                 Mutyn.e aime le cinéma et s'en inspire pour créer des oeuvres
                 authentiques et sans détour. Les traits francs et le couleurs
