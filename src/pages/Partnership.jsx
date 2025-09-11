@@ -85,17 +85,20 @@ function Partnership() {
               <h3>LA VACHE CHARENTAISE</h3>
             </a>
             <div className="VacheDiv">
-              <p className="fourniParaph">
-                Situé en Charente-Maritime, La Vache Charentaise propose toute
-                une gamme de produits à base de laits issus de son propre
-                laboratoire de fabrication. Impliquée dans le bien-être de tous
-                et soucieuse de la qualité de ses produits, La Vache Charentaise
-                s'est engagée aux côtés de l'association Bleu-Blanc-Coeur.
-              </p>
-              <p className="fourniParaph">
-                Retrouvez la crème glacée de la Vache Charentaise au Caméo
-                durant l'été dans de délicieux milkshakes !
-              </p>
+              <div style={{ display: "flex", flexDirection: "column" }}>
+                <p className="fourniParaph">
+                  Situé en Charente-Maritime, La Vache Charentaise propose toute
+                  une gamme de produits à base de laits issus de son propre
+                  laboratoire de fabrication. Impliquée dans le bien-être de
+                  tous et soucieuse de la qualité de ses produits, La Vache
+                  Charentaise s'est engagée aux côtés de l'association
+                  Bleu-Blanc-Coeur.
+                </p>
+                <p className="fourniParaph">
+                  Retrouvez la crème glacée de la Vache Charentaise au Caméo
+                  durant l'été dans de délicieux milkshakes !
+                </p>
+              </div>
               <div className="tImageDiv">
                 <a
                   className="partnerLink"
@@ -194,15 +197,17 @@ function Partnership() {
               <h3>MUTYN.E</h3>
             </a>
             <div className="VacheDiv">
-              <p className="fourniParaph2">
-                Mutyn.e aime le cinéma et s'en inspire pour créer des oeuvres
-                authentiques et sans détour. Les traits francs et le couleurs
-                vives animent ces images d'une intention sincère.
-              </p>
-              <p className="fourniParaph2">
-                À offrir aux autres ou à soi, n'hésitez pas à passer au café
-                pour acquérir une de ces magnifiques cartes.
-              </p>
+              <div style={{ display: "flex", flexDirection: "column" }}>
+                <p className="fourniParaph2">
+                  Mutyn.e aime le cinéma et s'en inspire pour créer des oeuvres
+                  authentiques et sans détour. Les traits francs et le couleurs
+                  vives animent ces images d'une intention sincère.
+                </p>
+                <p className="fourniParaph2">
+                  À offrir aux autres ou à soi, n'hésitez pas à passer au café
+                  pour acquérir une de ces magnifiques cartes.
+                </p>
+              </div>
               <div className="tImageDiv2">
                 <a
                   className="partnerLink"
