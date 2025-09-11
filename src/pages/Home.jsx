@@ -177,8 +177,10 @@ function Home() {
             </div>
             <div>
               <p style={{ color: "#582108", textAlign: "center" }}>
-                Ouvert du mercredi au samedi au 10h à 18h30 et le dimanche de
-                10h à 18h
+                Ouvert du mercredi au samedi au 10h à 18h30
+              </p>
+              <p style={{ color: "#582108", textAlign: "center" }}>
+                et le dimanche de 10h à 18h
               </p>
             </div>
           </div>
