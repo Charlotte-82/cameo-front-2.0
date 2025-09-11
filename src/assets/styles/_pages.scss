@@ -1309,6 +1309,12 @@
   width: 100%;
 }
 
+.teaDiv2 a:hover,
+.teaDivMut a:hover,
+.teaDiv a:hover {
+  cursor: pointer;
+}
+
 .teaDiv2 a h3,
 .teaDivMut a h3 {
   text-align: right;
@@ -1333,13 +1339,16 @@
   }
 }
 
+.tImageDiv:hover,
+.tImageDiv2:hover,
+.tImageDiv3:hover {
+  cursor: pointer;
+}
+
 .tImageDiv {
   display: flex;
   justify-content: start;
   margin-bottom: 2em;
-  @include tablette {
-    margin-bottom: 0.5em;
-  }
 }
 
 .tImageDiv2 {

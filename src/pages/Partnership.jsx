@@ -236,7 +236,13 @@ function Partnership() {
             </a>
           </div>
           <div>
-            <h3 style={{ textAlign: "left" }}>LA HOUSE </h3>
+            <a
+              className="partnerLink"
+              target="_blank"
+              href="https://lahouse17.wordpress.com/"
+            >
+              <h3 style={{ textAlign: "left" }}>LA HOUSE </h3>
+            </a>
             <p className="fourniParaph">
               Association LGBTQIA+ Rochelaise, La House 17 organise des
               événements festifs pour la communauté et ses allié·e·s. Elle est
