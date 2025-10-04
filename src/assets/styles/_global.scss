@@ -1,21 +1,21 @@
 html {
   background-color: $light-color;
   height: 100%;
-  margin-bottom: 0;
+  margin: 0;
 }
 
 body {
   font-family: $font-main;
   background-color: $light-color;
   height: 100%;
-  margin-bottom: 0;
+  margin: 0;
 }
 
 %heading-h1-style {
-  color: $logo-color;
+  color: $text-color;
   padding: 0.5em;
   letter-spacing: 0.1em;
-  font-size: 4em;
+  font-size: 3em;
   font-family: $font-titleh1;
   text-align: center;
   @include tablette {

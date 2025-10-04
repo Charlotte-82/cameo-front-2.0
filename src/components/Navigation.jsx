@@ -15,7 +15,13 @@ function Menu() {
       </button>
       <div className={`menu ${isOpen ? "open" : ""}`}>
         <p className="itemMenu">
-          <a href="/agenda">Programme</a>
+          <a href="/">Accueil</a>
+        </p>
+        <p className="itemMenu">
+          <a href="/apropos">À propos</a>
+        </p>
+        <p className="itemMenu">
+          <a href="/agenda">Agenda</a>
         </p>
         <p className="itemMenu">
           <a href="/boutique">Boutique</a>

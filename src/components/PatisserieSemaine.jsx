@@ -46,40 +46,37 @@ function PatisserieSemaine() {
   };
 
   return (
-    <div className="patSemaine">
-      <div className="imagePatSemaineDiv">
-        <img
-          src={`${API_BASE}/uploads/${media.photo_filename}`}
-          alt={wpastry.name}
-          className="imagePatisserieSemaine"
-        />
+    <div>
+      <p style={{ textAlign: "center", fontSize: "large" }}>inspirée de</p>
+      <div className="infosFilm">
+        <p style={{ fontStyle: "italic", fontSize: "x-large" }}>
+          {wpastry.film_title}
+        </p>
+        <p>
+          {wpastry.film_director} ({wpastry.film_release_date})
+        </p>
       </div>
-      <div className="cadrePat">
-        <h2 className="titrePatSemaine">{wpastry.name}</h2>
-        <p className="titrePatSemaine">{wpastry.price} €</p>
-      </div>
-      <div className="globalFilmDiv">
-        <div className="infosFilm">
-          <p className="titreFilm">{wpastry.film_title} </p>
-          <span className="realFilm"> {wpastry.film_director} </span>
-          <span className="dateFilm"> ({wpastry.film_release_date})</span>
+      <div className="patSemaineFlex">
+        {/* Image pâtisserie (gauche) */}
+        <div className="cercle imageCercle">
+          <img
+            src={`${API_BASE}/uploads/${media.photo_filename}`}
+            alt={wpastry.name}
+          />
         </div>
-        {media.video_filename && (
-          <div className="videoExtrait">
+
+        {/* Vidéo (milieu) */}
+        <div className="cercle videoCercle">
+          {media.video_filename && (
             <video controls>
               <source
                 src={`${API_BASE}/uploads/${media.video_filename}`}
                 type="video/mp4"
               />
             </video>
-          </div>
-        )}
-
-        {!media.video_filename && media.youtube_url && (
-          <div className="videoExtrait">
+          )}
+          {!media.video_filename && media.youtube_url && (
             <iframe
-              width="560"
-              height="315"
               src={`https://www.youtube.com/embed/${getYoutubeId(
                 media.youtube_url
               )}`}
@@ -88,8 +85,14 @@ function PatisserieSemaine() {
               allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
               allowFullScreen
             ></iframe>
-          </div>
-        )}
+          )}
+        </div>
+
+        {/* Infos pâtisserie (droite) */}
+        <div className="cercle infosCercle">
+          <h2 className="pastryName">{wpastry.name}</h2>
+          <p className="pastryPrice">{wpastry.price} €</p>
+        </div>
       </div>
     </div>
   );

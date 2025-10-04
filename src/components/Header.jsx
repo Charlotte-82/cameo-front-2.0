@@ -43,6 +43,11 @@ function Header() {
         ) : (
           <i className="bi bi-person-circle" onClick={toggleModal}></i>
         )}
+        <div className="iconE">
+          <a href="mailto:lecameo17@gmail.com">
+            <i className="bi bi-envelope"></i>
+          </a>
+        </div>
       </div>
       <div className="iconFB">
         <a
@@ -62,7 +67,9 @@ function Header() {
           />
         </a>
       </div>
+
       <Navigation />
+      <hr className="NavigLigne"></hr>
       {isModalOpen && (
         <AuthModal onClose={toggleModal} onLoginSuccess={onLoginSuccess} />
       )}

@@ -1,11 +1,13 @@
 // Home
 
 .page {
-  margin-bottom: 0;
+  margin: 0;
   @extend %component-style;
+  background-color: $light-color;
+  width: 100%;
 }
 
-.home *:last-child {
+.page *:last-child {
   margin-bottom: 0;
 }
 
@@ -17,25 +19,46 @@
 
 .bande1 h1 {
   @extend %heading-h1-style;
+  padding-bottom: 0;
+  margin-bottom: 0;
 }
 
 // home-bande 2
 
-.bande2 {
-  border: solid 5px $text-color;
+.bande2,
+.bande4 {
+  display: flex;
+  flex-direction: column;
+  border: solid 3px $text-color;
   border-radius: 25px;
-  padding-left: 2em;
+  background-color: whitesmoke;
+  align-items: center;
+  margin-bottom: 2em !important;
+  padding: 2em;
   @extend %bande-style;
+  width: 45%;
+  @media screen and (max-width: 1441px) and (min-width: 1025px) {
+    width: 90%;
+  }
   @include mobile {
+    width: 100%;
     padding: 0.8em;
+    margin: 0;
+  }
+  @include tablette {
+    width: 100%;
+    padding: 0.8em;
+    margin: 0;
   }
 }
 
-.bande2:hover {
-  border: solid 7px $darkorange-color;
+.bande2:hover,
+.bande4:hover {
+  border: solid 3px $darkorange-color;
 }
 
-.bande2 h2 {
+.bande2 h2,
+.bande4 h2 {
   color: $text-color;
   font-weight: 900;
   letter-spacing: 0.1em;
@@ -46,209 +69,41 @@
   }
 }
 
-.bande2 h2:hover {
+.bande2 h2:hover,
+.bande4 h2:hover {
   color: $darkorange-color;
   cursor: default;
 }
 
-// home-bande 3
-
-.bande3Mobile {
+.bande23 {
   display: flex;
-  justify-content: center;
-  flex-direction: column;
-  @include desktop {
-    display: none;
-  }
-  @include tablette {
-    display: none;
-  }
-}
-
-.bande3Mobile h2 {
-  font-weight: 700;
-  color: $text-color;
-  text-align: center;
-}
-
-.bande3 {
-  background-color: $light-color;
-  padding-top: 1.5rem;
-  padding-bottom: 1.5rem;
-  padding-left: 1.5em;
-  padding-right: 1.5em;
-  @extend %bande-style;
-  @include mobile {
-    display: none;
-  }
-}
-
-.bande3 h2 {
-  font-weight: 700;
-  color: $text-color;
-  text-align: center;
-}
-
-.bande3 h3 {
-  color: $text-color;
-  letter-spacing: 0.1em;
-  text-align: start;
-  @include tablette {
-    font-size: x-large;
-  }
-  @include mobile {
-    font-size: larger;
-  }
-}
-
-.cadreDef1 {
-  border: solid 3px $text-color;
-  border-radius: 10px;
-  width: 100%;
-  display: flex;
-  justify-self: center;
-  background-color: #fff2ee;
-  margin-bottom: 1.5rem;
-  padding: 1.5rem;
-
-  @include desktop {
-    flex-direction: row;
-    font-size: x-large;
-  }
-  @include tablette {
-    font-size: large;
-  }
-}
-
-.sousTitre {
-  opacity: 50%;
-  padding-right: 1rem;
-  padding-left: 1rem;
-  color: $darkorange-color;
-}
-
-.cadreDef1 p {
-  line-height: 1.2em;
-  @include desktop {
-    line-height: 1.5em;
-  }
-}
-
-.texteDef {
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-}
-
-.photoCadre1 {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  opacity: 85%;
-  @include mobile {
-    display: none;
-  }
-}
-
-.photoDef1 {
-  display: flex;
-  width: 100%;
-  height: 100%;
-  align-self: center;
-  justify-self: center;
-  padding-left: 1em;
-  padding-right: 1em;
-  @include mobile {
-    display: none;
-  }
-  @include desktop {
-    width: 60%;
-  }
-}
-
-.texteParaph {
-  width: 100%;
-  padding-right: 1rem;
-  @include tablette {
-    font-size: medium;
-  }
-}
-
-.divArticle h3 {
-  color: $text-color;
-  letter-spacing: 0.1em;
-  text-align: center;
-}
-
-.imageArticle1 {
   width: 80%;
-  height: auto;
-  object-fit: contain;
-  border: solid 2px $text-color;
-  border-radius: 10px;
-}
-
-.nomJournal {
-  color: $darkorange-color;
-  font-family: $font-titleh1;
-  font-size: x-large;
-}
-
-.imageArticle {
-  width: 300px;
-  height: auto;
-  overflow: hidden;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-}
-
-.imageArticle a {
-  text-decoration: none;
-  color: $text-color;
-  text-align: center;
-  @include desktop {
-    font-size: x-large;
-  }
-  @include tablette {
-    font-size: small;
+  justify-self: center;
+  @media screen and (max-width: 1441px) and (min-width: 1025px) {
+    flex-direction: column;
   }
   @include mobile {
-    font-size: xx-small;
+    flex-direction: column;
   }
-}
-
-.imageArticle a:hover {
-  color: $darkorange-color;
+  @include tablette {
+    flex-direction: column;
+  }
 }
 
 // home-bande 4
 
-.bande4 {
-  @extend %bande-style;
-}
-
-.bande4 h2 {
-  font-weight: 700;
-  color: $text-color;
-  text-align: center;
-  padding-top: 1em;
-}
-
 .bande4Div {
   display: flex;
-  flex-direction: row;
-  padding: 2em;
+  flex-direction: column;
   justify-content: center;
+  align-items: center;
+  width: 95%;
   @include tablette {
     flex-direction: column;
     width: 80%;
     justify-self: center;
-
     align-items: center;
   }
-
   @include mobile {
     flex-direction: column;
   }
@@ -263,8 +118,8 @@
 }
 
 .carteGoogleDiv {
-  width: 30%;
-  height: 18em;
+  width: 90%;
+  height: 25em;
   display: flex;
 
   @include tablette {
@@ -293,8 +148,8 @@
 }
 
 .imageDevantureDiv {
-  width: 30%;
-  height: 18em;
+  width: auto;
+  height: 30em;
   display: flex;
   justify-content: center;
   align-content: center;
@@ -320,48 +175,6 @@
     width: 80%;
     margin-top: 1em;
     margin-bottom: 1em;
-  }
-}
-
-.nomClient {
-  color: $text-color;
-  font-size: x-large;
-  text-align: center;
-}
-
-.starRate {
-  display: flex;
-  justify-content: center;
-}
-
-.avisGoogle {
-  color: $dark-color;
-  text-align: center;
-  font-size: medium;
-}
-
-.avis h3 {
-  text-align: center;
-  color: $text-color;
-}
-
-.bi-star-fill {
-  color: $logo-color;
-}
-
-.avis {
-  padding: 1.5em;
-  @include mobile {
-    display: none;
-  }
-}
-
-.avisMobileDiv {
-  @include desktop {
-    display: none;
-  }
-  @include tablette {
-    display: none;
   }
 }
 
@@ -1400,6 +1213,8 @@
 
 .shopTitle2 {
   @extend %heading-h2-style;
+  color: $logo-color;
+  margin-top: 1em;
 }
 
 .shopTitle {
@@ -1425,6 +1240,7 @@
   border: 2px solid $text-color;
   border-radius: 5px;
   padding: 1em;
+  background-color: whitesmoke;
 }
 
 .gridCaseCameo2 {
@@ -1438,4 +1254,268 @@
   @include mobile {
     width: 80%;
   }
+  background-color: whitesmoke;
+}
+
+// À propos
+
+.bande3Mobile {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  @include desktop {
+    display: none;
+  }
+  @include tablette {
+    display: none;
+  }
+}
+
+.bande3Mobile h2 {
+  font-weight: 700;
+  color: $text-color;
+  text-align: center;
+}
+
+.bande3 {
+  background-color: $light-color;
+  padding-top: 1.5rem;
+  padding-bottom: 1.5rem;
+  padding-left: 1.5em;
+  padding-right: 1.5em;
+  @extend %bande-style;
+  @include tablette {
+    padding-bottom: 0;
+    margin-bottom: 0;
+  }
+}
+
+.bande3 h2 {
+  font-weight: 700;
+  color: $text-color;
+  text-align: center;
+}
+
+.bande3 h3 {
+  color: $text-color;
+  letter-spacing: 0.1em;
+  text-align: start;
+  @include tablette {
+    font-size: x-large;
+  }
+  @include mobile {
+    font-size: larger;
+  }
+}
+
+.cadreDef1 {
+  border: solid 3px $text-color;
+  border-radius: 10px;
+  width: 70%;
+  display: flex;
+  justify-self: center;
+  background-color: #fff2ee;
+  margin-bottom: 1.5rem;
+  padding: 1.5rem;
+  @include desktop {
+    flex-direction: row;
+    font-size: x-large;
+  }
+  @include tablette {
+    font-size: large;
+  }
+  @include mobile {
+    width: 100%;
+  }
+}
+
+.sousTitre {
+  opacity: 50%;
+  padding-right: 1rem;
+  padding-left: 1rem;
+  color: $darkorange-color;
+}
+
+.cadreDef1 p {
+  line-height: 1.2em;
+  @include desktop {
+    line-height: 1.5em;
+  }
+}
+
+.texteDef {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.photoCadre1 {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 85%;
+  @include mobile {
+    display: none;
+  }
+  @include tablette {
+    display: none;
+  }
+}
+
+.photoDef1 {
+  display: flex;
+  width: 100%;
+  height: 100%;
+  align-self: center;
+  justify-self: center;
+  padding-left: 1em;
+  padding-right: 1em;
+  @include mobile {
+    display: none;
+  }
+  @include tablette {
+    display: none;
+  }
+  @include desktop {
+    width: 60%;
+  }
+}
+
+.texteParaph {
+  width: 100%;
+  padding-right: 1rem;
+  @include tablette {
+    font-size: medium;
+  }
+}
+
+.divArticle {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
+  @include mobile {
+    flex-direction: column;
+  }
+}
+
+.titreArticles {
+  width: 100%;
+  padding-top: 1em;
+}
+
+.divArticle h3 {
+  color: $text-color;
+  letter-spacing: 0.1em;
+  text-align: center;
+}
+
+.imageArticle {
+  display: flex;
+  flex-direction: column;
+  width: 45%;
+  height: auto;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  @include mobile {
+    width: 100%;
+  }
+}
+
+.blocArticles {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  @include mobile {
+    flex-direction: column;
+  }
+}
+
+.imageArticle1 {
+  width: 80%;
+  height: auto;
+  object-fit: contain;
+  border: solid 2px $text-color;
+  border-radius: 10px;
+}
+
+.nomJournal {
+  color: $darkorange-color;
+  font-family: $font-titleh1;
+  font-size: x-large;
+}
+
+.imageArticle a {
+  text-decoration: none;
+  color: $text-color;
+  text-align: center;
+  @include desktop {
+    font-size: x-large;
+  }
+  @include tablette {
+    font-size: small;
+  }
+  @include mobile {
+    font-size: xx-small;
+  }
+}
+
+.lienArticle {
+  font-size: larger;
+  @include tablette {
+    font-size: medium;
+  }
+}
+
+.imageArticle a:hover {
+  color: $darkorange-color;
+}
+
+.nomClient {
+  color: $text-color;
+  font-size: x-large;
+  text-align: center;
+}
+
+.starRate {
+  display: flex;
+  justify-content: center;
+}
+
+.avisGoogle {
+  color: $dark-color;
+  text-align: center;
+  font-size: medium;
+}
+
+.avis h3 {
+  text-align: center;
+  color: $text-color;
+}
+
+.bi-star-fill {
+  color: $logo-color;
+}
+
+.avis {
+  padding: 1.5em;
+  @include mobile {
+    display: none;
+  }
+}
+
+.avisMobileDiv {
+  @include desktop {
+    display: none;
+  }
+  @include tablette {
+    display: none;
+  }
+}
+
+.bande3 h1 {
+  @extend %heading-h1-style;
 }

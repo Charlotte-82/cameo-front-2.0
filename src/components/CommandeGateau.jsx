@@ -2,8 +2,8 @@ import React, { useEffect, useState } from "react";
 
 function CommandeGateau() {
   const [fullCakes, setFullCakes] = useState([]);
-  const [selectedCake, setSelectedCake] = useState(null);
-
+  // const [selectedCake, setSelectedCake] = useState(null);
+  const [activeIndex, setActiveIndex] = useState(null);
   const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
   useEffect(() => {
@@ -15,12 +15,16 @@ function CommandeGateau() {
       );
   }, []);
 
-  const openModal = (cake) => {
-    setSelectedCake(cake);
-  };
+  // const openModal = (cake) => {
+  //   setSelectedCake(cake);
+  // };
 
-  const closeModal = () => {
-    setSelectedCake(null);
+  // const closeModal = () => {
+  //   setSelectedCake(null);
+  // };
+
+  const toggleActive = (index) => {
+    setActiveIndex(activeIndex === index ? null : index);
   };
 
   return (
@@ -32,7 +36,29 @@ function CommandeGateau() {
         cliquez sur les gâteaux qui vont font envie pour voir les photos).
       </p>
 
-      <ul className="listeGateauxEntiers">
+      <div className="gateaux-grid">
+        {fullCakes.map((cake, index) => (
+          <div
+            key={cake.id}
+            className={`gateau ${activeIndex === index ? "active" : ""}`}
+            onClick={() => toggleActive(index)}
+          >
+            <div className="gateau-content">
+              <p className="gateau-nom">{cake.name}</p>
+              <img
+                src={`${API_BASE_URL}/uploads/${cake.photo_filename}`}
+                alt={cake.name}
+                className="gateau-image"
+              />
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+/* <ul className="listeGateauxEntiers">
         {fullCakes.map((cake) => (
           <li key={cake.id}>
             <button onClick={() => openModal(cake)}>{cake.name}</button>
@@ -79,6 +105,6 @@ const modalContentStyle = {
   overflow: "hidden", // pour que la bordure s'applique proprement
   backgroundColor: "transparent",
   padding: 0, // aucun espace autour de l'image
-};
+}; */
 
 export default CommandeGateau;

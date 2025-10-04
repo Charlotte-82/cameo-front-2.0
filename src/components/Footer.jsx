@@ -28,7 +28,6 @@ function Footer() {
           <p className="pFooter">Le Caméo</p>
           <p className="pFooter">36 avenue La Fayette</p>
           <p className="pFooter">17300 Rochefort</p>
-          <p className="pFooter">lecameo17@gmail.com</p>
         </div>
         <div className="col footerCol3">
           <img
@@ -39,13 +38,19 @@ function Footer() {
         </div>
         <div className="col footerCol4">
           <p className="pFooter">
-            <a href="/agenda">Programme</a>
+            <a href="/">Accueil</a>
+          </p>
+          <p className="pFooter">
+            <a href="/apropos">À propos</a>
+          </p>
+          <p className="pFooter">
+            <a href="/agenda">Agenda</a>
           </p>
           <p className="pFooter">
             <a href="/boutique">Boutique</a>
           </p>
           <p className="pFooter">
-            <a href="/blog">Blog</a>
+            <a href="/blog">CaméoScope</a>
           </p>
           <p className="pFooter">
             <a href="/partenaires">Partenaires</a>

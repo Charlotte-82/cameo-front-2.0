@@ -2,12 +2,13 @@
 
 .header {
   background-color: $text-color;
-  padding: 0.5em;
+  padding: 0.5em 0em 0.5em 0em;
   height: auto;
 }
 
 .logoHeader {
   height: 10em;
+  margin-bottom: 1em;
 }
 
 .logoHeader:hover {
@@ -15,7 +16,7 @@
 }
 
 .logo {
-  margin-top: 2.5em;
+  margin-top: 1em;
   display: flex;
   justify-content: center;
 }
@@ -40,6 +41,12 @@ i {
   position: absolute;
   top: 5px;
   right: 5px;
+}
+
+.iconE {
+  position: absolute;
+  top: 32px;
+  right: 1px;
 }
 
 .iconFB {
@@ -76,6 +83,42 @@ i {
   color: $light-color;
 }
 
+.NavigLigne {
+  height: 3px;
+  background-color: $light-color;
+  border: none;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  opacity: 1;
+  position: relative;
+  bottom: 0px;
+}
+
+.NavigLigne2 {
+  height: 4px;
+  position: relative;
+  top: 5px;
+  background-color: $text-color;
+  border: none;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  opacity: 1;
+}
+
+.NavigLigne21 {
+  height: 1.5px;
+  position: relative;
+  top: 9px;
+  background-color: $text-color;
+  border: none;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  opacity: 1;
+}
+
 // Navigation
 
 .menu-container {
@@ -93,15 +136,7 @@ i {
 .menu {
   display: flex;
   justify-content: space-around;
-  gap: 1rem;
   width: 100%;
-}
-
-.itemMenu a {
-  text-decoration: none;
-  color: $text-color;
-  font-size: x-large;
-  font-family: $font-titleh2;
 }
 
 @include mobile {
@@ -134,11 +169,17 @@ i {
 
 .menu .itemMenu a {
   text-decoration: none;
-  color: $light-color;
+  color: whitesmoke;
+  font-size: x-large;
+  font-family: $font-titleh2;
 }
 
 .menu .itemMenu a:hover {
-  color: $lightorange-color;
+  color: $darkorange-color;
+}
+
+.menu .itemMenu a:active {
+  color: $darkorange-color;
 }
 
 // Footer
@@ -146,6 +187,8 @@ i {
 .footer {
   background-color: $dark-color;
   padding: 0.1em;
+  padding-top: 1.5em;
+  padding-bottom: 1em;
   height: auto;
   margin-top: 0;
 }
@@ -242,210 +285,211 @@ i {
 
 // Pâtisserie de la semaine
 
-.patSemaine {
-  @extend %component-div-style;
+.patSemaineFlex {
+  display: flex;
+  justify-content: center; /* centre les cercles horizontalement */
+  align-items: center;
+  gap: 2rem; /* espace entre les cercles */
+  @include mobile {
+    flex-wrap: wrap;
+    height: 31em;
+  }
+}
+
+/* style générique des cercles */
+.videoCercle {
+  width: 25em;
+  height: 22em;
+  border-radius: 56% 44% 30% 70% / 42% 21% 79% 58%;
+  border: solid 5px $text-color;
+  overflow: hidden;
+  background: $lightorange-color;
+  display: flex;
   justify-content: center;
   align-items: center;
-  padding: 3em;
-  padding-top: 0;
-  gap: 3em;
-  @include mobile {
-    flex-wrap: wrap;
-    align-content: center;
-    gap: 1em;
-    padding-bottom: 1em;
-  }
-  @include tablette {
-    flex-wrap: wrap;
-  }
-}
-
-.imagePatSemaineDiv {
-  @include tablette {
-    width: 15em;
-    height: 12em;
-  }
-
-  @include desktop {
-    width: 25em;
-    height: 15em;
-  }
-
-  width: 15em;
-  height: 12em;
-  border: solid 3px $text-color;
-  border-radius: 10px;
-}
-
-.imagePatisserieSemaine {
-  object-fit: cover;
-  width: 100%;
-  height: 100%;
-}
-
-.titrePatSemaine {
-  color: $text-color;
   text-align: center;
-  font-size: x-large;
-  @include desktop {
-    font-size: xx-large;
-  }
-  @include mobile {
-    font-size: large;
-    margin-bottom: 0;
-  }
-  font-weight: 700;
-  font-family: $font-titleh2;
-}
-
-.cadrePat {
-  border: dashed 3px $dark-color;
-  border-radius: 12px;
-  padding: 1em;
-  @include mobile {
-    width: 100%;
-    padding: 0.2em;
-  }
-}
-
-.cadrePat:hover {
-  border: dashed 3px $logo-color;
-}
-
-.videoExtrait {
-  width: 30%;
   @include tablette {
-    width: 95%;
-    display: flex;
-    justify-content: center;
+    height: 15em;
+    width: 30em;
   }
   @include mobile {
-    width: 90%;
-  }
-}
-
-.videoExtrait video {
-  width: 25em;
-  height: auto;
-  display: block;
-  object-fit: cover;
-  @include mobile {
-    width: 17em;
-  }
-}
-
-.videoExtrait iframe {
-  width: 20em;
-  height: 13em;
-  @include mobile {
-    width: 17em;
-    height: auto;
-  }
-  @include tablette {
-    width: 100%;
-  }
-}
-
-.titreFilm {
-  display: inline-block;
-  margin: 0;
-  font-size: xx-large;
-  text-align: end;
-  font-style: italic;
-  color: $text-color;
-  @include tablette {
-    display: inline-block;
-    font-size: x-large;
-  }
-  @include mobile {
-    font-size: large;
-    text-align: center;
-  }
-}
-
-.realFilm {
-  color: $dark-color;
-  font-size: large;
-
-  @include tablette {
-    display: inline-block;
-    font-size: medium;
-  }
-  @include mobile {
-    font-size: small;
-    text-align: center;
-  }
-  text-align: end;
-  margin: 0;
-}
-
-.dateFilm {
-  color: $dark-color;
-  text-align: end;
-  font-size: medium;
-  margin: 0;
-  @include tablette {
-    display: inline-block;
-  }
-  @include mobile {
-    text-align: center;
+    top: -20em;
+    width: 20em;
+    height: 15em;
+    position: relative;
   }
 }
 
 .infosFilm {
+  display: flex;
+  flex-direction: column;
+  border-radius: 1.5em;
+  justify-self: center;
+  margin-bottom: 1em;
+  padding: 0.5em;
+  font-size: larger;
+  font-family: $font-main;
+  width: 30%;
+  text-align: center;
+  border: solid 5px $text-color;
+  color: $light-color;
+  background: #dd7300;
+  background: radial-gradient(
+    circle,
+    rgba(221, 115, 0, 1) 0%,
+    rgba(108, 19, 4, 1) 100%
+  );
+  line-height: 0.8em;
   @include mobile {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-evenly;
+    width: 80%;
   }
 }
 
-.globalFilmDIv {
+.infosFilm:hover {
+  border: solid 5px $darkorange-color;
+}
+
+.videoCercle {
+  z-index: 2;
+}
+
+.imageCercle {
+  position: relative;
+  left: 6em;
+  width: 20em;
+  height: 18em;
+  border: solid 5px $text-color;
+  border-radius: 68% 32% 50% 50% / 30% 76% 24% 70%;
+  overflow: hidden;
+  background: $light-color;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  animation: slideInLeft 1s ease-out forwards;
   @include tablette {
-    width: 100%;
+    left: 4em;
+    height: 15em;
+  }
+  @include mobile {
+    left: -5em;
+    width: 15em;
+    top: 7em;
+    z-index: 1;
+  }
+}
+
+.imageCercle:hover,
+.infosCercle:hover,
+.cercle:hover {
+  border: solid 5px $darkorange-color;
+}
+
+.infosCercle {
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  right: 6em;
+  width: 20em;
+  height: 18em;
+  border: solid 5px $text-color;
+  border-radius: 25% 75% 76% 24% / 70% 34% 66% 30%;
+  overflow: hidden;
+  background: #dd7300;
+  background: radial-gradient(
+    circle,
+    rgba(221, 115, 0, 1) 0%,
+    rgba(108, 19, 4, 1) 100%
+  );
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  animation: slideInRight 1s ease-out forwards;
+  @include tablette {
+    right: 5em;
+    height: 15em;
+  }
+  @include mobile {
+    right: -6em;
+    width: 15em;
+    top: -25em;
+  }
+}
+
+.pastryName {
+  font-size: 240%;
+  font-weight: 700;
+  width: 50%;
+  color: $light-color;
+  @include tablette {
+    font-size: 150%;
+  }
+  @include mobile {
+    font-size: 190%;
+  }
+}
+
+.pastryPrice {
+  font-size: 240%;
+  color: $light-color;
+  @include tablette {
+    font-size: 130%;
+  }
+  @include mobile {
+    font-size: 150%;
+  }
+}
+
+/* contenus adaptatifs */
+.imageCercle img,
+.videoCercle video,
+.videoCercle iframe {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/*Animation*/
+@keyframes slideInLeft {
+  0% {
+    transform: translateX(-200px);
+    opacity: 0;
+  }
+  100% {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+@keyframes slideInRight {
+  0% {
+    transform: translateX(200px);
+    opacity: 0;
+  }
+  100% {
+    transform: translateX(0);
+    opacity: 1;
   }
 }
 
 // News
 
-.affichageNewsMobile {
-  @include tablette {
-    display: none;
-  }
-  @include desktop {
-    display: none;
-  }
-}
-
-.card-title {
-  @extend %heading-h2-style;
-  color: $logo-color !important;
-}
-
-.card-body {
-  background-color: $light-color;
-  display: flex;
-  flex-direction: row;
-  flex-wrap: nowrap;
-  @include mobile {
-    flex-direction: column;
-  }
-}
-
-.bootstrapButtonDiv {
-  margin: 0.4em;
-  display: flex;
-  justify-content: center;
-}
-
 .newsDiv {
-  @extend %component-div-style;
-
   padding-bottom: 2em;
   align-items: center;
   @include mobile {
+    display: flex;
     align-items: center;
+    width: 100%;
     padding-bottom: 0;
+    margin: 0;
+  }
+  @include tablette {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    padding-bottom: 0;
+    margin: 0;
   }
 }
 
@@ -454,13 +498,23 @@ i {
   flex-direction: column;
   gap: 3em;
   align-items: center;
+  @include mobile {
+    flex-direction: column;
+    gap: 1em;
+  }
+  @include tablette {
+    flex-direction: column;
+  }
 }
 
 .imageNewsDiv {
-  width: 55%;
+  width: 95%;
   height: auto;
   @include mobile {
-    display: none;
+    width: 90%;
+  }
+  @include tablette {
+    width: 90%;
   }
 }
 
@@ -478,17 +532,15 @@ i {
   padding-left: 1em;
   color: $text-color;
   text-align: left;
-
   @include mobile {
-    display: none;
+    width: 90%;
+  }
+  @include tablette {
+    width: 90%;
   }
   @include desktop {
     font-size: x-large;
     line-height: 2em;
-  }
-  @include tablette {
-    font-size: large;
-    line-height: 1.7em;
   }
 }
 
@@ -503,17 +555,16 @@ i {
   font-weight: 700;
   color: $logo-color;
   font-size: xx-large;
-  @include mobile {
-    font-size: larger;
-  }
 }
 
 .descriptionNews {
   color: $text-color;
   text-align: center;
   font-size: x-large;
-  @include tablette {
-    font-size: larger;
+  line-height: 1.5em;
+  margin-top: 1em;
+  @include mobile {
+    display: none;
   }
 }
 
@@ -521,11 +572,9 @@ i {
   display: flex;
   align-items: center;
   flex-direction: column;
-  margin-top: 3.5em;
-  margin-right: 3.5em;
-  @include mobile {
-    display: none;
-  }
+  margin-top: 1em;
+
+  width: 100%;
 }
 
 .boutonDiv h4 {
@@ -546,9 +595,6 @@ i {
   text-decoration: none;
   font-family: $font-titleh2;
   font-size: x-large;
-  @include mobile {
-    font-size: medium;
-  }
 }
 
 .boutonReservation a:hover {
@@ -559,23 +605,16 @@ strong {
   font-family: $font-titleh2;
 }
 
-.lieuEvent {
-  width: 70%;
-  justify-self: center;
+.descriptionButton {
+  @include desktop {
+    display: none;
+  }
   @include tablette {
-    width: 100%;
+    display: none;
   }
-  @include mobile {
-    width: 100%;
-  }
-}
-
-.descriptionParaph {
-  font-weight: 700;
-  font-size: larger;
-  @include tablette {
-    font-size: large;
-  }
+  margin: 0.4em;
+  display: flex;
+  justify-content: center;
 }
 
 // Calendar
@@ -1130,31 +1169,132 @@ strong {
 
 // Commande de gateaux
 
-.listeGateauxEntiers {
-  column-count: 3;
-  column-gap: 20px;
-  list-style-type: none;
+// .listeGateauxEntiers {
+//   column-count: 3;
+//   column-gap: 20px;
+//   list-style-type: none;
+//   text-align: center;
+//   @include mobile {
+//     column-count: 1;
+//   }
+// }
+
+// .listeGateauxEntiers li {
+//   padding: 8px;
+// }
+
+// .listeGateauxEntiers li:hover {
+//   cursor: pointer;
+// }
+
+// .listeGateauxEntiers li button {
+//   padding: 10px;
+//   padding-left: 15px;
+//   padding-right: 15px;
+//   border-radius: 7px;
+//   border: solid 2px $darkorange-color;
+//   text-transform: uppercase;
+// }
+
+.gateaux-grid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  grid-template-rows: repeat(4, 1fr);
+  gap: 1rem;
+  padding: 2rem 0;
+}
+
+.gateau {
+  position: relative;
+  background: #f7f7f7;
+  border-radius: 12px;
+  overflow: hidden;
   text-align: center;
+  cursor: pointer;
+  transition: transform 0.3s ease;
+}
+
+.gateau:hover {
+  transform: scale(1.05);
+}
+
+.gateau-content {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  display: flex; /* ✅ active flexbox */
+  align-items: center; /* ✅ centre verticalement */
+  justify-content: center;
+  background: radial-gradient(
+    circle,
+    rgba(221, 115, 0, 1) 0%,
+    rgba(108, 19, 4, 1) 100%
+  );
+}
+
+.gateau-nom {
+  font-weight: 600;
+  font-size: 2rem !important;
+  padding: 2rem 2rem;
+  transition: opacity 0.3s ease;
+  text-transform: uppercase;
+  font-family: $font-titleh2 !important;
+  color: $light-color !important;
   @include mobile {
-    column-count: 1;
+    font-size: 1rem !important;
+  }
+  @include tablette {
+    font-size: 1.5rem !important;
   }
 }
 
-.listeGateauxEntiers li {
-  padding: 8px;
+/* Image cachée par défaut */
+.gateau-image {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0;
+  transition: opacity 0.4s ease;
 }
 
-.listeGateauxEntiers li:hover {
-  cursor: pointer;
+/* Hover desktop */
+@media (hover: hover) {
+  .gateau:hover .gateau-image {
+    opacity: 1;
+  }
+  .gateau:hover .gateau-nom {
+    opacity: 0;
+  }
 }
 
-.listeGateauxEntiers li button {
-  padding: 10px;
-  padding-left: 15px;
-  padding-right: 15px;
-  border-radius: 7px;
-  border: solid 2px $darkorange-color;
-  text-transform: uppercase;
+/* Active mobile */
+.gateau.active .gateau-image {
+  opacity: 1;
+}
+
+.gateau.active .gateau-nom {
+  opacity: 0;
+}
+
+.gateau {
+  aspect-ratio: 1 / 1; /* Rend chaque case carrée */
+  border: $text-color 2px solid;
+}
+
+/* Responsive */
+@media (max-width: 1024px) {
+  .gateaux-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media (max-width: 600px) {
+  .gateaux-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
 }
 
 .FormCommande {
@@ -1169,11 +1309,19 @@ strong {
   }
 }
 
+.FormCommande input[type="text"],
+.FormCommande input[type="email"],
+.FormCommande textarea {
+  border: 1px solid $text-color;
+  background-color: $light-color;
+}
+
 .FormCommande label,
 .FormCommande input[type="text"],
 .FormCommande input[type="email"],
 .FormCommande textarea {
   width: 25em;
+
   @include tablette {
     width: 21em;
   }

@@ -72,86 +72,6 @@ function News() {
 
   return (
     <div className="newsDiv">
-      <div className="affichageNewsMobile">
-        <div className="card border-0">
-          <img
-            src={`${API_BASE_URL.replace(/\/$/, "")}/uploads/highlight/${
-              highlight.photo_filename
-            }`}
-            className="card-img-top"
-            alt="illustration de l'actualité"
-          />
-          <div className="card-body">
-            <h3 className="card-title">{highlight.title}</h3>
-            {highlight.type === "event" ? (
-              <div className="infosNewsDiv">
-                <p className="infosNews">
-                  Du: <strong>{formatDate(highlight.start_date)} </strong>
-                  Au: <strong>{formatDate(highlight.end_date)}</strong>
-                </p>
-                <p className="infosNews">
-                  Intervenant·e: <strong>{highlight.contributor}</strong>
-                </p>
-                <p className="infosNews">
-                  Places disponibles restantes:{" "}
-                  <strong>{highlight.places}</strong>
-                </p>
-                <p className="infosNews">
-                  Prix: <strong>{highlight.price}</strong>
-                </p>
-              </div>
-            ) : (
-              <div className="infosNewsDiv">
-                <p className="infosNews">
-                  Date: le <strong>{formatDate(highlight.date)} </strong>
-                  jusqu'à{" "}
-                  <strong>
-                    {formatEndDate(highlight.date, highlight.duration)}
-                  </strong>
-                </p>
-                <p className="infosNews">
-                  Intervenant·e: <strong>{highlight.contributor}</strong>
-                </p>
-                <p className="infosNews">
-                  Places disponibles restantes:{" "}
-                  <strong>{highlight.places}</strong>
-                </p>
-                <p className="infosNews">
-                  Prix: <strong>{highlight.price} €</strong> / personne
-                </p>
-              </div>
-            )}
-            <div className="bootstrapButtonDiv">
-              <a
-                href="/agenda"
-                className="btn bootstrapButton"
-                style={{ backgroundColor: "#6c1304", color: "#ffdfb7" }}
-              >
-                Voir l'agenda
-              </a>
-            </div>
-            <div
-              style={{
-                margin: "0.4em",
-                display: "flex",
-                justifyContent: "center",
-              }}
-            >
-              <button
-                type="button"
-                className="btn"
-                data-bs-container="body"
-                data-bs-toggle="popover"
-                data-bs-placement="bottom"
-                data-bs-content={highlight.description}
-                style={{ backgroundColor: "#6c1304", color: "#ffdfb7" }}
-              >
-                Description
-              </button>
-            </div>
-          </div>
-        </div>
-      </div>
       <div className="affichageNewsTablette">
         <div className="imageNewsDiv">
           <h3>{highlight.title}</h3>
@@ -162,6 +82,13 @@ function News() {
             }`}
             alt="Actualité à la une"
           />
+          <div className="boutonDiv">
+            <h4>Pour réserver:</h4>
+            <br></br>
+            <button className="boutonReservation">
+              <a href="/agenda">Voir l'agenda</a>
+            </button>
+          </div>
         </div>
 
         <div className="texteNews">
@@ -201,17 +128,23 @@ function News() {
               <p className="infosNews">
                 Prix: <strong>{highlight.price} €</strong> / personne
               </p>
+              <p className="descriptionNews">{highlight.description}</p>
             </div>
           )}
         </div>
-      </div>
-      <div className="boutonDiv">
-        <p className="descriptionNews">{highlight.description}</p>
-        <h4>Pour réserver:</h4>
-        <br></br>
-        <button className="boutonReservation">
-          <a href="/agenda">Voir l'agenda</a>
-        </button>
+        <div className="descriptionButton">
+          <button
+            type="button"
+            className="btn"
+            data-bs-container="body"
+            data-bs-toggle="popover"
+            data-bs-placement="bottom"
+            data-bs-content={highlight.description}
+            style={{ backgroundColor: "#6c1304", color: "#ffdfb7" }}
+          >
+            Description
+          </button>
+        </div>
       </div>
     </div>
   );

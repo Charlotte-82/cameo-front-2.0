@@ -121,6 +121,8 @@ function Program() {
 
   return (
     <div className="program">
+      <hr className="NavigLigne2"></hr>
+      <hr className="NavigLigne21"></hr>
       <h1>Activités à venir</h1>
       <ul className="schedule-list">
         {items.map((item) => (

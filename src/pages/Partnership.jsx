@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import Tea from "../assets/images/teamagine.jpeg";
 import Vache from "../assets/images/Logo_La_Vache_Charentaise_web.png";
 import Mafiore from "../assets/images/mafiore.jpg";
@@ -8,8 +8,45 @@ import Mutyne from "../assets/images/logomutyne.png";
 import Meo from "../assets/images/logo_meo_blanc.png";
 
 function Partnership() {
+  const [showButton, setShowButton] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setShowButton(window.scrollY > 200);
+    };
+
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
+  const scrollToTop = () => {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  };
+
   return (
     <div className="page">
+      {showButton && (
+        <button
+          onClick={scrollToTop}
+          style={{
+            position: "fixed",
+            bottom: "30px",
+            right: "30px",
+            padding: "12px 18px",
+            borderRadius: "8px",
+            background: "whitesmoke",
+            color: "#6c1304",
+            cursor: "pointer",
+            border: "solid 2px #dd7300",
+            fontWeight: "400",
+            fontSize: "xx-large",
+          }}
+        >
+          ↑
+        </button>
+      )}
+      <hr className="NavigLigne2"></hr>
+      <hr className="NavigLigne21"></hr>
       <h1 className="partnerH1">La grande famille du Caméo</h1>
       <div className="partnerDiv1">
         <h2>Les Fournisseurs</h2>

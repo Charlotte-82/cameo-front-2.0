@@ -1,8 +1,45 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 
 function Mentions() {
+  const [showButton, setShowButton] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setShowButton(window.scrollY > 200);
+    };
+
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
+  const scrollToTop = () => {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  };
+
   return (
     <div className="page">
+      {showButton && (
+        <button
+          onClick={scrollToTop}
+          style={{
+            position: "fixed",
+            bottom: "30px",
+            right: "30px",
+            padding: "12px 18px",
+            borderRadius: "8px",
+            background: "whitesmoke",
+            color: "#6c1304",
+            cursor: "pointer",
+            border: "solid 2px #dd7300",
+            fontWeight: "400",
+            fontSize: "xx-large",
+          }}
+        >
+          ↑
+        </button>
+      )}
+      <hr className="NavigLigne2"></hr>
+      <hr className="NavigLigne21"></hr>
       <div className="sousTitre">
         <h1>Mentions Légales</h1>
       </div>

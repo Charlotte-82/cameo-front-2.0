@@ -1,6 +1,7 @@
 import React from "react";
 import { Routes, Route, Navigate } from "react-router-dom";
 import Home from "./pages/Home.jsx";
+import Apropos from "./pages/Concept.jsx";
 import Blog from "./pages/Blog.jsx";
 import Program from "./pages/Program.jsx";
 import Partnership from "./pages/Partnership.jsx";
@@ -35,6 +36,7 @@ function App() {
       <Routes>
         <Route path="/" element={<Home />}></Route>
         <Route path="/boutique" element={<Shop />}></Route>
+        <Route path="/apropos" element={<Apropos />}></Route>
         <Route path="/blog" element={<Blog />}></Route>
         <Route path="/agenda" element={<Program />}></Route>
         <Route path="/partenaires" element={<Partnership />}></Route>
