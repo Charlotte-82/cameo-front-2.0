@@ -57,7 +57,6 @@ function PatisserieSemaine() {
         </p>
       </div>
       <div className="patSemaineFlex">
-        {/* Image pâtisserie (gauche) */}
         <div className="cercle imageCercle">
           <img
             src={`${API_BASE}/uploads/${media.photo_filename}`}
@@ -65,7 +64,6 @@ function PatisserieSemaine() {
           />
         </div>
 
-        {/* Vidéo (milieu) */}
         <div className="cercle videoCercle">
           {media.video_filename && (
             <video controls>
@@ -88,7 +86,6 @@ function PatisserieSemaine() {
           )}
         </div>
 
-        {/* Infos pâtisserie (droite) */}
         <div className="cercle infosCercle">
           <h2 className="pastryName">{wpastry.name}</h2>
           <p className="pastryPrice">{wpastry.price} €</p>

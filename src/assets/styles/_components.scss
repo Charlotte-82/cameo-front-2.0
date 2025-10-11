@@ -287,16 +287,15 @@ i {
 
 .patSemaineFlex {
   display: flex;
-  justify-content: center; /* centre les cercles horizontalement */
+  justify-content: center;
   align-items: center;
-  gap: 2rem; /* espace entre les cercles */
+  gap: 2rem;
   @include mobile {
     flex-wrap: wrap;
     height: 31em;
   }
 }
 
-/* style générique des cercles */
 .videoCercle {
   width: 25em;
   height: 22em;
@@ -417,7 +416,7 @@ i {
 }
 
 .pastryName {
-  font-size: 240%;
+  font-size: 200%;
   font-weight: 700;
   width: 50%;
   color: $light-color;
@@ -615,6 +614,15 @@ strong {
   margin: 0.4em;
   display: flex;
   justify-content: center;
+}
+
+.reservationListDiv {
+  @include desktop {
+    display: none;
+  }
+  @include tablette {
+    display: none;
+  }
 }
 
 // Calendar
@@ -1167,35 +1175,6 @@ strong {
   }
 }
 
-// Commande de gateaux
-
-// .listeGateauxEntiers {
-//   column-count: 3;
-//   column-gap: 20px;
-//   list-style-type: none;
-//   text-align: center;
-//   @include mobile {
-//     column-count: 1;
-//   }
-// }
-
-// .listeGateauxEntiers li {
-//   padding: 8px;
-// }
-
-// .listeGateauxEntiers li:hover {
-//   cursor: pointer;
-// }
-
-// .listeGateauxEntiers li button {
-//   padding: 10px;
-//   padding-left: 15px;
-//   padding-right: 15px;
-//   border-radius: 7px;
-//   border: solid 2px $darkorange-color;
-//   text-transform: uppercase;
-// }
-
 .gateaux-grid {
   display: grid;
   grid-template-columns: repeat(5, 1fr);
@@ -1222,8 +1201,8 @@ strong {
   position: relative;
   width: 100%;
   height: 100%;
-  display: flex; /* ✅ active flexbox */
-  align-items: center; /* ✅ centre verticalement */
+  display: flex;
+  align-items: center;
   justify-content: center;
   background: radial-gradient(
     circle,
@@ -1248,7 +1227,6 @@ strong {
   }
 }
 
-/* Image cachée par défaut */
 .gateau-image {
   position: absolute;
   top: 0;
@@ -1270,7 +1248,6 @@ strong {
   }
 }
 
-/* Active mobile */
 .gateau.active .gateau-image {
   opacity: 1;
 }
@@ -1280,11 +1257,10 @@ strong {
 }
 
 .gateau {
-  aspect-ratio: 1 / 1; /* Rend chaque case carrée */
+  aspect-ratio: 1 / 1;
   border: $text-color 2px solid;
 }
 
-/* Responsive */
 @media (max-width: 1024px) {
   .gateaux-grid {
     grid-template-columns: repeat(3, 1fr);

@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 
 function CommandeGateau() {
   const [fullCakes, setFullCakes] = useState([]);
-  // const [selectedCake, setSelectedCake] = useState(null);
   const [activeIndex, setActiveIndex] = useState(null);
   const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
@@ -14,14 +13,6 @@ function CommandeGateau() {
         console.error("Erreur lors du chargement des gâteaux:", error)
       );
   }, []);
-
-  // const openModal = (cake) => {
-  //   setSelectedCake(cake);
-  // };
-
-  // const closeModal = () => {
-  //   setSelectedCake(null);
-  // };
 
   const toggleActive = (index) => {
     setActiveIndex(activeIndex === index ? null : index);

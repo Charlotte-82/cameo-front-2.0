@@ -8,7 +8,6 @@ function ReservDataManagement() {
   const [mode, setMode] = useState("existing");
   const [form, setForm] = useState({
     userId: "",
-    // Revenir aux noms de clés d'origine pour la saisie
     firstname: "",
     lastname: "",
     activityId: "",
@@ -175,13 +174,11 @@ function ReservDataManagement() {
     <div className="cakeManagementCompo">
       <h2>Gestion des réservations</h2>
 
-      {/* Formulaire de création */}
       <div className="allCakeDiv">
         <div className="cakeAddDiv">
           <h3>Créer une réservation</h3>
           <form onSubmit={handleSubmit} className="adminForm3">
             <fieldset>
-              {/* Choix du mode : Utilisateur existant ou invité */}
               <input
                 type="radio"
                 value="existing"
@@ -200,7 +197,6 @@ function ReservDataManagement() {
               <br />
               <br />
 
-              {/* Champs de saisie conditionnels */}
               {mode === "existing" ? (
                 <div>
                   <label>Nom et prénom :</label>
@@ -250,7 +246,6 @@ function ReservDataManagement() {
                 </div>
               )}
 
-              {/* Choix de l'activité */}
               <div>
                 <label>Activité à réserver:</label>
                 <br></br>
@@ -305,7 +300,6 @@ function ReservDataManagement() {
           </form>
         </div>
 
-        {/* Table d'affichage des réservations */}
         <div className="cakeTableDiv">
           <h3>Liste des réservations</h3>
           <table className="cakeTable">
@@ -350,6 +344,46 @@ function ReservDataManagement() {
               )}
             </tbody>
           </table>
+        </div>
+        <div className="reservationListDiv">
+          {reservations.length > 0 ? (
+            <ul className="reservationList">
+              {reservations.map((reservation) => (
+                <li
+                  key={reservation.id_reservation}
+                  className="reservationItem"
+                >
+                  <p>
+                    <strong>Nom de l'utilisateur :</strong>{" "}
+                    {reservation.user_firstname && reservation.user_lastname
+                      ? `${reservation.user_firstname} ${reservation.user_lastname}`
+                      : "Invité"}
+                  </p>
+                  <p>
+                    <strong>Activité :</strong> {reservation.activity_title}
+                  </p>
+                  <p>
+                    <strong>Type d'activité :</strong> {reservation.type}
+                  </p>
+                  <p>
+                    <strong>Date de l'activité :</strong>{" "}
+                    {formatDate(reservation.activity_date)}
+                  </p>
+                  <p>
+                    <strong>Date de réservation :</strong>{" "}
+                    {formatDate(reservation.created_at)}
+                  </p>
+                  <button
+                    onClick={() => handleDelete(reservation.id_reservation)}
+                  >
+                    Supprimer
+                  </button>
+                </li>
+              ))}
+            </ul>
+          ) : (
+            <p>Aucune réservation trouvée.</p>
+          )}
         </div>
       </div>
     </div>
