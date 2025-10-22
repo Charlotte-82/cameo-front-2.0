@@ -3,7 +3,7 @@ import Interieur1 from "../assets/images/Lieu/le-cameo-int4.jpg";
 import Interieur2 from "../assets/images/Lieu/le-cameo-pat.jpg";
 import ImageArticle1 from "../assets/images/Lieu/le-cameo-littoral.jpg";
 import ImageArticle2 from "../assets/images/Lieu/le-cameo-sudouest.jpg";
-import Accordion from "../components/homeAccordionMobile.jsx";
+import ImageArticle3 from "../assets/images/mathilde_hebdo.png";
 
 function Concept() {
   const [showButton, setShowButton] = useState(false);
@@ -141,6 +141,25 @@ function Concept() {
                 <p className="lienArticle">
                   Rochefort : avec son salon de thé, elle partage sa passion
                   pour le septième art
+                </p>
+              </a>
+            </div>
+          </div>
+          <div className="blocArticles">
+            <div className="imageArticleBot">
+              <p className="nomJournal">L'Hebdo</p>
+              <img
+                src={ImageArticle3}
+                className="imageArticle1"
+                alt="portrait de Mathilde tenant une assiette de tartes devant une affiche de cinéma de son salon"
+              />
+              <a
+                target="_blank"
+                rel="noreferrer"
+                href="https://www.lhebdo17.fr/actualite-7948-rochefort-au-salon-de-the-le-cameo-il-y-a-a-voir-et-a-manger?fbclid=IwY2xjawNg5YBleHRuA2FlbQIxMQABHh3rDgWN498RZLzKcY-X1D4Jy0-_4RgKz6VJlJ8xkZpgkfheoa1JpudRKD_e_aem_0YA5RmQsHcsDBV5gkvPLqA"
+              >
+                <p className="lienArticle">
+                  Rochefort. Au salon de thé Le Caméo, il y a à voir et à manger
                 </p>
               </a>
             </div>

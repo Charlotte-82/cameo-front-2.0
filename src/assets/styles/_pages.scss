@@ -1425,6 +1425,21 @@
   }
 }
 
+.imageArticleBot {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: auto;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  @include mobile {
+    width: 100%;
+  }
+}
+
 .blocArticles {
   display: flex;
   flex-direction: row;
@@ -1448,7 +1463,8 @@
   font-size: x-large;
 }
 
-.imageArticle a {
+.imageArticle a,
+.imageArticleBot a {
   text-decoration: none;
   color: $text-color;
   text-align: center;
@@ -1461,6 +1477,11 @@
   @include mobile {
     font-size: xx-small;
   }
+}
+
+.imageArticle a:hover,
+.imageArticleBot a:hover {
+  color: $darkorange-color;
 }
 
 .lienArticle {
