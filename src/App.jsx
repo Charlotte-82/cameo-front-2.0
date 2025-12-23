@@ -12,9 +12,8 @@ import Travaux from "./pages/Travaux.jsx";
 import Admin from "./adminPages/AdminLogin.jsx";
 import Dashboard from "./adminPages/Dashboard.jsx";
 import Mentions from "./pages/Mentions.jsx";
-import Pastry from "./adminPages/PastryManagement.jsx";
-import Event from "./adminPages/EventManagement.jsx";
-import Workshop from "./adminPages/WorkshopManagement.jsx";
+import Homepage from "./adminPages/HomepageManagement.jsx";
+import Activity from "./adminPages/ActivityManagement.jsx";
 import User from "./adminPages/UserManagament.jsx";
 import Reserv from "./adminPages/ReservManagement.jsx";
 import MenuManagement from "./adminPages/MenuManagement.jsx";
@@ -46,11 +45,13 @@ function App() {
         <Route path="/admin" element={<Admin />}></Route>
         <Route element={<PrivateRoute />}>
           <Route path="/admin/dashboard" element={<Dashboard />}></Route>
-          <Route path="/admin/dashboard/pastry" element={<Pastry />}></Route>
-          <Route path="/admin/dashboard/event" element={<Event />}></Route>
           <Route
-            path="/admin/dashboard/workshop"
-            element={<Workshop />}
+            path="/admin/dashboard/homepageManagement"
+            element={<Homepage />}
+          ></Route>
+          <Route
+            path="/admin/dashboard/activity"
+            element={<Activity />}
           ></Route>
           <Route path="/admin/dashboard/user" element={<User />}></Route>
           <Route

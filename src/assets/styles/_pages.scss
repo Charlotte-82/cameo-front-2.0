@@ -188,10 +188,31 @@
 .schedule-list {
   display: flex;
   flex-wrap: wrap;
+  list-style: none;
+  justify-content: center;
 }
 
-.program ul {
-  list-style-type: none;
+.schedule-list2 {
+  display: flex;
+  flex-wrap: wrap;
+  list-style: none;
+  justify-content: center;
+  width: 100%;
+}
+
+.schedule-list2 li {
+  color: $text-color;
+  border: solid 2px $dark-color;
+  margin: 1em;
+  padding: 1em;
+  width: 40%;
+  background-color: whitesmoke;
+  @include tablette {
+    width: 45%;
+  }
+  @include mobile {
+    width: 100%;
+  }
 }
 
 .program h1 {
@@ -200,11 +221,11 @@
 
 .schedule-list li {
   color: $text-color;
-  border: solid 2px $darkorange-color;
+  border: solid 2px $dark-color;
   margin: 2em;
   padding: 1em;
   width: 20%;
-  background-color: #fab97b9f;
+  background-color: whitesmoke;
   @include tablette {
     width: 35%;
   }

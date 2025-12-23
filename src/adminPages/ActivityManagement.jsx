@@ -1,7 +1,7 @@
 import React from "react";
-import WorkshopDataManagement from "../components/adminComponents/workshopDataManagement";
+import ActivityDataManagement from "../components/adminComponents/ActivityDataManagement";
 
-function WorkshopManagement() {
+function ActivityManagement() {
   return (
     <div className="PastryManager">
       <div className="menuManagement">
@@ -9,10 +9,10 @@ function WorkshopManagement() {
           <button className="backButtonDash">Retour au Tableau de Bord</button>
         </a>
         <h1>Gestion des ateliers</h1>
-        <WorkshopDataManagement />
+        <ActivityDataManagement />
       </div>
     </div>
   );
 }
 
-export default WorkshopManagement;
+export default ActivityManagement;

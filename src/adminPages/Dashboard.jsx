@@ -4,7 +4,6 @@ import PastrySVG from "../components/imagesSVG/PastrySVG";
 import ReservSVG from "../components/imagesSVG/ReservSVG";
 import UserSVG from "../components/imagesSVG/userSVG";
 import WorkshopSVG from "../components/imagesSVG/WorkshopSVG";
-import EventSVG from "../components/imagesSVG/EventSVG";
 import CakeSVG from "../components/imagesSVG/cakeSVG";
 
 function Dashboard() {
@@ -27,25 +26,25 @@ function Dashboard() {
       <div className="dashboardGrid">
         <div className="weeklyPastryDiv">
           <a className="adminLink" href="/admin/dashboard/pastry">
-            <h3>Gestion des Actualités</h3>
+            <h3>Gestion de la Page d'accueil</h3>
             <PastrySVG />
           </a>
         </div>
         <div className="workshopManagementDiv">
-          <a className="adminLink" href="/admin/dashboard/workshop">
-            <h3>Gestion des Ateliers</h3>
+          <a className="adminLink" href="/admin/dashboard/activity">
+            <h3>Gestion des Activités</h3>
             <WorkshopSVG />
           </a>
         </div>
-        <div className="eventManagementDiv">
+        {/* <div className="eventManagementDiv">
           <a className="adminLink" href="/admin/dashboard/event">
-            <h3>Gestion des Événements</h3>
+            <h3>Gestion des Collections</h3>
             <EventSVG />
           </a>
-        </div>
+        </div> */}
         <div className="userManagementDiv">
           <a className="adminLink" href="/admin/dashboard/user">
-            <h3>Gestion des Utilisateurs</h3>
+            <h3>Gestion des Clients</h3>
             <UserSVG />
           </a>
         </div>

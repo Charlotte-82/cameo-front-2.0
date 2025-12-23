@@ -1,5 +1,5 @@
 import React from "react";
-import EventDataManagement from "../components/adminComponents/EventDataManagement";
+import EventDataManagement from "./EventDataManagement";
 
 function EventManagement() {
   return (

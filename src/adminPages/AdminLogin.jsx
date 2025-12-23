@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 function AdminLogin() {
-  const [lastname, setLastname] = useState("");
+  const [name, setName] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const navigate = useNavigate();
@@ -21,7 +21,7 @@ function AdminLogin() {
           headers: {
             "Content-Type": "application/json",
           },
-          body: JSON.stringify({ lastname, password }),
+          body: JSON.stringify({ name, password }),
         }
       );
 
@@ -46,12 +46,12 @@ function AdminLogin() {
         <form onSubmit={handleSubmit} className="adminForm">
           <fieldset>
             <legend>Connexion</legend>
-            <label>Nom de Famille</label>
+            <label>Identifiant</label>
             <br />
             <input
               type="text"
-              value={lastname}
-              onChange={(e) => setLastname(e.target.value)}
+              value={name}
+              onChange={(e) => setName(e.target.value)}
               required
             />
             <br />
