@@ -415,6 +415,10 @@ i {
   }
 }
 
+.menuManagement h2 {
+  @extend %heading-h2-style;
+}
+
 .pastryName {
   font-size: 200%;
   font-weight: 700;
@@ -562,9 +566,6 @@ i {
   font-size: x-large;
   line-height: 1.5em;
   margin-top: 1em;
-  @include mobile {
-    display: none;
-  }
 }
 
 .boutonDiv {

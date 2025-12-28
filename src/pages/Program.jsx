@@ -176,15 +176,6 @@ function Program() {
                   </p>
                 )}
               </div>
-              {/* <button
-                onClick={() => {
-                  setSelectedItem(item);
-                  setIsModalOpen(true);
-                }}
-                className="reservButtonProgram"
-              >
-                Réserver
-              </button> */}
 
               {item[":places"] !== null && (
                 <button

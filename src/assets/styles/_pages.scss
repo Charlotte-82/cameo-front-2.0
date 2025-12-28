@@ -708,45 +708,11 @@
   margin-bottom: 0.5em;
 }
 
-.cakeDetail {
-  margin-bottom: 0.5em;
-  color: $text-color;
-}
-
-.cakeDetail .value {
-  font-weight: 700;
-}
-
 .cakeActions button {
   margin-bottom: 0.5em;
   @include tablette {
     margin-right: 0.5em;
   }
-}
-
-.visualMediaList {
-  @include desktop {
-    display: none;
-  }
-  @include tablette {
-    display: none;
-  }
-}
-
-.mediaItem {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
-.mediaItem h4 {
-  color: $text-color;
-  font-family: $font-main;
-  text-decoration: underline;
-}
-
-.pastryPhoto {
-  margin-bottom: 1em;
 }
 
 .backButtonDash {
@@ -757,6 +723,17 @@
   border: $dark-color solid 2px;
   color: $light-color;
   background-color: $text-color;
+}
+
+.weeklySection {
+  margin-top: 2em;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.weeklyPastryForm input {
+  margin-bottom: 1em;
 }
 
 .userManagementCompo {
@@ -919,6 +896,30 @@
 
 .tableRank3 {
   height: 45px;
+}
+
+.homepageImageBankDiv {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  width: 80%;
+  padding-right: 2em;
+  padding-left: 2em;
+  padding-bottom: 2em;
+  // display: grid;
+  // grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  // gap: 20px;
+  // padding: 0 2em;
+}
+
+.homepageImageDiv {
+  width: 15%;
+  margin-right: 1em;
+  border: 1px solid #ccc;
+  padding: 10px;
+  border-radius: 8px;
+  text-align: center;
+  background-color: #fff;
 }
 
 // Page de profil utilisateur

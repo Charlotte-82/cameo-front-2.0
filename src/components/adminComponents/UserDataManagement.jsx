@@ -1,42 +1,39 @@
 import React, { useEffect, useState } from "react";
 
 function UserDataManagement() {
-  const [users, setUsers] = useState([]);
-  const [allCakes, setAllCakes] = useState([]);
+  const [clients, setClients] = useState([]);
+  const [allProducts, setAllProducts] = useState([]);
   const [form, setForm] = useState({
-    lastname: "",
     firstname: "",
-    email: "",
+    lastname: "",
+    mail: "",
     tel: "",
     newsletter: "",
-    id_cake: "",
     password: "",
-    is_admin: "",
+    product_id: "",
   });
   const [editingId, setEditingId] = useState(null);
 
   const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
   useEffect(() => {
-    fetchUsers();
-    fetchCakes();
+    fetchClients();
+    fetchProducts();
   }, []);
 
-  const fetchUsers = () => {
-    fetch(`${API_BASE_URL}/users`)
+  const fetchClients = () => {
+    fetch(`${API_BASE_URL}/client`)
       .then((res) => {
         if (!res.ok) {
           throw new Error(`Erreur HTTP: ${res.status} ${res.statusText}`);
         }
         return res.json();
       })
-      .then(setUsers)
-      .catch((err) =>
-        console.error("Erreur lors du fetch des utilisateurs :", err)
-      );
+      .then(setClients)
+      .catch((err) => console.error("Erreur lors du fetch des clients :", err));
   };
 
-  const fetchCakes = () => {
+  const fetchProducts = () => {
     Promise.all([
       fetch(`${API_BASE_URL}/fullcakes`).then((res) => res.json()),
       fetch(`${API_BASE_URL}/cakes`).then((res) => res.json()),
