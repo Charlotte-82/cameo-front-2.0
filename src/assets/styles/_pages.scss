@@ -36,6 +36,22 @@
   margin-bottom: 2em !important;
   padding: 2em;
   @extend %bande-style;
+  @media screen and (max-width: 1441px) and (min-width: 1025px) {
+    width: 90%;
+  }
+  @include mobile {
+    width: 100%;
+    padding: 0.8em;
+    margin: 0;
+  }
+  @include tablette {
+    width: 100%;
+    padding: 0.8em;
+    margin: 0;
+  }
+}
+
+.bande2 {
   width: 45%;
   @media screen and (max-width: 1441px) and (min-width: 1025px) {
     width: 90%;
@@ -50,6 +66,10 @@
     padding: 0.8em;
     margin: 0;
   }
+}
+
+.bande4 {
+  width: 100%;
 }
 
 .bande2:hover,
@@ -420,6 +440,31 @@
   border: dotted 2px $darkorange-color;
 }
 
+.cards-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 1rem;
+  padding: 1rem 0;
+}
+
+.card {
+  border: solid 3px $dark-color;
+  border-radius: 8px;
+  padding: 1rem;
+  box-shadow: 2px 2px 6px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+}
+
+.card h3 {
+  margin-top: 0;
+}
+
+.card button {
+  margin-top: 1rem;
+  align-self: flex-start;
+}
+
 .cakeManagementDiv {
   @extend %grid-div-style;
   grid-row: 2;
@@ -554,14 +599,16 @@
 
 .adminForm3 {
   display: flex;
+  justify-self: center;
   justify-content: center;
-  flex-direction: column;
-}
-
-.adminForm3 fieldset {
-  border: $dark-color 2px solid;
-  padding: 3em;
+  flex-direction: row;
   width: 60%;
+  @include tablette {
+    width: 80%;
+  }
+  @include mobile {
+    width: 100%;
+  }
 }
 
 .allCakeDiv {
@@ -769,6 +816,7 @@
 .adminForm3 label {
   font-family: $font-main;
   color: $text-color;
+  margin-top: 1em;
 }
 
 .adminForm3 legend {
@@ -779,6 +827,14 @@
 
 .adminForm3 input[type="file"] {
   font-family: $font-main;
+}
+
+.adminForm3 input {
+  margin-top: 1em;
+}
+
+.adminForm3 select {
+  margin-top: 1em;
 }
 
 .adminForm3 button {
@@ -822,18 +878,14 @@
   margin-bottom: 1em;
 }
 
-.userTable {
-  display: none;
-}
-
-.userTable2 {
-  @include tablette {
-    display: none;
-  }
-  @include mobile {
-    display: none;
-  }
-}
+// .userTable2 {
+//   @include tablette {
+//     display: none;
+//   }
+//   @include mobile {
+//     display: none;
+//   }
+// }
 
 .userList {
   @include desktop {
@@ -841,12 +893,12 @@
   }
 }
 
-.userTableDiv {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  width: 65%;
-}
+// .userTableDiv {
+//   display: flex;
+//   flex-direction: column;
+//   justify-content: center;
+//   width: 65%;
+// }
 
 .userCard {
   display: flex;
@@ -865,29 +917,74 @@
   flex-direction: column;
 }
 
-.userTable th {
-  text-align: center;
-  font-family: $font-titleh2;
-  color: $light-color;
-  background-color: $text-color;
-  border: $lightorange-color 2px solid;
+// .userTable th {
+//   text-align: center;
+//   font-family: $font-titleh2;
+//   color: $light-color;
+//   background-color: $text-color;
+//   border: $lightorange-color 2px solid;
+// }
+
+// .userTable th,
+// .userTable td {
+//   padding-left: 1em;
+//   font-family: $font-main;
+// }
+
+// .userTable td {
+//   border: $dark-color 2px solid;
+//   color: $text-color;
+// }
+
+// .userTable button {
+//   margin-left: 1.5em;
+//   margin-right: 1.5em;
+//   @extend %button-style;
+// }
+
+.client-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.5rem;
+  margin-top: 1rem;
 }
 
-.userTable th,
-.userTable td {
-  padding-left: 1em;
-  font-family: $font-main;
+.client-card {
+  background: whitesmoke;
+  border: solid 2px $text-color;
+  border-radius: 12px;
+  padding: 1.2rem 1.4rem;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
-.userTable td {
-  border: $dark-color 2px solid;
-  color: $text-color;
+.client-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.12);
 }
 
-.userTable button {
-  margin-left: 1.5em;
-  margin-right: 1.5em;
-  @extend %button-style;
+.client-card h3 {
+  margin: 0 0 0.8rem 0;
+  font-weight: 700;
+  font-size: 1.1rem;
+  border-bottom: 1px solid #eee;
+  padding-bottom: 0.5rem;
+}
+
+.client-info {
+  display: grid;
+  grid-template-columns: 1fr 1.4fr;
+  row-gap: 0.4rem;
+  column-gap: 0.6rem;
+  font-size: 0.95rem;
+}
+
+.client-info span:nth-child(odd) {
+  font-weight: 600;
+  color: #444;
+}
+
+.client-info span:nth-child(even) {
+  color: #222;
 }
 
 .itemDetail .value {
@@ -906,10 +1003,6 @@
   padding-right: 2em;
   padding-left: 2em;
   padding-bottom: 2em;
-  // display: grid;
-  // grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-  // gap: 20px;
-  // padding: 0 2em;
 }
 
 .homepageImageDiv {
@@ -920,6 +1013,9 @@
   border-radius: 8px;
   text-align: center;
   background-color: #fff;
+  @include mobile {
+    width: 80%;
+  }
 }
 
 // Page de profil utilisateur
@@ -948,12 +1044,19 @@
   }
 }
 
-.catInfo {
-  font-weight: 700;
+.profileForm {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  align-items: center;
+}
+
+.profileForm label {
   color: $darkorange-color;
 }
 
 .userInformationsDiv {
+  margin-left: 2em;
   @include mobile {
     margin-bottom: 1em;
     display: flex;
@@ -1245,8 +1348,8 @@
 
 .gridServices {
   display: grid;
-  grid-template-columns: 1fr 1fr;
-  grid-template-rows: 1fr;
+  grid-template-columns: 1fr;
+  grid-template-rows: 1fr 1fr 1fr;
   margin: 2em;
   margin-top: 0.5em;
   padding: 1em;
@@ -1276,7 +1379,21 @@
   @include mobile {
     width: 80%;
   }
+  @include tablette {
+    width: 80%;
+  }
   background-color: whitesmoke;
+}
+
+.shopBande {
+  display: flex;
+  flex-direction: row;
+  @include mobile {
+    flex-direction: column;
+  }
+  @include tablette {
+    flex-direction: column;
+  }
 }
 
 // À propos

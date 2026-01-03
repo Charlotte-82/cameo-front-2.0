@@ -6,7 +6,7 @@ import { useAuth } from "../contexts/AuthContext";
 
 function Header() {
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const { user, logout } = useAuth();
+  const { client, logout } = useAuth(); // ✅ Changé de 'user' à 'client'
 
   const toggleModal = () => {
     setIsModalOpen(!isModalOpen);
@@ -32,9 +32,9 @@ function Header() {
         </a>
       </div>
       <div className="iconU">
-        {user ? (
+        {client ? (
           <div className="bienvenue">
-            <span>Bonjour {user.firstname} !</span>
+            <span>Bonjour {client.client_firstname} !</span>
             <button>
               <a href="/profile">Ton compte</a>
             </button>

@@ -19,14 +19,8 @@ function CommandeGateau() {
   };
 
   return (
-    <div className="ResaCameoDiv">
-      <h3>Commander des Gâteaux</h3>
-      <p>
-        Le Caméo met à votre disposition une carte généreuse de gâteaux entiers
-        à la commande. Consultez la carte ci-dessous pour faire votre choix (et
-        cliquez sur les gâteaux qui vont font envie pour voir les photos).
-      </p>
-
+    <div>
+      <h3 style={{ color: "#b21a00", fontWeight: "700" }}>Gâteaux Entiers</h3>
       <div className="gateaux-grid">
         {fullCakes.map((cake, index) => (
           <div
@@ -37,7 +31,7 @@ function CommandeGateau() {
             <div className="gateau-content">
               <p className="gateau-nom">{cake.name}</p>
               <img
-                src={`${API_BASE_URL}/uploads/${cake.photo_filename}`}
+                src={`${API_BASE_URL}/uploads/${cake.photo}`}
                 alt={cake.name}
                 className="gateau-image"
               />

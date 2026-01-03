@@ -8,7 +8,7 @@ function ActivityManagement() {
         <a href="/admin/dashboard">
           <button className="backButtonDash">Retour au Tableau de Bord</button>
         </a>
-        <h1>Gestion des ateliers</h1>
+        <h1>Gestion des activités</h1>
         <ActivityDataManagement />
       </div>
     </div>

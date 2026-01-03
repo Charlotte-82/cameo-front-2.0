@@ -320,6 +320,7 @@ function HomepageManagement() {
               marginLeft: "2em",
               marginBottom: "2em",
               display: "flex",
+              flexWrap: "wrap",
               gap: "10px",
             }}
           >

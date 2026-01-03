@@ -7,7 +7,6 @@ function News() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    // 1. Chargement de l'activité
     fetch(`${API_BASE_URL}/activity`)
       .then((res) => (res.ok ? res.json() : Promise.reject(res)))
       .then((data) => {
@@ -17,7 +16,6 @@ function News() {
       .catch((err) => console.error("Erreur activité :", err))
       .finally(() => setLoading(false));
 
-    // 2. Chargement de l'image
     fetch(`${API_BASE_URL}/media?featured=1`)
       .then((res) => (res.ok ? res.json() : null))
       .then((data) => {
@@ -91,7 +89,9 @@ function News() {
             </p>
             {highlight[":places"] !== null && (
               <p className="infosNews">
-                Places disponibles : {highlight[":places"]}
+                {highlight["remaining_places"] === 0
+                  ? "Cet événement est complet"
+                  : `Places disponibles : ${highlight["remaining_places"]}`}
               </p>
             )}
             <p className="infosNews">

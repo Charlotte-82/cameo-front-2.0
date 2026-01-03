@@ -15,7 +15,7 @@ function AdminLogin() {
 
     try {
       const response = await fetch(
-        `${API_BASE_URL}/middlewares/adminLogin.php`,
+        `${API_BASE_URL}/authFolder/adminLogin.php`,
         {
           method: "POST",
           headers: {

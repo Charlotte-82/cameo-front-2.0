@@ -9,7 +9,7 @@ function Program() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedItem, setSelectedItem] = useState(null);
 
-  const { isAuthenticated, user } = useAuth();
+  const { isAuthenticated, client } = useAuth(); // ✅ Changé 'user' en 'client'
   const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
   const fetchUpcomingActivities = async () => {
@@ -49,13 +49,16 @@ function Program() {
   }, []);
 
   const handleReservation = async (placesCount) => {
-    if (!user || !selectedItem) return;
+    if (!client || !selectedItem) return;
 
     const reservationData = {
-      user_id: user.id_user,
+      client_id: client.id_client,
       activity_id: selectedItem[":id"],
-      places_count: parseInt(placesCount),
+      places_reserved: parseInt(placesCount),
+      created_at: new Date().toISOString(),
     };
+
+    console.log("📤 Envoi réservation:", reservationData);
 
     try {
       const response = await fetch(`${API_BASE_URL}/booking`, {
@@ -64,6 +67,7 @@ function Program() {
           "Content-Type": "application/json",
         },
         body: JSON.stringify(reservationData),
+        credentials: "include",
       });
 
       if (!response.ok) {
@@ -75,6 +79,7 @@ function Program() {
         closeModal();
       }
     } catch (error) {
+      console.error("Erreur réservation:", error);
       alert("Erreur de connexion.");
     }
   };
@@ -172,7 +177,9 @@ function Program() {
                 <p className="description">{item[":description"]}</p>
                 {item[":places"] !== null && (
                   <p className="places">
-                    Places disponibles : {item[":places"]}
+                    {item["remaining_places"] === 0
+                      ? "Complet"
+                      : `Places disponibles : ${item["remaining_places"]}`}
                   </p>
                 )}
               </div>

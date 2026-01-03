@@ -84,7 +84,7 @@ function MenuComponent() {
             {error && <p>Erreur: {error}</p>}
 
             {modalData && modalData.produits && (
-              <div className="imageFondMenu">
+              <div>
                 <h3 className="titreMenuCollection">
                   {modalData.info_collection.nom}
                 </h3>

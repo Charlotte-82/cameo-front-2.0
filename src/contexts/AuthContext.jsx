@@ -9,7 +9,7 @@ export const useAuth = () => {
 export const AuthProvider = ({ children }) => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
-  const [user, setUser] = useState(null);
+  const [client, setClient] = useState(null);
   const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
   useEffect(() => {
@@ -22,10 +22,10 @@ export const AuthProvider = ({ children }) => {
         if (response.ok) {
           const data = await response.json();
           setIsAuthenticated(true);
-          setUser(data.user);
+          setClient(data.client);
         } else {
           setIsAuthenticated(false);
-          setUser(null);
+          setClient(null);
         }
       } catch (error) {
         console.error(
@@ -33,7 +33,7 @@ export const AuthProvider = ({ children }) => {
           error
         );
         setIsAuthenticated(false);
-        setUser(null);
+        setClient(null);
       } finally {
         setIsLoading(false);
       }
@@ -42,14 +42,14 @@ export const AuthProvider = ({ children }) => {
     checkAuthStatus();
   }, [API_BASE_URL]);
 
-  const login = async (email, password) => {
+  const login = async (mail, password) => {
     try {
       const response = await fetch(`${API_BASE_URL}/auth/login`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ email, password }),
+        body: JSON.stringify({ client_mail: mail, client_password: password }),
         credentials: "include",
       });
 
@@ -59,7 +59,7 @@ export const AuthProvider = ({ children }) => {
 
       const data = await response.json();
       setIsAuthenticated(true);
-      setUser(data.user);
+      setClient(data.client);
       return data;
     } catch (error) {
       console.error("Erreur de connexion :", error);
@@ -67,32 +67,25 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
-  const logout = () => {
-    fetch(`${API_BASE_URL}/auth/logout`, {
-      method: "POST",
-    })
-      .then(() => {
-        setIsAuthenticated(false);
-        setUser(null);
-      })
-      .catch((error) => {
-        console.error("Erreur lors de la déconnexion:", error);
-        setIsAuthenticated(false);
-        setUser(null);
+  const logout = async () => {
+    try {
+      await fetch(`${API_BASE_URL}/auth/logout`, {
+        credentials: "include",
       });
-  };
-
-  const updateUser = (newUser) => {
-    setUser(newUser);
+    } catch (error) {
+      console.error("Erreur lors de la déconnexion:", error);
+    } finally {
+      setIsAuthenticated(false);
+      setClient(null);
+    }
   };
 
   const value = {
     isAuthenticated,
     isLoading,
-    user,
+    client,
     login,
     logout,
-    updateUser,
   };
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;

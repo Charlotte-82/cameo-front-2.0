@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 
 function ActivityDataManagement() {
   const [activity, setActivities] = useState([]);
+  const [bookings, setBookings] = useState([]);
   const [form, setForm] = useState({
     title: "",
     type: "workshop",
@@ -16,18 +17,35 @@ function ActivityDataManagement() {
 
   const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
+  const fetchAllData = async () => {
+    try {
+      const [aRes, bRes] = await Promise.all([
+        fetch(`${API_BASE_URL}/activity`),
+        fetch(`${API_BASE_URL}/booking`),
+      ]);
+
+      const activitiesData = await aRes.json();
+      const bookingsData = await bRes.json();
+
+      setActivities(activitiesData);
+      setBookings(bookingsData);
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
   useEffect(() => {
-    fetchActivities();
+    fetchAllData();
   }, []);
 
-  const fetchActivities = () => {
-    fetch(`${API_BASE_URL}/activity`)
-      .then((res) => {
-        if (!res.ok) throw new Error(`Erreur HTTP: ${res.status}`);
-        return res.json();
-      })
-      .then(setActivities)
-      .catch((err) => console.error("Erreur fetch:", err));
+  const getRemainingPlaces = (activity) => {
+    if (activity[":places"] === null) return null;
+
+    const reserved = bookings
+      .filter((b) => b.activity === activity[":id"])
+      .reduce((sum, b) => sum + b.places_reserved, 0);
+    const remaining = activity[":places"] - reserved;
+    return remaining <= 0 ? 0 : remaining;
   };
 
   const handleChange = (e) => {
@@ -74,7 +92,7 @@ function ActivityDataManagement() {
       }
 
       alert(editingId ? "Activité mise à jour !" : "Activité créée !");
-      fetchActivities();
+      fetchAllData();
       resetForm();
     } catch (error) {
       alert("Erreur : " + error.message);
@@ -125,7 +143,7 @@ function ActivityDataManagement() {
   const handleDelete = (id) => {
     if (!window.confirm("Supprimer cette activité ?")) return;
     fetch(`${API_BASE_URL}/activity/${id}`, { method: "DELETE" })
-      .then(() => fetchActivities())
+      .then(() => fetchAllData())
       .catch((err) => console.error("Erreur suppression:", err));
   };
 
@@ -185,7 +203,7 @@ function ActivityDataManagement() {
               />
               <br />
               <br />
-              <label>Fin (ou date de fin)</label>
+              <label>Fin</label>
               <br />
               <input
                 name="end"
@@ -196,7 +214,7 @@ function ActivityDataManagement() {
               />
               <br />
               <br />
-              <label>Places (vide si illimité)</label> <br />
+              <label>Places (laisser vide si illimité)</label> <br />
               <input
                 name="places"
                 type="number"
@@ -262,7 +280,18 @@ function ActivityDataManagement() {
                   <p className="description">{act[":description"]}</p>
 
                   {act[":places"] !== null && (
-                    <p className="places">Places : {act[":places"]}</p>
+                    <p className="places">
+                      {act.remaining_places <= 0 ? (
+                        <span style={{ color: "crimson", fontWeight: "bold" }}>
+                          COMPLET
+                        </span>
+                      ) : (
+                        <>
+                          Places restantes :{" "}
+                          <strong>{act.remaining_places}</strong>
+                        </>
+                      )}
+                    </p>
                   )}
 
                   <div className="admin-actions" style={{ marginTop: "10px" }}>
