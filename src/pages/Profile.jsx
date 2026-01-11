@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useAuth } from "../contexts/AuthContext";
 
 function Profile() {
-  const { client } = useAuth(); // ✅ Changé de 'user' à 'client'
+  const { client } = useAuth();
   const [products, setProducts] = useState([]);
   const [form, setForm] = useState({
     lastname: "",
@@ -36,21 +36,6 @@ function Profile() {
       fetchReservations(client.id_client);
     }
   }, [client]);
-
-  // const fetchProducts = async () => {
-  //   try {
-  //     const res = await fetch(`${API_BASE_URL}/product`);
-  //     if (!res.ok) throw new Error(`Erreur ${res.status}`);
-  //     const data = await res.json();
-  //     const filteredProducts = data.filter(
-  //       (p) => p.type === "gateau-entier" || p.type === "gateau-part"
-  //     );
-
-  //     setProducts(filteredProducts);
-  //   } catch (err) {
-  //     console.error("Erreur lors du fetch des produits :", err);
-  //   }
-  // };
 
   const fetchProducts = async () => {
     try {
@@ -88,6 +73,7 @@ function Profile() {
             if (!activityRes.ok) throw new Error("Activité introuvable");
 
             const a = await activityRes.json();
+            console.log("📊 Structure de l'activité:", a);
             return {
               ...b,
               places_reserved: b.places,
@@ -122,13 +108,16 @@ function Profile() {
     }
   };
 
-  const handleCancelReservation = async (reservationId) => {
+  const handleCancelReservation = async (clientId, activityId) => {
     if (!window.confirm("Êtes-vous sûr de vouloir annuler cette réservation ?"))
       return;
     try {
-      const res = await fetch(`${API_BASE_URL}/booking/${reservationId}`, {
-        method: "DELETE",
-      });
+      const res = await fetch(
+        `${API_BASE_URL}/booking/${clientId}/${activityId}`,
+        {
+          method: "DELETE",
+        }
+      );
       if (!res.ok) throw new Error(`Erreur ${res.status}`);
       fetchReservations(client.id_client);
     } catch (err) {
@@ -355,7 +344,11 @@ function Profile() {
                 </div>
                 <div className="reservationActions">
                   {!r.is_canceled && (
-                    <button onClick={() => handleCancelReservation(r.activity)}>
+                    <button
+                      onClick={() =>
+                        handleCancelReservation(r.client, r.activity)
+                      }
+                    >
                       Annuler cette réservation
                     </button>
                   )}

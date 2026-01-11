@@ -49,8 +49,10 @@ function Shop() {
       <hr className="NavigLigne21"></hr>
       <h1 className="shopTitle">La Boutique du Caméo</h1>
       <div className="shopBande">
-        <div className="gridCaseCameo2">
-          <ContactComponent />
+        <div className="gridServices2">
+          <div className="gridCaseCameo">
+            <ContactComponent />
+          </div>
         </div>
         <div>
           <h2 className="shopTitle2">Les Services du Caméo</h2>

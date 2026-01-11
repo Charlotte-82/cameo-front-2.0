@@ -68,10 +68,6 @@
   }
 }
 
-.bande4 {
-  width: 100%;
-}
-
 .bande2:hover,
 .bande4:hover {
   border: solid 3px $darkorange-color;
@@ -1354,35 +1350,52 @@
   margin-top: 0.5em;
   padding: 1em;
   gap: 2em;
+  @include tablette {
+    grid-template-columns: 1fr;
+    grid-template-rows: 1fr;
+    margin-top: 0.5em;
+  }
   @include mobile {
     grid-template-columns: 1fr;
-    grid-template-rows: 1fr 1fr;
+    grid-template-rows: 1fr;
+    margin: 0.5em;
+    padding: 0.5em;
+  }
+}
+
+.gridServices2 {
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: 1fr;
+  margin: 2em;
+  margin-top: 0.5em;
+  padding: 1em;
+  gap: 2em;
+  @include tablette {
+    grid-template-columns: 1fr;
+    grid-template-rows: 1fr;
     margin-top: 0.5em;
+  }
+  @include mobile {
+    grid-template-columns: 1fr;
+    grid-template-rows: 1fr;
+    margin: 0.5em;
+    padding: 0.5em;
   }
 }
 
 .gridCaseCameo {
+  display: flex;
+  justify-content: center;
   border: 2px solid $text-color;
   border-radius: 5px;
   padding: 1em;
   background-color: whitesmoke;
-}
-
-.gridCaseCameo2 {
-  border: 2px solid $text-color;
-  border-radius: 5px;
-  padding: 1em;
-  margin: 2.5em;
-  margin-top: 0.5em;
-  width: 50%;
-  justify-self: center;
   @include mobile {
-    width: 80%;
+    box-sizing: border-box !important;
+    max-width: 100% !important;
+    overflow-x: hidden !important;
   }
-  @include tablette {
-    width: 80%;
-  }
-  background-color: whitesmoke;
 }
 
 .shopBande {
@@ -1678,4 +1691,164 @@
 
 .bande3 h1 {
   @extend %heading-h1-style;
+}
+
+//Ghibli
+
+// .event-gifs {
+//   position: fixed;
+//   inset: 0;
+//   pointer-events: none;
+//   z-index: 2;
+// }
+
+// /* Base commune */
+// .gif {
+//   position: absolute;
+//   width: clamp(70px, 10vw, 140px);
+//   opacity: 0.9;
+//   animation: float 6s ease-in-out infinite;
+// }
+
+/* Positions intelligentes */
+
+// .g2 {
+//   top: 20%;
+//   right: 6%;
+//   animation-delay: 1s;
+// }
+
+// @media (max-width: 768px) {
+//   .gif {
+//     width: 60px;
+//     opacity: 0.7;
+//   }
+//   .g5,
+//   .g6 {
+//     display: none;
+//   } /* On allège pour mobile */
+// }
+
+.ghibli-personnages {
+  position: relative;
+}
+
+.chihiro {
+  position: absolute;
+  top: 9.4em;
+  left: 0;
+  width: clamp(70px, 12vw, 110px);
+  pointer-events: none;
+  animation: chihiroWalk 35s linear infinite;
+  z-index: 3;
+  display: none;
+  @include tablette {
+    top: 10.3em;
+    animation: chihiroWalk 25s linear infinite;
+  }
+  @include mobile {
+    top: 11.5em;
+    animation: chihiroWalk 13s linear infinite;
+  }
+}
+
+.totoro {
+  position: absolute;
+  top: 9.3em;
+  right: 0;
+  width: clamp(80px, 12vw, 150px);
+  pointer-events: none;
+  animation: totoroReverse 35s linear infinite;
+  z-index: 3;
+  display: none;
+
+  @include tablette {
+    top: 11.6em;
+    animation: totoroReverse 25s linear infinite;
+  }
+
+  @include mobile {
+    top: 12em;
+    animation: totoroReverse 13s linear infinite;
+  }
+}
+
+/* animation horizontale sans créer de scroll */
+@keyframes chihiroWalk {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(calc(100vw));
+  }
+}
+
+@keyframes totoroReverse {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(calc(-100vw));
+  }
+}
+
+.kodama {
+  position: fixed;
+  top: 11em;
+  right: 12em;
+  width: clamp(40px, 12vw, 100px);
+  pointer-events: none;
+  animation: kodamaFloatFade 6s ease-in-out infinite;
+  z-index: 3;
+  display: none;
+
+  @include tablette {
+    top: 10.5em;
+    left: 1em;
+    width: clamp(20px, 12vw, 60px);
+  }
+
+  @include mobile {
+    top: 14em;
+    left: 1em;
+    width: clamp(30px, 13vw, 90px);
+  }
+}
+
+@keyframes kodamaFloatFade {
+  0%,
+  100% {
+    opacity: 0;
+  }
+  20%,
+  75% {
+    opacity: 0.5;
+  }
+  25%,
+  50%,
+  80% {
+    opacity: 1;
+  }
+}
+
+.calcifer {
+  position: absolute;
+  top: 41.3em;
+  left: 15em;
+  width: clamp(250px, 12vw, 350px);
+  pointer-events: none;
+  z-index: 3;
+  display: none;
+
+  @include tablette {
+    top: 41.7em;
+    left: 3em;
+    width: clamp(170px, 12vw, 350px);
+  }
+
+  @include mobile {
+    top: 55.4em;
+    left: 2em;
+    width: clamp(120px, 12vw, 350px);
+  }
 }

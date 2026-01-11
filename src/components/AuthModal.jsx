@@ -26,9 +26,9 @@ function AuthModal({ onClose, onLoginSuccess }) {
         // Filtrer uniquement les gâteaux (gateau-entier et gateau-part)
         const cakes = data.filter(
           (product) =>
-            product.product_type === "gateau-entier" ||
-            product.product_type === "gateau-part"
+            product.type === "gateau-entier" || product.type === "gateau-part"
         );
+        console.log("Gâteaux filtrés :", cakes);
         setProducts(cakes);
       } catch (error) {
         console.error("Erreur chargement gâteaux:", error);
@@ -59,12 +59,12 @@ function AuthModal({ onClose, onLoginSuccess }) {
     e.preventDefault();
 
     const userData = {
-      client_firstname: form.firstname,
-      client_lastname: form.lastname,
-      client_mail: form.mail,
-      client_password: form.password,
-      client_telephone: form.tel,
-      client_newsletter_agreement: form.newsletter,
+      firstname: form.firstname,
+      lastname: form.lastname,
+      mail: form.mail,
+      password: form.password,
+      tel: form.tel,
+      newsletter: form.newsletter,
       product_id: form.product_id,
     };
 
@@ -233,12 +233,9 @@ function AuthModal({ onClose, onLoginSuccess }) {
                       required
                     >
                       <option value="">--Choisissez un gâteau préféré--</option>
-                      {products.map((product) => (
-                        <option
-                          key={product.id_product}
-                          value={product.id_product}
-                        >
-                          {product.product_name}
+                      {products.map((product, index) => (
+                        <option key={product.id || index} value={product.id}>
+                          {product.name}
                         </option>
                       ))}
                     </select>

@@ -54,7 +54,7 @@ function Home() {
           <News />
         </section>
         <div>
-          <div style={{ marginBottom: "2em" }}>
+          <div className="bande4" style={{ paddingTop: "0" }}>
             <MenuComponent />
           </div>
           <section className="bande4">

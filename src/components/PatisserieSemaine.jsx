@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import Kodama from "../assets/images/Ghibli/kodama.gif";
 
 function PatisserieSemaine() {
   const [wpastry, setWpastry] = useState(null);
@@ -92,6 +93,7 @@ function PatisserieSemaine() {
         <div className="cercle infosCercle">
           <h2 className="pastryName">{wpastry.name}</h2>
           <p className="pastryPrice">{wpastry.price} €</p>
+          <img src={Kodama} alt="Kodama" className="kodama"></img>
         </div>
       </div>
     </div>

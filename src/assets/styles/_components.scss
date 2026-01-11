@@ -4,6 +4,7 @@
   background-color: $text-color;
   padding: 0.5em 0em 0.5em 0em;
   height: auto;
+  overflow: hidden;
 }
 
 .logoHeader {
@@ -40,13 +41,13 @@ i {
 .iconU {
   position: absolute;
   top: 5px;
-  right: 5px;
+  right: 1.2em;
 }
 
 .iconE {
   position: absolute;
   top: 32px;
-  right: 1px;
+  right: 0.2em;
 }
 
 .iconFB {
@@ -204,7 +205,7 @@ i {
 
 .footerCol1 p {
   @include mobile {
-    display: none;
+    display: none !important;
   }
 }
 
@@ -221,15 +222,25 @@ i {
   text-align: end;
   margin-bottom: 0;
   @include mobile {
-    display: none;
+    display: none !important;
   }
 }
 
 .footerCol4 p {
   margin-bottom: 0;
   @include mobile {
+    display: none;
     font-size: smaller;
     text-align: center;
+  }
+}
+
+.footerCol1,
+.footerCol2,
+.footerCol4,
+.footerCol5 {
+  @include mobile {
+    display: none;
   }
 }
 
@@ -255,16 +266,13 @@ i {
 
 .footerCol5 {
   @include mobile {
-    visibility: hidden;
+    display: none !important;
   }
 }
 
 .footerCol5 p {
   font-size: x-large;
   text-align: center;
-  @include mobile {
-    display: none;
-  }
   @include tablette {
     font-size: larger;
   }
@@ -1144,6 +1152,10 @@ strong {
 
 // resaCameo
 
+.ResaCameoDiv {
+  width: 95%;
+}
+
 .ResaCameoDiv h3 {
   color: $dark-color;
 }
@@ -1244,18 +1256,6 @@ strong {
   border: $text-color 2px solid;
 }
 
-@media (max-width: 1024px) {
-  .gateaux-grid {
-    grid-template-columns: repeat(3, 1fr);
-  }
-}
-
-@media (max-width: 600px) {
-  .gateaux-grid {
-    grid-template-columns: repeat(2, 1fr);
-  }
-}
-
 .FormCommande {
   margin: 2em;
   color: $text-color;
@@ -1263,9 +1263,16 @@ strong {
   display: flex;
   flex-direction: column;
   align-items: center;
+  max-width: 100%;
+  box-sizing: border-box;
   @include mobile {
-    margin: 0.5em;
+    margin: 0em;
   }
+}
+
+.FormCommande * {
+  max-width: 100%;
+  box-sizing: border-box;
 }
 
 .FormCommande input[type="text"],
@@ -1296,6 +1303,10 @@ strong {
   justify-content: space-around;
   @include mobile {
     flex-direction: column;
+    align-items: center;
+  }
+  @include tablette {
+    flex-wrap: wrap;
   }
 }
 
@@ -1316,6 +1327,7 @@ strong {
   gap: 10px;
   @include mobile {
     flex-direction: column;
+    align-items: center;
   }
 }
 

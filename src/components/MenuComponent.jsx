@@ -12,7 +12,7 @@ function MenuComponent() {
     { id: 1, name: "Pâtisseries" },
     { id: 3, name: "Boissons chaudes" },
     { id: 2, name: "Boissons froides" },
-    { id: 5, name: "Carte des Thés et Infusions" },
+    { id: 5, name: "Carte des Thés" },
     { id: 4, name: "Offre de saison" },
     { id: 6, name: "Nouveautés" },
   ];
@@ -50,7 +50,7 @@ function MenuComponent() {
   };
 
   return (
-    <div className="page">
+    <div className="page" style={{ backgroundColor: "whitesmoke" }}>
       <h2 className="shopTitle2">La carte du salon</h2>
       <p className="introMenu">
         Découvrez toutes les douceurs à venir déguster sur place.

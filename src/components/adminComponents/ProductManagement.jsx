@@ -216,17 +216,17 @@ function ProductManagement() {
                 onChange={handleChange}
                 required
               >
-                <option value="gateau-part">Gâteau à la part</option>
-                <option value="gateau-entier">Gâteau entier</option>
-                <option value="boissons-chaudes">Boisson Chaude</option>
-                <option value="boissons-froides">Boisson Froide</option>
-                <option value="thes-verts">Thé Vert</option>
-                <option value="thes-noirs">Thé Noir</option>
-                <option value="infusions">Infusion</option>
+                <option value="gateau-part">Gâteaux à la part</option>
+                <option value="gateau-entier">Gâteaux entiers</option>
+                <option value="boissons-chaudes">Boissons Chaudes</option>
+                <option value="boissons-froides">Boissons Froides</option>
+                <option value="thes-verts">Thés Verts</option>
+                <option value="thes-noirs">Thés Noirs</option>
+                <option value="infusions">Infusions</option>
                 <option value="rooibos">Rooïbos</option>
                 <option value="goodies">Goodies</option>
-                <option value="sachet">Sachet de thé 100g</option>
-                <option value="glaces">Glace</option>
+                <option value="sachet">Sachets de thé 100g</option>
+                <option value="glaces">Glaces</option>
               </select>
               <br />
               <br />

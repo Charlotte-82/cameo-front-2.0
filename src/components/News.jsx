@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import Flamme from "../assets/images/Ghibli/flamme.gif";
 
 function News() {
   const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
@@ -53,6 +54,7 @@ function News() {
 
   return (
     <div className="newsDiv">
+      <img src={Flamme} className="calcifer" alt="Calcifer" />
       <div className="affichageNewsTablette">
         <div className="imageNewsDiv">
           <h3>{highlight[":title"]}</h3>
