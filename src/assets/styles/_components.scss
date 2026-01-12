@@ -937,13 +937,13 @@ strong {
 
 .modalCollection {
   position: fixed;
-  top: 30%;
-  left: 10%;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
   background: $dark-color;
   border: 2px solid $text-color;
-  padding: 20px;
   width: 80%;
-  max-height: 80%;
+  max-height: 90vh;
   overflow-y: auto;
   color: $light-color;
 }

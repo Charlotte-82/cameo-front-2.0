@@ -72,6 +72,8 @@ function ActivityDataManagement() {
       contributor: form.contributor,
     };
 
+    console.log("Données envoyées :", activityData);
+
     try {
       const response = await fetch(url, {
         method: method,

@@ -9,11 +9,11 @@ function MenuComponent() {
   const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
   const collectionsData = [
-    { id: 1, name: "Pâtisseries" },
-    { id: 3, name: "Boissons chaudes" },
-    { id: 2, name: "Boissons froides" },
-    { id: 5, name: "Carte des Thés" },
-    { id: 4, name: "Offre de saison" },
+    { id: 1, name: "Boissons Chaudes" },
+    { id: 3, name: "Pâtisseries" },
+    { id: 2, name: "Boissons Froides" },
+    { id: 5, name: "Offre de Saison" },
+    { id: 4, name: "Carte des Thés" },
     { id: 6, name: "Nouveautés" },
   ];
 
@@ -95,13 +95,13 @@ function MenuComponent() {
                         <span className="itemGauche">
                           {item[":name"] || item.product_name}
                         </span>
-                        {modalData.info_collection.id !== 5 && (
+                        {modalData.info_collection.id !== 4 && (
                           <span className="itemDroit">
                             {item[":price"] || item.product_price}€
                           </span>
                         )}
                       </div>
-                      {modalData.info_collection.id === 5 &&
+                      {modalData.info_collection.id === 4 &&
                         (item[":ingredients"] || item.product_ingredients) && (
                           <p className="ingredientsText">
                             {item[":ingredients"] || item.product_ingredients}
