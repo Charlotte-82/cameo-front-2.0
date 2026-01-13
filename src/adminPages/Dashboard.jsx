@@ -36,14 +36,14 @@ function Dashboard() {
             <WorkshopSVG />
           </a>
         </div>
-        <div className="eventManagementDiv">
-          {/* <a className="adminLink" href="/admin/dashboard/blog"> */}
-          {/* <a className="adminLink" href="/dashblog"> */}
-          <a className="adminLink" href="#">
+        {/* <div className="eventManagementDiv"> */}
+        {/* <a className="adminLink" href="/admin/dashboard/blog"> */}
+        {/* <a className="adminLink" href="/dashblog"> */}
+        {/* <a className="adminLink" href="#">
             <h3>Gestion du Blog</h3>
             <BlogSVG />
           </a>
-        </div>
+        </div> */}
         <div className="userManagementDiv">
           <a className="adminLink" href="/admin/dashboard/user">
             <h3>Gestion des Clients</h3>

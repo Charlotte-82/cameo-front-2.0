@@ -1176,6 +1176,11 @@ strong {
   gap: 1rem;
   padding: 2rem 0;
   justify-content: center;
+  @include mobile {
+    grid-template-columns: repeat(auto-fit, 150px);
+    gap: 0.5rem;
+    padding: 1rem 0;
+  }
 }
 
 .gateau {
@@ -1208,14 +1213,14 @@ strong {
 
 .gateau-nom {
   font-weight: 600;
-  font-size: 2rem !important;
+  font-size: 1.5rem !important;
   padding: 2rem 2rem;
   transition: opacity 0.3s ease;
   text-transform: uppercase;
   font-family: $font-titleh2 !important;
   color: $light-color !important;
   @include mobile {
-    font-size: 0.8rem !important;
+    font-size: 1rem !important;
   }
   @include tablette {
     font-size: 1.5rem !important;

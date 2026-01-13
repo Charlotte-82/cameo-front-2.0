@@ -229,12 +229,12 @@ function HomepageManagement() {
               required
             />
             <br />
-            <br></br>
+
             <label>Prix de la pâtisserie</label>
             <br></br>
             <input
-              type="number"
-              step="0.01"
+              type="text"
+              inputMode="decimal"
               placeholder="Prix"
               value={weeklyData.price}
               onChange={(e) =>
@@ -243,7 +243,7 @@ function HomepageManagement() {
               required
             />
             <br />
-            <br></br>
+
             <label>Titre de l'oeuvre</label>
             <br></br>
             <input
@@ -256,7 +256,7 @@ function HomepageManagement() {
               required
             />
             <br />
-            <br></br>
+
             <label>Réalisateur / Réalisatrice</label>
             <br></br>
             <input
@@ -269,7 +269,7 @@ function HomepageManagement() {
               required
             />
             <br />
-            <br></br>
+
             <label>Année de réalisation de l'oeuvre</label>
             <br></br>
             <input
@@ -282,7 +282,7 @@ function HomepageManagement() {
               required
             />
             <br />
-            <br></br>
+
             <button type="submit" className="backButtonDash">
               Enregistrer les textes
             </button>
