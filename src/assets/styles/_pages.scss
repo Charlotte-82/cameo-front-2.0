@@ -1681,18 +1681,18 @@
   right: 0;
   width: clamp(80px, 12vw, 150px);
   pointer-events: none;
-  animation: totoroReverse 35s linear infinite;
+  animation: totoroReverse 45s linear infinite;
   z-index: 3;
   // display: none;
 
   @include tablette {
     top: 11.6em;
-    animation: totoroReverse 25s linear infinite;
+    animation: totoroReverse 30s linear infinite;
   }
 
   @include mobile {
     top: 12em;
-    animation: totoroReverse 13s linear infinite;
+    animation: totoroReverse 16s linear infinite;
   }
 }
 

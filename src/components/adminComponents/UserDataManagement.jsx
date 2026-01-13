@@ -174,7 +174,7 @@ function UserDataManagement() {
               </option>
             ))}
           </select>
-          <br></br>
+          {/* <br></br>
           {!editingId && (
             <input
               name="password"
@@ -184,7 +184,7 @@ function UserDataManagement() {
               onChange={handleChange}
               required
             />
-          )}
+          )} */}
 
           <button
             type="submit"

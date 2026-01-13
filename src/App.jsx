@@ -20,6 +20,7 @@ import MenuManagement from "./adminPages/MenuManagement.jsx";
 import PrivateRoute from "./components/PrivateRoute.jsx";
 import Profile from "./pages/Profile.jsx";
 import Politique from "./pages/Politics.jsx";
+import DashBlog from "./adminPages/BlogManagement.jsx";
 import { AuthProvider, useAuth } from "./contexts/AuthContext.jsx";
 
 function App() {
@@ -37,6 +38,7 @@ function App() {
         <Route path="/boutique" element={<Shop />}></Route>
         <Route path="/apropos" element={<Apropos />}></Route>
         <Route path="/blog" element={<Blog />}></Route>
+        <Route path="/dashblog" element={<DashBlog />}></Route>
         <Route path="/agenda" element={<Program />}></Route>
         <Route path="/partenaires" element={<Partnership />}></Route>
         <Route path="/404" element={<Travaux />}></Route>

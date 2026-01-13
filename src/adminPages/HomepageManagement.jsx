@@ -81,7 +81,8 @@ function HomepageManagement() {
     e.preventDefault();
     const dataToPost = {
       weekly_name: weeklyData.name,
-      weekly_price: weeklyData.price.toString().replace(",", "."),
+      // weekly_price: weeklyData.price.toString().replace(",", "."),
+      weekly_price: parseFloat(weeklyData.price.toString().replace(",", ".")),
       weekly_filmtitle: weeklyData.filmtitle,
       weekly_filmreal: weeklyData.filmreal,
       weekly_filmdate: weeklyData.filmdate,
@@ -216,6 +217,8 @@ function HomepageManagement() {
         <section className="weeklySection">
           <h2>Infos Pâtisserie & Film</h2>
           <form className="weeklyPastryForm" onSubmit={handleWeeklyUpdate}>
+            <label>Nom de la pâtisserie</label>
+            <br></br>
             <input
               type="text"
               placeholder="Nom"
@@ -226,6 +229,9 @@ function HomepageManagement() {
               required
             />
             <br />
+            <br></br>
+            <label>Prix de la pâtisserie</label>
+            <br></br>
             <input
               type="number"
               step="0.01"
@@ -237,6 +243,9 @@ function HomepageManagement() {
               required
             />
             <br />
+            <br></br>
+            <label>Titre de l'oeuvre</label>
+            <br></br>
             <input
               type="text"
               placeholder="Film"
@@ -247,6 +256,9 @@ function HomepageManagement() {
               required
             />
             <br />
+            <br></br>
+            <label>Réalisateur / Réalisatrice</label>
+            <br></br>
             <input
               type="text"
               placeholder="Réalisateur"
@@ -257,6 +269,9 @@ function HomepageManagement() {
               required
             />
             <br />
+            <br></br>
+            <label>Année de réalisation de l'oeuvre</label>
+            <br></br>
             <input
               type="text"
               placeholder="Année"
@@ -267,6 +282,7 @@ function HomepageManagement() {
               required
             />
             <br />
+            <br></br>
             <button type="submit" className="backButtonDash">
               Enregistrer les textes
             </button>
