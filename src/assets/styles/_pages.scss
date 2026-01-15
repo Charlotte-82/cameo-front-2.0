@@ -36,6 +36,22 @@
   margin-bottom: 2em !important;
   padding: 2em;
   @extend %bande-style;
+  @media screen and (max-width: 1441px) and (min-width: 1025px) {
+    width: 90%;
+  }
+  @include mobile {
+    width: 100%;
+    padding: 0.8em;
+    margin: 0;
+  }
+  @include tablette {
+    width: 100%;
+    padding: 0.8em;
+    margin: 0;
+  }
+}
+
+.bande2 {
   width: 45%;
   @media screen and (max-width: 1441px) and (min-width: 1025px) {
     width: 90%;
@@ -188,10 +204,31 @@
 .schedule-list {
   display: flex;
   flex-wrap: wrap;
+  list-style: none;
+  justify-content: center;
 }
 
-.program ul {
-  list-style-type: none;
+.schedule-list2 {
+  display: flex;
+  flex-wrap: wrap;
+  list-style: none;
+  justify-content: center;
+  width: 100%;
+}
+
+.schedule-list2 li {
+  color: $text-color;
+  border: solid 2px $dark-color;
+  margin: 1em;
+  padding: 1em;
+  width: 40%;
+  background-color: whitesmoke;
+  @include tablette {
+    width: 45%;
+  }
+  @include mobile {
+    width: 100%;
+  }
 }
 
 .program h1 {
@@ -200,11 +237,11 @@
 
 .schedule-list li {
   color: $text-color;
-  border: solid 2px $darkorange-color;
+  border: solid 2px $dark-color;
   margin: 2em;
   padding: 1em;
   width: 20%;
-  background-color: #fab97b9f;
+  background-color: whitesmoke;
   @include tablette {
     width: 35%;
   }
@@ -399,6 +436,31 @@
   border: dotted 2px $darkorange-color;
 }
 
+.cards-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 1rem;
+  padding: 1rem 0;
+}
+
+.card {
+  border: solid 3px $dark-color;
+  border-radius: 8px;
+  padding: 1rem;
+  box-shadow: 2px 2px 6px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+}
+
+.card h3 {
+  margin-top: 0;
+}
+
+.card button {
+  margin-top: 1rem;
+  align-self: flex-start;
+}
+
 .cakeManagementDiv {
   @extend %grid-div-style;
   grid-row: 2;
@@ -533,14 +595,16 @@
 
 .adminForm3 {
   display: flex;
+  justify-self: center;
   justify-content: center;
-  flex-direction: column;
-}
-
-.adminForm3 fieldset {
-  border: $dark-color 2px solid;
-  padding: 3em;
+  flex-direction: row;
   width: 60%;
+  @include tablette {
+    width: 80%;
+  }
+  @include mobile {
+    width: 100%;
+  }
 }
 
 .allCakeDiv {
@@ -687,45 +751,11 @@
   margin-bottom: 0.5em;
 }
 
-.cakeDetail {
-  margin-bottom: 0.5em;
-  color: $text-color;
-}
-
-.cakeDetail .value {
-  font-weight: 700;
-}
-
 .cakeActions button {
   margin-bottom: 0.5em;
   @include tablette {
     margin-right: 0.5em;
   }
-}
-
-.visualMediaList {
-  @include desktop {
-    display: none;
-  }
-  @include tablette {
-    display: none;
-  }
-}
-
-.mediaItem {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
-.mediaItem h4 {
-  color: $text-color;
-  font-family: $font-main;
-  text-decoration: underline;
-}
-
-.pastryPhoto {
-  margin-bottom: 1em;
 }
 
 .backButtonDash {
@@ -736,6 +766,17 @@
   border: $dark-color solid 2px;
   color: $light-color;
   background-color: $text-color;
+}
+
+.weeklySection {
+  margin-top: 2em;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.weeklyPastryForm input {
+  margin-bottom: 1em;
 }
 
 .userManagementCompo {
@@ -771,6 +812,7 @@
 .adminForm3 label {
   font-family: $font-main;
   color: $text-color;
+  margin-top: 1em;
 }
 
 .adminForm3 legend {
@@ -781,6 +823,14 @@
 
 .adminForm3 input[type="file"] {
   font-family: $font-main;
+}
+
+.adminForm3 input {
+  margin-top: 1em;
+}
+
+.adminForm3 select {
+  margin-top: 1em;
 }
 
 .adminForm3 button {
@@ -824,30 +874,10 @@
   margin-bottom: 1em;
 }
 
-.userTable {
-  display: none;
-}
-
-.userTable2 {
-  @include tablette {
-    display: none;
-  }
-  @include mobile {
-    display: none;
-  }
-}
-
 .userList {
   @include desktop {
     display: none;
   }
-}
-
-.userTableDiv {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  width: 65%;
 }
 
 .userCard {
@@ -867,29 +897,49 @@
   flex-direction: column;
 }
 
-.userTable th {
-  text-align: center;
-  font-family: $font-titleh2;
-  color: $light-color;
-  background-color: $text-color;
-  border: $lightorange-color 2px solid;
+.client-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.5rem;
+  margin-top: 1rem;
 }
 
-.userTable th,
-.userTable td {
-  padding-left: 1em;
-  font-family: $font-main;
+.client-card {
+  background: whitesmoke;
+  border: solid 2px $text-color;
+  border-radius: 12px;
+  padding: 1.2rem 1.4rem;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
-.userTable td {
-  border: $dark-color 2px solid;
-  color: $text-color;
+.client-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.12);
 }
 
-.userTable button {
-  margin-left: 1.5em;
-  margin-right: 1.5em;
-  @extend %button-style;
+.client-card h3 {
+  margin: 0 0 0.8rem 0;
+  font-weight: 700;
+  font-size: 1.1rem;
+  border-bottom: 1px solid #eee;
+  padding-bottom: 0.5rem;
+}
+
+.client-info {
+  display: grid;
+  grid-template-columns: 1fr 1.4fr;
+  row-gap: 0.4rem;
+  column-gap: 0.6rem;
+  font-size: 0.95rem;
+}
+
+.client-info span:nth-child(odd) {
+  font-weight: 600;
+  color: #444;
+}
+
+.client-info span:nth-child(even) {
+  color: #222;
 }
 
 .itemDetail .value {
@@ -898,6 +948,29 @@
 
 .tableRank3 {
   height: 45px;
+}
+
+.homepageImageBankDiv {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  width: 80%;
+  padding-right: 2em;
+  padding-left: 2em;
+  padding-bottom: 2em;
+}
+
+.homepageImageDiv {
+  width: 15%;
+  margin-right: 1em;
+  border: 1px solid #ccc;
+  padding: 10px;
+  border-radius: 8px;
+  text-align: center;
+  background-color: #fff;
+  @include mobile {
+    width: 80%;
+  }
 }
 
 // Page de profil utilisateur
@@ -926,12 +999,19 @@
   }
 }
 
-.catInfo {
-  font-weight: 700;
+.profileForm {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  align-items: center;
+}
+
+.profileForm label {
   color: $darkorange-color;
 }
 
 .userInformationsDiv {
+  margin-left: 2em;
   @include mobile {
     margin-bottom: 1em;
     display: flex;
@@ -1223,38 +1303,69 @@
 
 .gridServices {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: 1fr;
+  grid-template-rows: 1fr 1fr 1fr;
+  margin: 2em;
+  margin-top: 0.5em;
+  padding: 1em;
+  gap: 2em;
+  @include tablette {
+    grid-template-columns: 1fr;
+    grid-template-rows: 1fr;
+    margin-top: 0.5em;
+  }
+  @include mobile {
+    grid-template-columns: 1fr;
+    grid-template-rows: 1fr;
+    margin: 0.5em;
+    padding: 0.5em;
+  }
+}
+
+.gridServices2 {
+  display: grid;
+  grid-template-columns: 1fr;
   grid-template-rows: 1fr;
   margin: 2em;
   margin-top: 0.5em;
   padding: 1em;
   gap: 2em;
+  @include tablette {
+    grid-template-columns: 1fr;
+    grid-template-rows: 1fr;
+    margin-top: 0.5em;
+  }
   @include mobile {
     grid-template-columns: 1fr;
-    grid-template-rows: 1fr 1fr;
-    margin-top: 0.5em;
+    grid-template-rows: 1fr;
+    margin: 0.5em;
+    padding: 0.5em;
   }
 }
 
 .gridCaseCameo {
+  display: flex;
+  justify-content: center;
   border: 2px solid $text-color;
   border-radius: 5px;
   padding: 1em;
   background-color: whitesmoke;
+  @include mobile {
+    box-sizing: border-box !important;
+    max-width: 100% !important;
+    overflow-x: hidden !important;
+  }
 }
 
-.gridCaseCameo2 {
-  border: 2px solid $text-color;
-  border-radius: 5px;
-  padding: 1em;
-  margin: 2.5em;
-  margin-top: 0.5em;
-  width: 50%;
-  justify-self: center;
+.shopBande {
+  display: flex;
+  flex-direction: row;
   @include mobile {
-    width: 80%;
+    flex-direction: column;
   }
-  background-color: whitesmoke;
+  @include tablette {
+    flex-direction: column;
+  }
 }
 
 // À propos
@@ -1539,4 +1650,128 @@
 
 .bande3 h1 {
   @extend %heading-h1-style;
+}
+
+.ghibli-personnages {
+  position: relative;
+}
+
+.chihiro {
+  position: absolute;
+  top: 9.4em;
+  left: 0;
+  width: clamp(70px, 12vw, 110px);
+  pointer-events: none;
+  animation: chihiroWalk 35s linear infinite;
+  z-index: 3;
+  // display: none;
+  @include tablette {
+    top: 10.3em;
+    animation: chihiroWalk 25s linear infinite;
+  }
+  @include mobile {
+    top: 11.5em;
+    animation: chihiroWalk 13s linear infinite;
+  }
+}
+
+.totoro {
+  position: absolute;
+  top: 9.3em;
+  right: 0;
+  width: clamp(80px, 12vw, 150px);
+  pointer-events: none;
+  animation: totoroReverse 45s linear infinite;
+  z-index: 3;
+  // display: none;
+
+  @include tablette {
+    top: 11.6em;
+    animation: totoroReverse 30s linear infinite;
+  }
+
+  @include mobile {
+    top: 12em;
+    animation: totoroReverse 16s linear infinite;
+  }
+}
+
+/* animation horizontale sans créer de scroll */
+@keyframes chihiroWalk {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(calc(100vw));
+  }
+}
+
+@keyframes totoroReverse {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(calc(-100vw));
+  }
+}
+
+.kodama {
+  position: fixed;
+  top: 11em;
+  right: 12em;
+  width: clamp(40px, 12vw, 100px);
+  pointer-events: none;
+  animation: kodamaFloatFade 6s ease-in-out infinite;
+  z-index: 3;
+  // display: none;
+
+  @include tablette {
+    top: 10.5em;
+    left: 1em;
+    width: clamp(20px, 12vw, 60px);
+  }
+
+  @include mobile {
+    top: 14em;
+    left: 1em;
+    width: clamp(30px, 13vw, 90px);
+  }
+}
+
+@keyframes kodamaFloatFade {
+  0%,
+  100% {
+    opacity: 0;
+  }
+  20%,
+  75% {
+    opacity: 0.5;
+  }
+  25%,
+  50%,
+  80% {
+    opacity: 1;
+  }
+}
+
+.calcifer {
+  position: absolute;
+  top: 41.3em;
+  left: 15em;
+  width: clamp(250px, 12vw, 350px);
+  pointer-events: none;
+  z-index: 3;
+  // display: none;
+
+  @include tablette {
+    top: 41.7em;
+    left: 3em;
+    width: clamp(170px, 12vw, 350px);
+  }
+
+  @include mobile {
+    top: 55.4em;
+    left: 2em;
+    width: clamp(120px, 12vw, 350px);
+  }
 }

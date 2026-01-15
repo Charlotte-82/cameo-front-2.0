@@ -12,15 +12,15 @@ import Travaux from "./pages/Travaux.jsx";
 import Admin from "./adminPages/AdminLogin.jsx";
 import Dashboard from "./adminPages/Dashboard.jsx";
 import Mentions from "./pages/Mentions.jsx";
-import Pastry from "./adminPages/PastryManagement.jsx";
-import Event from "./adminPages/EventManagement.jsx";
-import Workshop from "./adminPages/WorkshopManagement.jsx";
+import Homepage from "./adminPages/HomepageManagement.jsx";
+import Activity from "./adminPages/ActivityManagement.jsx";
 import User from "./adminPages/UserManagament.jsx";
 import Reserv from "./adminPages/ReservManagement.jsx";
 import MenuManagement from "./adminPages/MenuManagement.jsx";
 import PrivateRoute from "./components/PrivateRoute.jsx";
 import Profile from "./pages/Profile.jsx";
 import Politique from "./pages/Politics.jsx";
+import DashBlog from "./adminPages/BlogManagement.jsx";
 import { AuthProvider, useAuth } from "./contexts/AuthContext.jsx";
 
 function App() {
@@ -38,6 +38,7 @@ function App() {
         <Route path="/boutique" element={<Shop />}></Route>
         <Route path="/apropos" element={<Apropos />}></Route>
         <Route path="/blog" element={<Blog />}></Route>
+        <Route path="/dashblog" element={<DashBlog />}></Route>
         <Route path="/agenda" element={<Program />}></Route>
         <Route path="/partenaires" element={<Partnership />}></Route>
         <Route path="/404" element={<Travaux />}></Route>
@@ -46,11 +47,13 @@ function App() {
         <Route path="/admin" element={<Admin />}></Route>
         <Route element={<PrivateRoute />}>
           <Route path="/admin/dashboard" element={<Dashboard />}></Route>
-          <Route path="/admin/dashboard/pastry" element={<Pastry />}></Route>
-          <Route path="/admin/dashboard/event" element={<Event />}></Route>
           <Route
-            path="/admin/dashboard/workshop"
-            element={<Workshop />}
+            path="/admin/dashboard/homepageManagement"
+            element={<Homepage />}
+          ></Route>
+          <Route
+            path="/admin/dashboard/activity"
+            element={<Activity />}
           ></Route>
           <Route path="/admin/dashboard/user" element={<User />}></Route>
           <Route

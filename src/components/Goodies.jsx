@@ -1,12 +1,9 @@
 import React from "react";
 import Retour from "../assets/images/retour.png";
-import Potter from "../assets/images/potter.png";
-import Barbe from "../assets/images/barbe.png";
-import Brod1 from "../assets/images/brod1.jpg";
-import Brod2 from "../assets/images/brod2.jpg";
 import Brod3 from "../assets/images/brod3.jpg";
-import Brod4 from "../assets/images/brod4.jpg";
-import Brod5 from "../assets/images/brod5.jpg";
+import Ghibli from "../assets/images/ghibli.png";
+import Sticker from "../assets/images/sticker.png";
+import Portecle from "../assets/images/portecle.png";
 
 function Goodies() {
   return (
@@ -18,68 +15,68 @@ function Goodies() {
         <a
           href="/partenaires"
           target="_blank"
-          style={{ color: "red", textDecoration: "none" }}
+          style={{
+            color: "#b21a00",
+            textDecoration: "none",
+            cursor: "pointer",
+          }}
         >
           Partenaires
         </a>
       </p>
       <div className="sousDivGoodies">
         <div className="divArtisteGoodies">
+          <h3>Les porte-clés</h3>
+          <p>4€</p>
+          <div className="DivIllusArtiste">
+            <img
+              className="imgArtiste"
+              src={Portecle}
+              alt="Le professeur Macgonagal"
+            />
+          </div>
+        </div>
+        <div className="divArtisteGoodies">
+          <h3>Les stickers de Mutyn.e</h3>
+          <p>2€</p>
+          <div className="DivIllusArtiste">
+            <img
+              className="imgArtiste"
+              src={Sticker}
+              alt="Le professeur Macgonagal"
+            />
+          </div>
+        </div>
+        <div className="divArtisteGoodies">
           <h3>Les cartes postales de Mutyn.e</h3>
-          <p>
-            Un style unique et les références cinématographiques qu'on aime
-            beaucoup au Caméo, vous aimerez ces dessins aux traits marqués et
-            aux couleurs franches. Elles sont au prix de 3,50€.
-          </p>
+          <p>3,50€</p>
           <div className="DivIllusArtiste">
             <img
               className="imgArtiste"
               src={Retour}
-              alt="une basket sur un skateboard"
-            />
-            <img
-              className="imgArtiste"
-              src={Potter}
               alt="Le professeur Macgonagal"
             />
+          </div>
+        </div>
+        <div className="divArtisteGoodies">
+          <h3>Les illustrations de Frida K.O.</h3>
+          <p>10€</p>
+          <div className="DivIllusArtiste">
             <img
               className="imgArtiste"
-              src={Barbe}
-              alt="Un homme avec une barbe naissante"
+              src={Ghibli}
+              alt="une broche brodée du Petit Prince"
             />
           </div>
         </div>
         <div className="divArtisteGoodies">
           <h3>Les broderies de Frida K.O.</h3>
-          <p>
-            Les broderies sont disponibles en magasin au prix de 30€ pour les
-            petites et 40€ pour les grandes.
-          </p>
+          <p>30€ / 40€</p>
           <div className="DivIllusArtiste">
-            <img
-              className="imgArtiste"
-              src={Brod1}
-              alt="une broche brodée de Mon Voisin Totoro"
-            />
-            <img
-              className="imgArtiste"
-              src={Brod2}
-              alt="une broche brodée d'un clone de Star Wars"
-            />
             <img
               className="imgArtiste"
               src={Brod3}
               alt="une broche brodée du Petit Prince"
-            />
-            <img
-              className="imgArtiste"
-              src={Brod4}
-              alt="une broche brodée du chat de Kiki"
-            />
-            <img
-              className="imgArtiste"
-              src={Brod5}
-              alt="une broche brodée de la maison de Frodon"
             />
           </div>
         </div>

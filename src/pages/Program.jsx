@@ -9,26 +9,32 @@ function Program() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedItem, setSelectedItem] = useState(null);
 
-  const { isAuthenticated, user } = useAuth();
+  const { isAuthenticated, client } = useAuth(); // ✅ Changé 'user' en 'client'
   const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
-  const fetchUpcomingItems = async () => {
+  const fetchUpcomingActivities = async () => {
+    setIsLoading(true);
     try {
-      const response = await fetch(`${API_BASE_URL}/upcoming`);
-
-      if (!response.ok) {
+      const response = await fetch(`${API_BASE_URL}/activity`);
+      if (!response.ok)
         throw new Error(`HTTP error! status: ${response.status}`);
-      }
 
       const data = await response.json();
 
       if (Array.isArray(data)) {
-        setItems(data);
+        const now = new Date();
+
+        const upcomingItems = data
+          .filter((item) => {
+            const dateString = item[":start"]?.date;
+            return dateString && new Date(dateString) >= now;
+          })
+          .sort(
+            (a, b) => new Date(a[":start"].date) - new Date(b[":start"].date)
+          );
+
+        setItems(upcomingItems);
       } else {
-        console.error(
-          "Les données des activités ne sont pas un tableau :",
-          data
-        );
         setItems([]);
       }
     } catch (err) {
@@ -39,47 +45,42 @@ function Program() {
   };
 
   useEffect(() => {
-    fetchUpcomingItems();
+    fetchUpcomingActivities();
   }, []);
 
   const handleReservation = async (placesCount) => {
-    if (!user || !selectedItem) return;
+    if (!client || !selectedItem) return;
 
-    const activityId =
-      selectedItem.type === "workshop"
-        ? `workshop-${selectedItem.id_workshop}`
-        : `event-${selectedItem.id_event}`;
     const reservationData = {
-      user_id: user.id_user,
-      activity_id: activityId,
-      places_count: parseInt(placesCount),
+      client_id: client.id_client,
+      activity_id: selectedItem[":id"],
+      places_reserved: parseInt(placesCount),
+      created_at: new Date().toISOString(),
     };
 
+    console.log("📤 Envoi réservation:", reservationData);
+
     try {
-      const response = await fetch(`${API_BASE_URL}/reservations`, {
+      const response = await fetch(`${API_BASE_URL}/booking`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify(reservationData),
+        credentials: "include",
       });
 
-      const result = await response.json();
-
       if (!response.ok) {
-        alert(
-          `Erreur lors de la réservation : ${
-            result.error || response.statusText
-          }`
-        );
+        const result = await response.json();
+        alert(`Erreur : ${result.error || response.statusText}`);
       } else {
-        alert("Réservation créée avec succès !");
-        fetchUpcomingItems();
+        alert("Réservation effectuée !");
+        fetchUpcomingActivities();
         closeModal();
       }
     } catch (error) {
-      console.error("Erreur de connexion:", error);
-      alert("Une erreur s'est produite. Veuillez réessayer plus tard.");
+      console.error("Erreur réservation:", error);
+      alert("Erreur de connexion.");
     }
   };
 
@@ -112,74 +113,88 @@ function Program() {
     return <div>Aucune activité à venir pour le moment.</div>;
   }
 
-  const formatEndDate = (dateString, duration) => {
-    const startDate = new Date(dateString);
-    const endDate = new Date(startDate.getTime() + duration * 60000);
-    const options = { hour: "2-digit", minute: "2-digit" };
-    return endDate.toLocaleTimeString("fr-FR", options);
-  };
-
   return (
     <div className="program">
-      <hr className="NavigLigne2"></hr>
-      <hr className="NavigLigne21"></hr>
+      <hr className="NavigLigne2" />
+      <hr className="NavigLigne21" />
       <h1>Activités à venir</h1>
       <ul className="schedule-list">
-        {items.map((item) => (
-          <li
-            key={item.type === "workshop" ? item.id_workshop : item.id_event}
-            className="schedule-item"
-          >
-            <div className="item-info">
-              <h3>{item.title}</h3>
-              <p>Intervenant:</p>
-              <p className="infortantes">
-                <strong>{item.contributor}</strong>
-              </p>
+        {items.map((item) => {
+          const start = new Date(item[":start"].date);
+          const end = new Date(item[":end"].date);
 
-              <p>
-                <span>
-                  {item.type === "workshop"
-                    ? `Le ${new Date(
-                        item.date
-                      ).toLocaleDateString()} de ${new Date(
-                        item.date
-                      ).toLocaleString("fr-FR", {
-                        timeStyle: "short",
-                      })} `
-                    : ` Du ${new Date(
-                        item.start_date
-                      ).toLocaleDateString()} au ${new Date(
-                        item.start_date
-                      ).toLocaleString("fr-FR", {
-                        timeStyle: "short",
-                      })} `}
-                </span>
-                <span>
-                  {item.type === "workshop"
-                    ? ` à ${formatEndDate(item.date, item.duration)}`
-                    : `au ${new Date(
-                        item.end_date
-                      ).toLocaleDateString()} à ${new Date(
-                        item.end_date
-                      ).toLocaleString("fr-FR", {
-                        timeStyle: "short",
-                      })} `}
-                </span>
-              </p>
-              <p></p>
-              <p>{item.price} €</p>
-              <p>{item.description}</p>
-              <p>Places disponibles: {item.places}</p>
-            </div>
-            <button
-              onClick={() => handleReservationClick(item)}
-              className="reservButtonProgram"
-            >
-              Réserver
-            </button>
-          </li>
-        ))}
+          const isSameDay =
+            start.getDate() === end.getDate() &&
+            start.getMonth() === end.getMonth() &&
+            start.getFullYear() === end.getFullYear();
+
+          const timeOptions = { hour: "2-digit", minute: "2-digit" };
+          const dateOptions = {
+            day: "2-digit",
+            month: "2-digit",
+            year: "numeric",
+          };
+
+          return (
+            <li key={item[":id"]} className="schedule-item">
+              <div className="item-info">
+                {item[":type"] === "workshop" ? (
+                  <span className="badge-type">Atelier</span>
+                ) : (
+                  <span className="badge-type">Événement</span>
+                )}
+                <h3>{item[":title"]}</h3>
+                <p>
+                  Intervenant: <strong>{item[":contributor"]}</strong>
+                </p>
+
+                <p className="activity-date">
+                  {isSameDay ? (
+                    <>
+                      Le <b>{start.toLocaleDateString("fr-FR", dateOptions)}</b>{" "}
+                      de <b>{start.toLocaleTimeString("fr-FR", timeOptions)}</b>{" "}
+                      à <b>{end.toLocaleTimeString("fr-FR", timeOptions)}</b>
+                    </>
+                  ) : (
+                    <>
+                      Du <b>{start.toLocaleDateString("fr-FR", dateOptions)}</b>{" "}
+                      à <b>{start.toLocaleTimeString("fr-FR", timeOptions)}</b>{" "}
+                      au <b>{end.toLocaleDateString("fr-FR", dateOptions)}</b> à{" "}
+                      <b>{end.toLocaleTimeString("fr-FR", timeOptions)}</b>
+                    </>
+                  )}
+                </p>
+
+                <p className="price">
+                  {parseInt(item[":price"]) === 0 ? (
+                    <span className="free-tag">
+                      <b>Gratuit</b>
+                    </span>
+                  ) : (
+                    `${item[":price"]} €`
+                  )}
+                </p>
+                <p className="description">{item[":description"]}</p>
+                {item[":places"] !== null && (
+                  <p className="places">
+                    {item["remaining_places"] === 0
+                      ? "Complet"
+                      : `Places disponibles : ${item["remaining_places"]}`}
+                  </p>
+                )}
+              </div>
+
+              {item[":places"] !== null && (
+                <button
+                  onClick={() => handleReservationClick(item)}
+                  className="reservButtonProgram"
+                >
+                  Réserver
+                </button>
+              )}
+            </li>
+          );
+        })}
       </ul>
       {isModalOpen && (
         <ReservationModal

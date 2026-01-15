@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import MenuComponent from "../components/MenuComponent";
+import GateauTexte from "../components/CommandeGateauTexte";
 import ResaCameo from "../components/ResaCameo";
 import ContactComponent from "../components/ContactComponent";
 import CoutureCameo from "../components/CoutureCameo";
@@ -48,25 +48,32 @@ function Shop() {
       <hr className="NavigLigne2"></hr>
       <hr className="NavigLigne21"></hr>
       <h1 className="shopTitle">La Boutique du Caméo</h1>
-      <MenuComponent />
-      <h2 className="shopTitle2">Les Services du Caméo</h2>
-      <div className="gridServices">
-        <div className="gridCaseCameo">
-          <ResaCameo />
+      <div className="shopBande">
+        <div className="gridServices2">
+          <div className="gridCaseCameo">
+            <ContactComponent />
+          </div>
         </div>
-        <div className="gridCaseCameo">
-          <CoutureCameo />
+        <div>
+          <h2 className="shopTitle2">Les Services du Caméo</h2>
+          <div className="gridServices">
+            <div className="gridCaseCameo">
+              <GateauTexte />
+            </div>
+            <div className="gridCaseCameo">
+              <ResaCameo />
+            </div>
+            <div className="gridCaseCameo">
+              <CoutureCameo />
+            </div>
+          </div>
         </div>
       </div>
-      <div
-        className="gridCaseCameo"
-        style={{ margin: "2.5em", marginTop: "0.5em" }}
-      >
+
+      <div style={{ margin: "2.5em", marginTop: "0.5em" }}>
         <CommandeGateau />
       </div>
-      <div className="gridCaseCameo2">
-        <ContactComponent />
-      </div>
+
       <h2 className="shopTitle2">Les goodies</h2>
       <div
         className="gridCaseCameo"

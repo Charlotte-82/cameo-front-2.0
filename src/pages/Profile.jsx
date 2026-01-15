@@ -2,15 +2,15 @@ import React, { useState, useEffect } from "react";
 import { useAuth } from "../contexts/AuthContext";
 
 function Profile() {
-  const { user, updateUser } = useAuth();
-  const [cakes, setCakes] = useState([]);
+  const { client } = useAuth();
+  const [products, setProducts] = useState([]);
   const [form, setForm] = useState({
     lastname: "",
     firstname: "",
-    email: "",
+    mail: "",
     tel: "",
-    newsletter: "",
-    id_cake: "",
+    newsletter: "0",
+    product_id: "",
     password: "",
   });
   const [isEditing, setIsEditing] = useState(false);
@@ -22,115 +22,107 @@ function Profile() {
   const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
   useEffect(() => {
-    if (user && user.id_user) {
+    if (client?.id_client) {
       setForm({
-        lastname: user.lastname,
-        firstname: user.firstname,
-        email: user.email,
-        tel: user.tel,
-        newsletter: user.newsletter,
-        id_cake:
-          user.cake_id && user.cake_type
-            ? `${user.cake_type}-${user.cake_id}`
-            : "",
+        lastname: client.client_lastname,
+        firstname: client.client_firstname,
+        mail: client.client_mail,
+        tel: client.client_telephone || "",
+        newsletter: client.client_newsletter_agreement ? "1" : "0",
+        product_id: client.product_id ? String(client.product_id) : "",
         password: "",
       });
-      fetchCakes();
-      fetchReservations(user.id_user);
+      fetchProducts();
+      fetchReservations(client.id_client);
     }
-  }, [user]);
+  }, [client]);
 
-  if (!user) {
-    return <div>Chargement des informations de l'utilisateur...</div>;
-  }
-
-  const fetchCakes = async () => {
+  const fetchProducts = async () => {
     try {
-      const [fullRes, slicedRes] = await Promise.all([
-        fetch(`${API_BASE_URL}/fullcakes`),
-        fetch(`${API_BASE_URL}/cakes`),
-      ]);
+      const resEntier = await fetch(
+        `${API_BASE_URL}/product?type=gateau-entier`
+      );
+      if (!resEntier.ok) throw new Error(`Erreur ${resEntier.status}`);
+      const gateauxEntiers = await resEntier.json();
 
-      const [fullCakes, slicedCakes] = await Promise.all([
-        fullRes.json(),
-        slicedRes.json(),
-      ]);
+      const resPart = await fetch(`${API_BASE_URL}/product?type=gateau-part`);
+      if (!resPart.ok) throw new Error(`Erreur ${resPart.status}`);
+      const gateauxParts = await resPart.json();
 
-      const combinedCakes = [
-        ...fullCakes.map((c) => ({
-          ...c,
-          id_cake_unique: `full-${c.id}`,
-          type: "full",
-        })),
-        ...slicedCakes.map((c) => ({
-          ...c,
-          id_cake_unique: `sliced-${c.id_cake}`,
-          type: "sliced",
-        })),
-      ];
+      const allCakes = [...gateauxEntiers, ...gateauxParts];
 
-      setCakes(combinedCakes);
+      setProducts(allCakes);
     } catch (err) {
-      console.error("Erreur lors du fetch des gâteaux :", err);
+      console.error("Erreur lors du fetch des produits :", err);
     }
   };
 
-  const fetchReservations = async (userId) => {
+  const fetchReservations = async (clientId) => {
     setLoadingReservations(true);
     try {
-      const response = await fetch(
-        `${API_BASE_URL}/reservations/by-user/${userId}`
+      const res = await fetch(`${API_BASE_URL}/booking?client=${clientId}`);
+      if (!res.ok) throw new Error(`Erreur ${res.status}`);
+      const bookings = await res.json();
+
+      const bookingsWithActivity = await Promise.all(
+        bookings.map(async (b, index) => {
+          try {
+            const activityRes = await fetch(
+              `${API_BASE_URL}/activity/${b.activity}`
+            );
+            if (!activityRes.ok) throw new Error("Activité introuvable");
+
+            const a = await activityRes.json();
+            console.log("📊 Structure de l'activité:", a);
+            return {
+              ...b,
+              places_reserved: b.places,
+
+              title: a[":title"],
+              type: a[":type"],
+              start: a[":start"]?.date,
+              end: a[":end"]?.date,
+              price: a[":price"],
+              contributor: a[":contributor"],
+              remainingPlaces: a["remaining_places"],
+
+              key: `${b.client}-${b.activity}-${index}`,
+            };
+          } catch (err) {
+            console.error(`Erreur pour l'activité ${b.activity}:`, err);
+            return {
+              ...b,
+              title: "Activité indisponible",
+              key: `${b.client}-${b.activity}-${index}`,
+            };
+          }
+        })
       );
-      if (!response.ok) {
-        throw new Error(
-          `Erreur lors de la récupération des réservations : ${response.status}`
-        );
-      }
-      const data = await response.json();
-      setReservations(data);
+
+      setReservations(bookingsWithActivity);
     } catch (err) {
-      console.error("Erreur lors du chargement des réservations :", err);
+      console.error("Erreur lors du chargement :", err);
+      setReservations([]);
     } finally {
       setLoadingReservations(false);
     }
   };
 
-  const handleCancelReservation = async (reservationId) => {
-    if (
-      !window.confirm("Êtes-vous sûr de vouloir annuler cette réservation ?")
-    ) {
+  const handleCancelReservation = async (clientId, activityId) => {
+    if (!window.confirm("Êtes-vous sûr de vouloir annuler cette réservation ?"))
       return;
-    }
     try {
-      const response = await fetch(
-        `${API_BASE_URL}/reservations/${reservationId}`,
+      const res = await fetch(
+        `${API_BASE_URL}/booking/${clientId}/${activityId}`,
         {
           method: "DELETE",
         }
       );
-
-      if (!response.ok) {
-        throw new Error(
-          `Erreur lors de l'annulation de la réservation: ${response.status}`
-        );
-      }
-
-      // console.log("Réservation annulée avec succès.");
-      fetchReservations(user.id_user);
+      if (!res.ok) throw new Error(`Erreur ${res.status}`);
+      fetchReservations(client.id_client);
     } catch (err) {
-      console.error("Erreur lors de l'annulation de la réservation:", err);
+      console.error(err);
     }
-  };
-
-  const formatDate = (dateString) => {
-    const options = {
-      year: "numeric",
-      month: "long",
-      day: "numeric",
-      hour: "2-digit",
-      minute: "2-digit",
-    };
-    return new Date(dateString).toLocaleDateString("fr-FR", options);
   };
 
   const handleChange = (e) => {
@@ -143,251 +135,236 @@ function Profile() {
     setError(null);
     setSuccess(null);
 
-    const [cakeType, cakeId] = form.id_cake
-      ? form.id_cake.split("-")
-      : [null, null];
-
     const userData = {
-      lastname: form.lastname,
-      firstname: form.firstname,
-      email: form.email,
-      tel: form.tel,
-      newsletter: form.newsletter,
-      cake_id: cakeId,
-      cake_type: cakeType,
+      client_firstname: form.firstname,
+      client_lastname: form.lastname,
+      client_mail: form.mail,
+      client_telephone: form.tel,
+      client_newsletter_agreement: form.newsletter === "1" ? 1 : 0,
+      product_id: form.product_id ? parseInt(form.product_id, 10) : null,
     };
 
-    if (form.password) userData.password = form.password;
+    if (form.password && form.password.trim() !== "") {
+      userData.client_password = form.password;
+    }
 
     try {
-      const response = await fetch(`${API_BASE_URL}/users/${user.id_user}`, {
+      const res = await fetch(`${API_BASE_URL}/client/${client.id_client}`, {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(userData),
+        credentials: "include",
       });
 
-      if (!response.ok) {
-        const errorData = await response.json();
-        throw new Error(errorData.error || `Erreur HTTP: ${response.status}`);
+      if (!res.ok) {
+        const errData = await res.json();
+        throw new Error(errData.error || `Erreur HTTP ${res.status}`);
       }
 
-      // On attend que les cakes soient chargés avant de calculer cake_name
-      let cakeName = "Non spécifié";
-      if (cakes.length > 0 && cakeId && cakeType) {
-        const selectedCake = cakes.find(
-          (c) => c.id_cake_unique === `${cakeType}-${cakeId}`
-        );
-        if (selectedCake) cakeName = selectedCake.name;
-      }
-
-      if (typeof updateUser === "function") {
-        updateUser({
-          ...user,
-          ...userData,
-          cake_name: cakeName,
-        });
-      }
-
-      setSuccess("Vos informations ont été mises à jour avec succès !");
+      setSuccess("Vos informations ont été mises à jour !");
       setIsEditing(false);
+
+      window.location.reload();
     } catch (err) {
-      setError(err.message || "Erreur lors de la mise à jour du profil.");
-      console.error("Erreur lors de la mise à jour du profil :", err);
+      console.error(err);
+      setError(err.message);
     }
   };
 
+  if (!client) return <div>Chargement des informations...</div>;
+
   return (
     <div className="profile">
-      <h1>Bonjour {user.firstname} !</h1>
-      <h2>Informations de votre compte</h2>
-      <div className="profileInfo">
-        {error && <p className="error">{error}</p>}
-        {success && <p className="success">{success}</p>}
-
-        {!isEditing ? (
-          <div className="userInformationsDiv">
-            <ul>
-              <li>
-                <span className="catInfo">Vos nom et prénom: </span>
-                {user.lastname} {user.firstname}
-              </li>
-              <li>
-                <span className="catInfo">Votre email: </span>
-                {user.email}
-              </li>
-              <li>
-                <span className="catInfo">Votre numéro de téléphone: </span>
-                {user.tel}
-              </li>
-              <li>
-                <span className="catInfo">
-                  Voulez-vous recevoir la newsletter ?{" "}
-                </span>
-                {user.newsletter ? "Oui" : "Non"}
-              </li>
-              <li>
-                <span className="catInfo">Votre gâteau préféré: </span>
-                {user.cake_name || "Non spécifié"}
-              </li>
-            </ul>
-            <button onClick={() => setIsEditing(true)}>
-              Modifier mes informations
+      <h1>Bonjour {client.client_firstname} !</h1>
+      {!isEditing ? (
+        <div className="userInformationsDiv">
+          <ul>
+            <li>
+              <strong>Nom et prénom:</strong> {client.client_lastname}{" "}
+              {client.client_firstname}
+            </li>
+            <li>
+              <strong>Email:</strong> {client.client_mail}
+            </li>
+            <li>
+              <strong>Téléphone:</strong>{" "}
+              {client.client_telephone || "Non renseigné"}
+            </li>
+            <li>
+              <strong>Newsletter:</strong>{" "}
+              {client.client_newsletter_agreement ? "Oui" : "Non"}
+            </li>
+            <li>
+              <strong>Gâteau préféré:</strong>{" "}
+              {client.product_name || "Non spécifié"}
+            </li>
+          </ul>
+          <button onClick={() => setIsEditing(true)}>
+            Modifier mes informations
+          </button>
+        </div>
+      ) : (
+        <form onSubmit={handleSubmit} className="profileForm">
+          <label>Nom:</label>
+          <input
+            name="lastname"
+            value={form.lastname}
+            onChange={handleChange}
+            required
+          />
+          <br></br>
+          <label>Prénom:</label>
+          <input
+            name="firstname"
+            value={form.firstname}
+            onChange={handleChange}
+            required
+          />
+          <br></br>
+          <label>Email:</label>
+          <input
+            type="email"
+            name="mail"
+            value={form.mail}
+            onChange={handleChange}
+            required
+          />
+          <br></br>
+          <label>Téléphone:</label>
+          <input
+            type="tel"
+            name="tel"
+            value={form.tel}
+            onChange={handleChange}
+          />
+          <br></br>
+          <label>Newsletter:</label>
+          <div>
+            <input
+              type="radio"
+              name="newsletter"
+              value="1"
+              checked={form.newsletter === "1"}
+              onChange={handleChange}
+            />{" "}
+            Oui
+            <input
+              type="radio"
+              name="newsletter"
+              value="0"
+              checked={form.newsletter === "0"}
+              onChange={handleChange}
+            />{" "}
+            Non
+          </div>
+          <br></br>
+          <label>Gâteau préféré:</label>
+          <select
+            name="product_id"
+            value={form.product_id}
+            onChange={handleChange}
+          >
+            <option value="">--Choisissez un gâteau--</option>
+            {products.map((p, index) => (
+              <option
+                key={`${p.id_product || p.id}-${index}`}
+                value={p.id_product || p.id}
+              >
+                {p.product_name || p.name}
+              </option>
+            ))}
+          </select>
+          <br></br>
+          <label>Nouveau mot de passe:</label>
+          <input
+            type="password"
+            name="password"
+            value={form.password}
+            onChange={handleChange}
+            placeholder="Laissez vide pour ne pas changer"
+          />
+          <br></br>
+          <div
+            style={{
+              display: "flex",
+              flexDirection: "row",
+            }}
+          >
+            <button type="submit" style={{ marginRight: "1em" }}>
+              Enregistrer
+            </button>
+            <button type="button" onClick={() => setIsEditing(false)}>
+              Annuler
             </button>
           </div>
-        ) : (
-          <div className="userInformationsDiv">
-            <form onSubmit={handleSubmit} className="adminForm3">
-              <fieldset>
-                <legend>Modifier mes informations</legend>
-                <label>Nom:</label>
-                <input
-                  name="lastname"
-                  value={form.lastname}
-                  onChange={handleChange}
-                  required
-                />
-                <br />
-                <br />
-                <label>Prénom:</label>
-                <input
-                  name="firstname"
-                  value={form.firstname}
-                  onChange={handleChange}
-                  required
-                />
-                <br />
-                <br />
-                <label>Email:</label>
-                <input
-                  name="email"
-                  type="email"
-                  value={form.email}
-                  onChange={handleChange}
-                  required
-                />
-                <br />
-                <br />
-                <label>Téléphone:</label>
-                <input
-                  name="tel"
-                  type="tel"
-                  value={form.tel}
-                  onChange={handleChange}
-                  required
-                />
-                <br />
-                <br />
-                <label>L'utilisateur accepte-t-il la newsletter ?</label>
-                <div className="inputRadioRegister">
-                  <input
-                    name="newsletter"
-                    type="radio"
-                    value="1"
-                    checked={form.newsletter === "1" || form.newsletter === 1}
-                    onChange={handleChange}
-                  />
-                  <label className="labelRadioNews">Oui</label>
-                  <input
-                    name="newsletter"
-                    type="radio"
-                    value="0"
-                    checked={form.newsletter === "0" || form.newsletter === 0}
-                    onChange={handleChange}
-                  />
-                  <label className="labelRadioNews">Non</label>
+        </form>
+      )}
+
+      <div className="userReservationsDiv">
+        <h3>Vos réservations</h3>
+        {loadingReservations ? (
+          <p>Chargement de vos réservations...</p>
+        ) : reservations.length > 0 ? (
+          <ul className="reservationList">
+            {reservations.map((r) => (
+              <li key={r.key} className="reservationItem">
+                <div className="reservationDetail">
+                  <span className="label">Activité:</span>
+                  <span className="value">
+                    <strong>{r.title}</strong> ({r.type})
+                  </span>
                 </div>
-                <br />
-                <label>Gâteau préféré</label>
-                <select
-                  name="id_cake"
-                  value={form.id_cake}
-                  onChange={handleChange}
-                >
-                  <option value="">--Choisissez un gâteau préféré--</option>
-                  {cakes.map((cake) => (
-                    <option
-                      key={cake.id_cake_unique}
-                      value={cake.id_cake_unique}
+                <div className="reservationDetail">
+                  <span className="label">Date de début:</span>
+                  <span className="value">
+                    {new Date(r.start).toLocaleString("fr-FR")}
+                  </span>
+                </div>
+                <div className="reservationDetail">
+                  <span className="label">Date de fin:</span>
+                  <span className="value">
+                    {new Date(r.end).toLocaleString("fr-FR")}
+                  </span>
+                </div>
+                <div className="reservationDetail">
+                  <span className="label">Places réservées:</span>
+                  <span className="value">{r.places_reserved}</span>
+                </div>
+                {r.remainingPlaces !== undefined && (
+                  <div className="reservationDetail">
+                    <span className="label">Places restantes:</span>
+                    <span className="value">{r.remainingPlaces}</span>
+                  </div>
+                )}
+                <div className="reservationDetail">
+                  <span className="label">Statut:</span>
+                  <span className="value">
+                    {r.is_canceled ? "Annulée" : "Confirmée"}
+                  </span>
+                </div>
+                <div className="reservationActions">
+                  {!r.is_canceled && (
+                    <button
+                      onClick={() =>
+                        handleCancelReservation(r.client, r.activity)
+                      }
                     >
-                      {cake.name} (
-                      {cake.type === "full" ? "Entier" : "À la part"})
-                    </option>
-                  ))}
-                </select>
-                <br />
-                <br />
-                <label>
-                  Nouveau mot de passe (laissez vide si vous ne voulez pas le
-                  changer)
-                </label>
-                <input
-                  name="password"
-                  type="password"
-                  value={form.password}
-                  onChange={handleChange}
-                />
-                <br />
-                <br />
-                <button type="submit">Enregistrer les modifications</button>
-                <button type="button" onClick={() => setIsEditing(false)}>
-                  Annuler
-                </button>
-              </fieldset>
-            </form>
-          </div>
+                      Annuler cette réservation
+                    </button>
+                  )}
+                </div>
+              </li>
+            ))}
+          </ul>
+        ) : (
+          <p>Vous n'avez aucune réservation.</p>
         )}
-        <div className="userReservationsDiv">
-          <h3>Vos réservations</h3>
-          {loadingReservations ? (
-            <p>Chargement de vos réservations...</p>
-          ) : reservations.length > 0 ? (
-            <ul className="reservationList">
-              {reservations.map((reservation) => (
-                <li
-                  key={reservation.id_reservation}
-                  className="reservationItem"
-                >
-                  <div className="reservationDetail">
-                    <span className="label">Activité:</span>
-                    <span className="value">
-                      <strong>{reservation.activity_title}</strong>
-                    </span>
-                  </div>
-                  <div className="reservationDetail">
-                    <span className="label">Date:</span>
-                    <span className="value">
-                      {formatDate(reservation.activity_date)}
-                    </span>
-                  </div>
-                  <div className="reservationDetail">
-                    <span className="label">Places réservées:</span>
-                    <span className="value">{reservation.places_count}</span>
-                  </div>
-                  <div className="reservationDetail">
-                    <span className="label">Statut:</span>
-                    <span className="value">
-                      {reservation.is_canceled ? "Annulée" : "Confirmée"}
-                    </span>
-                  </div>
-                  <div className="reservationActions">
-                    {!reservation.is_canceled && (
-                      <button
-                        onClick={() =>
-                          handleCancelReservation(reservation.id_reservation)
-                        }
-                      >
-                        Annuler
-                      </button>
-                    )}
-                  </div>
-                </li>
-              ))}
-            </ul>
-          ) : (
-            <p>Vous n'avez aucune réservation pour le moment.</p>
-          )}
-        </div>
       </div>
+
+      {error && <p style={{ marginLeft: "2em", color: "red" }}>{error}</p>}
+      {success && (
+        <p style={{ marginLeft: "2em", color: "green" }}>{success}</p>
+      )}
     </div>
   );
 }

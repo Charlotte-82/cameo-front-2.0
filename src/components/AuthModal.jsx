@@ -4,18 +4,16 @@ import { useAuth } from "../contexts/AuthContext";
 
 function AuthModal({ onClose, onLoginSuccess }) {
   const [isLoginMode, setIsLoginMode] = useState(true);
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [cakes, setCakes] = useState([]);
+  const [products, setProducts] = useState([]);
   const { login } = useAuth();
   const [form, setForm] = useState({
     lastname: "",
     firstname: "",
-    email: "",
+    mail: "",
     password: "",
     tel: "",
     newsletter: "0",
-    id_cake: "",
+    product_id: "",
   });
 
   const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
@@ -23,34 +21,20 @@ function AuthModal({ onClose, onLoginSuccess }) {
   useEffect(() => {
     const fetchCakes = async () => {
       try {
-        const [fullRes, slicedRes] = await Promise.all([
-          fetch(`${API_BASE_URL}/fullcakes`),
-          fetch(`${API_BASE_URL}/cakes`),
-        ]);
-
-        const [fullCakes, slicedCakes] = await Promise.all([
-          fullRes.json(),
-          slicedRes.json(),
-        ]);
-
-        const combinedCakes = [
-          ...fullCakes.map((c) => ({
-            ...c,
-            id_cake_unique: `full-${c.id}`,
-            type: "full",
-          })),
-          ...slicedCakes.map((c) => ({
-            ...c,
-            id_cake_unique: `sliced-${c.id_cake}`,
-            type: "sliced",
-          })),
-        ];
-
-        setCakes(combinedCakes);
+        const res = await fetch(`${API_BASE_URL}/product`);
+        const data = await res.json();
+        // Filtrer uniquement les gâteaux (gateau-entier et gateau-part)
+        const cakes = data.filter(
+          (product) =>
+            product.type === "gateau-entier" || product.type === "gateau-part"
+        );
+        console.log("Gâteaux filtrés :", cakes);
+        setProducts(cakes);
       } catch (error) {
-        console.error("Erreur lors du chargement des gâteaux:", error);
+        console.error("Erreur chargement gâteaux:", error);
       }
     };
+
     fetchCakes();
   }, [API_BASE_URL]);
 
@@ -62,7 +46,7 @@ function AuthModal({ onClose, onLoginSuccess }) {
   const handleLoginSubmit = async (e) => {
     e.preventDefault();
     try {
-      await login(form.email, form.password);
+      await login(form.mail, form.password);
       onClose();
       if (onLoginSuccess) onLoginSuccess();
     } catch (err) {
@@ -74,17 +58,20 @@ function AuthModal({ onClose, onLoginSuccess }) {
   const handleRegisterSubmit = async (e) => {
     e.preventDefault();
 
-    const [cakeType, cakeId] = form.id_cake.split("-");
-
     const userData = {
-      ...form,
-      cake_id: cakeId,
-      cake_type: cakeType,
-      is_admin: "0",
+      firstname: form.firstname,
+      lastname: form.lastname,
+      mail: form.mail,
+      password: form.password,
+      tel: form.tel,
+      newsletter: form.newsletter,
+      product_id: form.product_id,
     };
 
+    console.log("Tentative d'enregistrement avec:", userData);
+
     try {
-      const response = await fetch(`${API_BASE_URL}/users`, {
+      const response = await fetch(`${API_BASE_URL}/client`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(userData),
@@ -92,15 +79,17 @@ function AuthModal({ onClose, onLoginSuccess }) {
 
       if (!response.ok) throw new Error(`Erreur: ${response.statusText}`);
 
-      await response.json();
+      const result = await response.json();
+      console.log("Enregistrement réussi:", result);
+
       setForm({
         lastname: "",
         firstname: "",
-        email: "",
+        mail: "",
         password: "",
         tel: "",
         newsletter: "0",
-        id_cake: "",
+        product_id: "",
       });
       onClose();
       alert("Enregistrement réussi !");
@@ -133,9 +122,9 @@ function AuthModal({ onClose, onLoginSuccess }) {
                     <br />
                     <input
                       type="email"
-                      name="email"
+                      name="mail"
                       placeholder="email"
-                      value={form.email}
+                      value={form.mail}
                       onChange={handleChange}
                       required
                     />
@@ -187,9 +176,9 @@ function AuthModal({ onClose, onLoginSuccess }) {
                     <label>Email</label>
                     <input
                       type="email"
-                      name="email"
+                      name="mail"
                       placeholder="Email"
-                      value={form.email}
+                      value={form.mail}
                       onChange={handleChange}
                       required
                     />
@@ -238,19 +227,15 @@ function AuthModal({ onClose, onLoginSuccess }) {
                     <br />
                     <label>Gâteau préféré</label>
                     <select
-                      name="id_cake"
-                      value={form.id_cake}
+                      name="product_id"
+                      value={form.product_id}
                       onChange={handleChange}
                       required
                     >
                       <option value="">--Choisissez un gâteau préféré--</option>
-                      {cakes.map((cake) => (
-                        <option
-                          key={cake.id_cake_unique}
-                          value={cake.id_cake_unique}
-                        >
-                          {cake.name} (
-                          {cake.type === "full" ? "Entier" : "À la part"})
+                      {products.map((product, index) => (
+                        <option key={product.id || index} value={product.id}>
+                          {product.name}
                         </option>
                       ))}
                     </select>

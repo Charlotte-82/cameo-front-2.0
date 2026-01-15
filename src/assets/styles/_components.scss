@@ -4,6 +4,7 @@
   background-color: $text-color;
   padding: 0.5em 0em 0.5em 0em;
   height: auto;
+  overflow: hidden;
 }
 
 .logoHeader {
@@ -40,13 +41,13 @@ i {
 .iconU {
   position: absolute;
   top: 5px;
-  right: 5px;
+  right: 1.2em;
 }
 
 .iconE {
   position: absolute;
   top: 32px;
-  right: 1px;
+  right: 0.2em;
 }
 
 .iconFB {
@@ -204,7 +205,7 @@ i {
 
 .footerCol1 p {
   @include mobile {
-    display: none;
+    display: none !important;
   }
 }
 
@@ -221,15 +222,25 @@ i {
   text-align: end;
   margin-bottom: 0;
   @include mobile {
-    display: none;
+    display: none !important;
   }
 }
 
 .footerCol4 p {
   margin-bottom: 0;
   @include mobile {
+    display: none;
     font-size: smaller;
     text-align: center;
+  }
+}
+
+.footerCol1,
+.footerCol2,
+.footerCol4,
+.footerCol5 {
+  @include mobile {
+    display: none;
   }
 }
 
@@ -255,16 +266,13 @@ i {
 
 .footerCol5 {
   @include mobile {
-    visibility: hidden;
+    display: none !important;
   }
 }
 
 .footerCol5 p {
   font-size: x-large;
   text-align: center;
-  @include mobile {
-    display: none;
-  }
   @include tablette {
     font-size: larger;
   }
@@ -415,6 +423,10 @@ i {
   }
 }
 
+.menuManagement h2 {
+  @extend %heading-h2-style;
+}
+
 .pastryName {
   font-size: 200%;
   font-weight: 700;
@@ -562,9 +574,6 @@ i {
   font-size: x-large;
   line-height: 1.5em;
   margin-top: 1em;
-  @include mobile {
-    display: none;
-  }
 }
 
 .boutonDiv {
@@ -614,15 +623,6 @@ strong {
   margin: 0.4em;
   display: flex;
   justify-content: center;
-}
-
-.reservationListDiv {
-  @include desktop {
-    display: none;
-  }
-  @include tablette {
-    display: none;
-  }
 }
 
 // Calendar
@@ -935,59 +935,46 @@ strong {
 
 // Composition du menu
 
-.collectionDiv {
+.modalCollection {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: $dark-color;
   border: 2px solid $text-color;
-  margin: 0.5em;
-  padding: 0.5em;
-  width: 30%;
-  @include mobile {
-    width: 95%;
-  }
+  width: 80%;
+  max-height: 90vh;
+  overflow-y: auto;
+  color: $light-color;
 }
 
-.collectionDiv li {
-  font-family: $font-main;
-  color: $text-color;
-  font-size: small;
+.collectionManager h2 {
+  @extend %heading-h2-style;
 }
 
-.collectionGroupDiv {
+.collectionList {
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
-  @include mobile {
-    flex-direction: column;
+  justify-content: center;
+}
+
+.collectionList h3 {
+  color: $logo-color;
+}
+
+.collectionBox {
+  border: 1px solid $logo-color;
+  margin: 2em;
+  padding: 1em;
+  background-color: whitesmoke;
+  width: 28%;
+  @include tablette {
+    width: 38%;
   }
-}
-
-/* Container de la modale pour les produits */
-.modal-products-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(205px, 1fr));
-  gap: 0rem;
-}
-
-/* Style de chaque élément de la grille (un produit) */
-.modal-products-grid-item {
-  display: flex;
-  align-items: center;
-  padding: 0.5rem;
-  background-color: $light-color;
-}
-
-/* Style de la case à cocher */
-.modal-products-grid-item input[type="checkbox"] {
-  height: 0.75rem;
-  width: 0.75rem;
-  cursor: pointer;
-  color: $text-color;
-}
-
-/* Style du label (nom du produit) */
-.modal-products-grid-item label {
-  margin-left: 0.5rem;
-  font-size: x-small;
-  color: $text-color;
+  @include mobile {
+    width: 85%;
+  }
 }
 
 .boutonCollection {
@@ -996,6 +983,10 @@ strong {
 
 .boutonCollection:hover {
   color: $darkorange-color;
+}
+
+.itemGauche {
+  color: $text-color;
 }
 
 // page boutique bande 1
@@ -1019,7 +1010,7 @@ strong {
   border: 2px solid $lightorange-color;
   border-radius: 15px;
   background-color: $text-color;
-  width: 80%;
+  width: 100%;
   height: 60px;
   color: $light-color;
   font-family: $font-titleh2;
@@ -1066,23 +1057,23 @@ strong {
   max-height: 90vh;
 }
 
-.menuCase:last-child {
-  display: flex;
-  justify-content: center;
-  border: 2px solid $text-color;
-  border-radius: 15px;
-  background-color: $logo-color;
-  width: 80%;
-  height: 60px;
-  color: $lightorange-color;
-  font-family: $font-titleh2;
-  font-size: xx-large;
-  font-weight: 700;
-  line-height: 1.7em;
-  @include mobile {
-    font-size: x-large;
-  }
-}
+// .menuCase:last-child {
+//   display: flex;
+//   justify-content: center;
+//   border: 2px solid $text-color;
+//   border-radius: 15px;
+//   background-color: $logo-color;
+//   width: 80%;
+//   height: 60px;
+//   color: $lightorange-color;
+//   font-family: $font-titleh2;
+//   font-size: xx-large;
+//   font-weight: 700;
+//   line-height: 1.7em;
+//   @include mobile {
+//     font-size: x-large;
+//   }
+// }
 
 .menuModale {
   list-style-type: none;
@@ -1093,7 +1084,7 @@ strong {
   font-family: $font-main;
   border-bottom: dotted 1px $text-color;
   line-height: 30px;
-  margin-right: 2em;
+  margin-right: 1em;
 }
 
 .close-button {
@@ -1161,6 +1152,10 @@ strong {
 
 // resaCameo
 
+.ResaCameoDiv {
+  width: 95%;
+}
+
 .ResaCameoDiv h3 {
   color: $dark-color;
 }
@@ -1177,10 +1172,15 @@ strong {
 
 .gateaux-grid {
   display: grid;
-  grid-template-columns: repeat(5, 1fr);
-  grid-template-rows: repeat(4, 1fr);
+  grid-template-columns: repeat(auto-fit, 180px);
   gap: 1rem;
   padding: 2rem 0;
+  justify-content: center;
+  @include mobile {
+    grid-template-columns: repeat(auto-fit, 150px);
+    gap: 0.5rem;
+    padding: 1rem 0;
+  }
 }
 
 .gateau {
@@ -1213,14 +1213,14 @@ strong {
 
 .gateau-nom {
   font-weight: 600;
-  font-size: 2rem !important;
+  font-size: 1.5rem !important;
   padding: 2rem 2rem;
   transition: opacity 0.3s ease;
   text-transform: uppercase;
   font-family: $font-titleh2 !important;
   color: $light-color !important;
   @include mobile {
-    font-size: 0.8rem !important;
+    font-size: 1rem !important;
   }
   @include tablette {
     font-size: 1.5rem !important;
@@ -1261,18 +1261,6 @@ strong {
   border: $text-color 2px solid;
 }
 
-@media (max-width: 1024px) {
-  .gateaux-grid {
-    grid-template-columns: repeat(3, 1fr);
-  }
-}
-
-@media (max-width: 600px) {
-  .gateaux-grid {
-    grid-template-columns: repeat(2, 1fr);
-  }
-}
-
 .FormCommande {
   margin: 2em;
   color: $text-color;
@@ -1280,9 +1268,16 @@ strong {
   display: flex;
   flex-direction: column;
   align-items: center;
+  max-width: 100%;
+  box-sizing: border-box;
   @include mobile {
-    margin: 0.5em;
+    margin: 0em;
   }
+}
+
+.FormCommande * {
+  max-width: 100%;
+  box-sizing: border-box;
 }
 
 .FormCommande input[type="text"],
@@ -1313,6 +1308,10 @@ strong {
   justify-content: space-around;
   @include mobile {
     flex-direction: column;
+    align-items: center;
+  }
+  @include tablette {
+    flex-wrap: wrap;
   }
 }
 
@@ -1333,6 +1332,7 @@ strong {
   gap: 10px;
   @include mobile {
     flex-direction: column;
+    align-items: center;
   }
 }
 
@@ -1347,5 +1347,14 @@ strong {
   @include mobile {
     height: auto;
     width: 80%;
+  }
+}
+
+.mobileAccordionContainer {
+  @include desktop {
+    display: none;
+  }
+  @include tablette {
+    display: none;
   }
 }

@@ -9,46 +9,33 @@ function MenuComponent() {
   const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
   const collectionsData = [
-    { id: 1, name: "Pâtisseries" },
-    { id: 3, name: "Boissons chaudes" },
-    { id: 4, name: "Boissons froides" },
-    { id: 2, name: "Carte des Thés et Infusions" },
-    { id: 5, name: "Offre de saison" },
+    { id: 1, name: "Boissons Chaudes" },
+    { id: 3, name: "Pâtisseries" },
+    { id: 2, name: "Boissons Froides" },
+    { id: 5, name: "Offre de Saison" },
+    { id: 4, name: "Carte des Thés" },
     { id: 6, name: "Nouveautés" },
   ];
-
-  const getProductId = (product) => {
-    switch (product.type_produit) {
-      case "boissons_froides":
-        return product.id_boissonsfroides;
-      case "boissons_chaudes":
-        return product.id_boissonschaudes;
-      case "cake":
-        return product.id_cake;
-      case "glaces":
-        return product.id_glace;
-      case "thes_infusions":
-        return product.id;
-      default:
-        return product.id;
-    }
-  };
 
   const handleCaseClick = async (collectionId) => {
     setLoading(true);
     setError(null);
-    setModalData(null);
 
     try {
-      const endpoint = `${API_BASE_URL}/collections/${collectionId}`;
-      const response = await fetch(endpoint);
-      if (!response.ok) {
-        throw new Error(
-          `Erreur de chargement des données : ${response.status}`
-        );
-      }
-      const data = await response.json();
-      setModalData(data);
+      const response = await fetch(
+        `${API_BASE_URL}/contain?collection=${collectionId}`
+      );
+      if (!response.ok)
+        throw new Error("Erreur lors de la récupération des produits");
+
+      const produits = await response.json();
+      const collectionInfo = collectionsData.find((c) => c.id === collectionId);
+
+      setModalData({
+        info_collection: { id: collectionId, nom: collectionInfo.name },
+        produits: produits,
+      });
+
       setShowModal(true);
     } catch (err) {
       setError(err.message);
@@ -63,21 +50,24 @@ function MenuComponent() {
   };
 
   return (
-    <div className="page">
+    <div className="page" style={{ backgroundColor: "whitesmoke" }}>
       <h2 className="shopTitle2">La carte du salon</h2>
       <p className="introMenu">
         Découvrez toutes les douceurs à venir déguster sur place.
       </p>
+
       <div className="menuGrid">
-        {collectionsData.map((collection) => (
-          <div
-            key={collection.id}
-            className="menuCase"
-            onClick={() => handleCaseClick(collection.id)}
-          >
-            {collection.name}
-          </div>
-        ))}
+        {collectionsData
+          .filter((col) => col.id !== 6 || (col.items && col.items.length > 0))
+          .map((collection) => (
+            <div
+              key={collection.id}
+              className="menuCase"
+              onClick={() => handleCaseClick(collection.id)}
+            >
+              {collection.name}
+            </div>
+          ))}
       </div>
 
       {showModal && (
@@ -89,38 +79,33 @@ function MenuComponent() {
             <button className="close-button" onClick={closeModal}>
               &times;
             </button>
+
             {loading && <p>Chargement...</p>}
             {error && <p>Erreur: {error}</p>}
+
             {modalData && modalData.produits && (
-              <div className="imageFondMenu">
+              <div>
                 <h3 className="titreMenuCollection">
                   {modalData.info_collection.nom}
                 </h3>
                 <ul className="menuModale">
                   {modalData.produits.map((item, index) => (
-                    <li key={`${item.type_produit}-${getProductId(item)}`}>
-                      {modalData.info_collection.id === 6 &&
-                        item.ingredients && (
-                          <p className="NouveauteText">
-                            C'est tout nouveau tout chaud ! Venez le découvrir
-                            au café !
-                          </p>
-                        )}
+                    <li key={item.product_id || index}>
                       <div className="itemMenuDiv">
-                        <span className="itemGauche">{item.name}</span>
-                        {modalData.info_collection.id !== 2 &&
-                          modalData.info_collection.id !== 6 && (
-                            <span className="itemDroit">{item.price}€</span>
-                          )}
-                      </div>
-                      {modalData.info_collection.id === 2 &&
-                        item.ingredients && (
-                          <p className="ingredientsText">{item.ingredients}</p>
+                        <span className="itemGauche">
+                          {item[":name"] || item.product_name}
+                        </span>
+                        {modalData.info_collection.id !== 4 && (
+                          <span className="itemDroit">
+                            {item[":price"] || item.product_price}€
+                          </span>
                         )}
-
-                      {modalData.info_collection.id === 6 &&
-                        item.ingredients && (
-                          <p className="ingredientsText">{item.ingredients}</p>
+                      </div>
+                      {modalData.info_collection.id === 4 &&
+                        (item[":ingredients"] || item.product_ingredients) && (
+                          <p className="ingredientsText">
+                            {item[":ingredients"] || item.product_ingredients}
+                          </p>
                         )}
                     </li>
                   ))}

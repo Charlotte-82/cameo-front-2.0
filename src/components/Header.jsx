@@ -2,11 +2,13 @@ import React, { useState } from "react";
 import LogoHeaderRouge from "../assets/images/logos/Logo baseline beige.png";
 import Navigation from "./Navigation";
 import AuthModal from "./AuthModal";
+import Chihiro from "../assets/images/Ghibli/chihiro.gif";
+import Totoro from "../assets/images/Ghibli/totoro2.gif";
 import { useAuth } from "../contexts/AuthContext";
 
 function Header() {
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const { user, logout } = useAuth();
+  const { client, logout } = useAuth(); // ✅ Changé de 'user' à 'client'
 
   const toggleModal = () => {
     setIsModalOpen(!isModalOpen);
@@ -22,6 +24,10 @@ function Header() {
 
   return (
     <div className="header">
+      <div className="ghibli-personnages">
+        <img src={Chihiro} alt="Chihiro" className="chihiro"></img>
+        <img src={Totoro} alt="Totoro" className="totoro"></img>
+      </div>
       <div className="iconI">
         <a
           href="https://www.instagram.com/lecameo.17?fbclid=IwY2xjawLCaUhleHRuA2FlbQIxMABicmlkETE2ZmRad0dnZ285dHRzemtCAR6Z77uwzjzeNdZ4W4t9YOwIbWbvXLZiqyyNEuzDtk-aGLEjFRCosUJlC8Z39Q_aem_e0N8YyCXs1839mt5vmQejg"
@@ -32,9 +38,9 @@ function Header() {
         </a>
       </div>
       <div className="iconU">
-        {user ? (
+        {client ? (
           <div className="bienvenue">
-            <span>Bonjour {user.firstname} !</span>
+            <span>Bonjour {client.client_firstname} !</span>
             <button>
               <a href="/profile">Ton compte</a>
             </button>

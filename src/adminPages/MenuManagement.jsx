@@ -1,11 +1,6 @@
 import React from "react";
-import CakeManagement from "../components/adminComponents/CakeManagement";
-import BoissonsChaudesManagement from "../components/adminComponents/BoissonsChaudesManagement";
-import BoissonsFroidesManagement from "../components/adminComponents/BoissonsFroidesManagement";
-import GlacesManagement from "../components/adminComponents/GlacesManagement";
-import TeaManagement from "../components/adminComponents/TeaDataManagement";
+import ProductManagement from "../components/adminComponents/ProductManagement";
 import MenuCompoManagement from "../components/adminComponents/MenuCompoManagement";
-import FullCakeManagement from "../components/adminComponents/FullCakesManagement";
 
 function MenuManagement() {
   return (
@@ -14,19 +9,9 @@ function MenuManagement() {
         <button className="backButtonDash">Retour au Tableau de Bord</button>
       </a>
       <h1>Gestion de la carte</h1>
+      <ProductManagement />
+      <hr></hr>
       <MenuCompoManagement />
-      <hr></hr>
-      <CakeManagement />
-      <hr></hr>
-      <FullCakeManagement />
-      <hr></hr>
-      <TeaManagement />
-      <hr></hr>
-      <BoissonsChaudesManagement />
-      <hr></hr>
-      <BoissonsFroidesManagement />
-      <hr></hr>
-      <GlacesManagement />
     </div>
   );
 }
