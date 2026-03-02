@@ -14,7 +14,6 @@ function ReservDataManagement() {
     places: 1,
   });
 
-  // ==================== FETCH DATA ====================
   const fetchData = async () => {
     setLoading(true);
     try {
@@ -55,9 +54,9 @@ function ReservDataManagement() {
       const formatSQLDate = (date = new Date()) => {
         const pad = (n) => n.toString().padStart(2, "0");
         return `${date.getFullYear()}-${pad(date.getMonth() + 1)}-${pad(
-          date.getDate()
+          date.getDate(),
         )} ${pad(date.getHours())}:${pad(date.getMinutes())}:${pad(
-          date.getSeconds()
+          date.getSeconds(),
         )}`;
       };
 
@@ -87,14 +86,13 @@ function ReservDataManagement() {
     }
   };
 
-  // ==================== DELETE ====================
   const handleDelete = async (clientId, activityId) => {
     if (!window.confirm("Supprimer cette réservation ?")) return;
 
     try {
       const response = await fetch(
         `${API_BASE_URL}/booking/${clientId}/${activityId}`,
-        { method: "DELETE" }
+        { method: "DELETE" },
       );
       if (!response.ok) throw new Error(`Erreur HTTP ${response.status}`);
       fetchData();
@@ -103,7 +101,6 @@ function ReservDataManagement() {
     }
   };
 
-  // ==================== UTILITIES ====================
   const formatDate = (dateString) =>
     new Date(dateString).toLocaleString("fr-FR", {
       year: "numeric",
@@ -121,7 +118,7 @@ function ReservDataManagement() {
     );
 
   return (
-    <div className="reservManagementCompo">
+    <div>
       <h2>Gestion des réservations</h2>
 
       <div className="reservationFormDiv">
@@ -195,7 +192,7 @@ function ReservDataManagement() {
             {reservations.map((reservation, index) => {
               const client = clients.find((c) => c.id === reservation.client);
               const activity = activities.find(
-                (a) => a[":id"] === reservation.activity
+                (a) => a[":id"] === reservation.activity,
               );
 
               const formatBackendDate = (backendDateObj) => {

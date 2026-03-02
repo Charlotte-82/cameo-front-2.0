@@ -21,7 +21,7 @@ function ContactComponent() {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify(data),
-        }
+        },
       );
 
       const result = await response.json();
@@ -39,7 +39,7 @@ function ContactComponent() {
     <div className="ResaCameoDiv">
       <h3>Formulaire de contact</h3>
       <p>
-        Quelque soient vos besoins ou vos envies, remplissez le formulaire
+        Quels que soient vos besoins ou vos envies, remplissez le formulaire
         ci-dessous pour nous soumettre votre projet. Il y sera apporté une
         réponse aussi vite que possible.
       </p>

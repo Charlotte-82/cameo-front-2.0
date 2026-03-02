@@ -38,7 +38,6 @@ function App() {
         <Route path="/boutique" element={<Shop />}></Route>
         <Route path="/apropos" element={<Apropos />}></Route>
         <Route path="/blog" element={<Blog />}></Route>
-        <Route path="/dashblog" element={<DashBlog />}></Route>
         <Route path="/agenda" element={<Program />}></Route>
         <Route path="/partenaires" element={<Partnership />}></Route>
         <Route path="/404" element={<Travaux />}></Route>
@@ -64,6 +63,7 @@ function App() {
             path="/admin/dashboard/carte"
             element={<MenuManagement />}
           ></Route>
+          <Route path="/admin/dashblog" element={<DashBlog />}></Route>
         </Route>
         <Route
           path="/profile"

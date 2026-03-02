@@ -1,85 +1,403 @@
-import React, { useState } from "react";
-import { CKEditor } from "@ckeditor/ckeditor5-react";
-import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
+import React, { useState, useRef, useEffect } from "react";
 
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
-export default function BlogEditor({ onSave }) {
-  const [title, setTitle] = useState("");
-  const [author, setAuthor] = useState("");
-  const [content, setContent] = useState("");
+export default function TextEditor({
+  onSave,
+  editMode = false,
+  initialData = null,
+  extraTags = [],
+}) {
+  const [title, setTitle] = useState(initialData?.title || "");
+  const [author, setAuthor] = useState(initialData?.author || "");
+  const [content, setContent] = useState(initialData?.content || "");
+  // NOUVEAU : Image de couverture
+  const [coverImage, setCoverImage] = useState(initialData?.cover_image || "");
+  const [date, setDate] = useState(
+    initialData?.date ||
+      new Date().toISOString().slice(0, 19).replace("T", " "),
+  );
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
+  const editorRef = useRef(null);
 
-  const handleSubmit = () => {
-    if (!title || !author || !content) {
+  const [images, setImages] = useState([]);
+  const [showImageBank, setShowImageBank] = useState(false);
+  const [selectedFile, setSelectedFile] = useState(null);
+  const [imageName, setImageName] = useState("");
+
+  useEffect(() => {
+    if (editorRef.current && content) {
+      editorRef.current.innerHTML = content;
+    }
+    fetchImages();
+  }, []);
+
+  const fetchImages = async () => {
+    try {
+      const res = await fetch(`${API_BASE_URL}/media`);
+      const data = await res.json();
+      setImages([...data]);
+    } catch (err) {
+      console.error("Erreur galerie:", err);
+    }
+  };
+
+  const handleEditorChange = () => {
+    if (editorRef.current) {
+      setContent(editorRef.current.innerHTML);
+    }
+  };
+
+  const execCommand = (command, value = null) => {
+    document.execCommand(command, false, value);
+    editorRef.current?.focus();
+  };
+
+  const handleImageUpload = async (e) => {
+    e.preventDefault();
+    if (!selectedFile) return;
+    const formData = new FormData();
+    formData.append("name", imageName);
+    formData.append("image", selectedFile);
+    try {
+      const res = await fetch(`${API_BASE_URL}/media`, {
+        method: "POST",
+        body: formData,
+      });
+      if (res.ok) {
+        setImageName("");
+        setSelectedFile(null);
+        fetchImages();
+        alert("Image ajoutée à la banque !");
+      }
+    } catch (err) {
+      console.error("Erreur upload:", err);
+    }
+  };
+
+  // MODIFIÉ : Ajout du choix de la taille
+  const insertImageInEditor = (imageUrl) => {
+    const width = prompt(
+      "Largeur de l'image en % ou px (ex: 50% ou 300px) :",
+      "100%",
+    );
+    if (width === null) return; // Annuler si l'utilisateur clique sur annuler
+
+    const img = `<img src="${API_BASE_URL}/uploads/highlight/${imageUrl}" alt="Image article" style="width: ${width}; height: auto; display: block; margin: 10px auto;" />`;
+
+    if (editorRef.current) {
+      editorRef.current.focus();
+      document.execCommand("insertHTML", false, img);
+      handleEditorChange();
+    }
+    setShowImageBank(false);
+  };
+
+  const handleSubmit = async () => {
+    if (!title || !author || !content || !date) {
       alert("Tous les champs sont requis !");
       return;
     }
-    onSave({ title, author, content });
+
+    setLoading(true);
+    setError(null);
+
+    try {
+      const articleData = {
+        title: title.trim(),
+        author: author.trim(),
+        content: content,
+        cover_image: coverImage, // AJOUT : Envoi de la couverture
+        date: new Date().toISOString().slice(0, 19).replace("T", " "),
+        tags: extraTags.join(","),
+      };
+
+      const url =
+        editMode && initialData?.id
+          ? `${API_BASE_URL}/article/${initialData.id}`
+          : `${API_BASE_URL}/article`;
+
+      const method = editMode ? "PUT" : "POST";
+
+      const response = await fetch(url, {
+        method: method,
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(articleData),
+      });
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        throw new Error(data.error || `Erreur HTTP ${response.status}`);
+      }
+
+      if (onSave) {
+        onSave({ ...articleData, id: data.id });
+      }
+
+      if (!editMode) {
+        setTitle("");
+        setAuthor("");
+        setContent("");
+        setCoverImage("");
+        setDate("");
+        if (editorRef.current) {
+          editorRef.current.innerHTML = "";
+        }
+      }
+
+      alert(editMode ? "Article mis à jour !" : "Article créé !");
+    } catch (err) {
+      setError(err.message);
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
-    <div className="p-4 max-w-4xl mx-auto">
-      <h2 className="text-2xl font-bold mb-6">Créer un article</h2>
+    <div className="p-4 container-fluid">
+      <h2 className="h2 fw-bold mb-4" style={{ color: "#b21a00" }}>
+        {editMode ? "Modifier l'article" : "Nouvel Article"}
+      </h2>
 
-      <div className="mb-4">
-        <label className="block text-sm font-medium mb-2">Titre</label>
-        <input
-          type="text"
-          value={title}
-          onChange={(e) => setTitle(e.target.value)}
-          className="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-          placeholder="Titre de l'article"
-        />
+      <div className="row g-4">
+        {/* COLONNE GAUCHE : ÉDITEUR */}
+        <div className="col-12 col-lg-8">
+          <div className="card shadow-sm p-4 mb-4">
+            <div className="mb-3">
+              <label className="form-label fw-bold">Titre de l'article</label>
+              <input
+                type="text"
+                className="form-control form-control-lg"
+                value={title}
+                onChange={(e) => setTitle(e.target.value)}
+              />
+            </div>
+            <div className="mb-3">
+              <label className="form-label fw-bold">Auteur</label>
+              <input
+                type="text"
+                className="form-control"
+                value={author}
+                onChange={(e) => setAuthor(e.target.value)}
+              />
+            </div>
+
+            <div className="mb-3">
+              <label className="form-label fw-bold">Contenu</label>
+              <div className="border rounded-top p-2 bg-light d-flex flex-wrap gap-1">
+                {/* Toolbar */}
+                <div className="border rounded-top p-2 bg-light d-flex flex-wrap gap-1">
+                  <button
+                    type="button"
+                    onClick={() => execCommand("bold")}
+                    className="btn btn-sm btn-outline-secondary bg-white"
+                    title="Gras"
+                  >
+                    <strong>G</strong>
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => execCommand("italic")}
+                    className="btn btn-sm btn-outline-secondary bg-white"
+                    title="Italique"
+                  >
+                    <em>I</em>
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => execCommand("underline")}
+                    className="btn btn-sm btn-outline-secondary bg-white"
+                    title="Souligné"
+                  >
+                    <u>S</u>
+                  </button>
+                  <div className="vr mx-1"></div>
+                  <button
+                    type="button"
+                    onClick={() => execCommand("insertUnorderedList")}
+                    className="btn btn-sm btn-outline-secondary bg-white"
+                    title="Liste à puces"
+                  >
+                    • Liste
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => execCommand("insertOrderedList")}
+                    className="btn btn-sm btn-outline-secondary bg-white"
+                    title="Liste numérotée"
+                  >
+                    1. Liste
+                  </button>
+                  <div className="vr mx-1"></div>
+                  <button
+                    type="button"
+                    onClick={() => execCommand("formatBlock", "h2")}
+                    className="btn btn-sm btn-outline-secondary bg-white"
+                    title="Titre"
+                  >
+                    H2
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => execCommand("formatBlock", "h3")}
+                    className="btn btn-sm btn-outline-secondary bg-white"
+                    title="Sous-titre"
+                  >
+                    H3
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => execCommand("formatBlock", "p")}
+                    className="btn btn-sm btn-outline-secondary bg-white"
+                    title="Paragraphe"
+                  >
+                    P
+                  </button>
+                  <div className="vr mx-1"></div>
+                  <button
+                    type="button"
+                    onClick={() => {
+                      const url = prompt("URL du lien:");
+                      if (url) execCommand("createLink", url);
+                    }}
+                    className="btn btn-sm btn-outline-secondary bg-white"
+                    title="Lien"
+                  >
+                    🔗
+                  </button>
+                </div>
+                <div className="vr mx-1"></div>
+                <button
+                  type="button"
+                  onClick={() => setShowImageBank(!showImageBank)}
+                  className="btn btn-sm btn-primary"
+                >
+                  🖼️ Insérer Image
+                </button>
+              </div>
+
+              <div
+                ref={editorRef}
+                contentEditable={!loading}
+                onInput={handleEditorChange}
+                className="form-control rounded-bottom rounded-0 border-top-0 bg-white"
+                style={{ minHeight: "500px", overflowY: "auto" }}
+              />
+            </div>
+
+            <button
+              onClick={handleSubmit}
+              disabled={loading}
+              className="btn btn-primary btn-lg w-100"
+            >
+              {loading
+                ? "Chargement..."
+                : editMode
+                  ? "Enregistrer les modifications"
+                  : "Publier l'article"}
+            </button>
+          </div>
+        </div>
+
+        {/* COLONNE DROITE : BANQUE D'IMAGES & COUVERTURE */}
+        <div className="col-12 col-lg-4">
+          {/* NOUVEAU : APERÇU COUVERTURE */}
+          <div className="card shadow-sm mb-4 border-primary">
+            <div className="card-body">
+              <h5 className="card-title fw-bold">Image de couverture</h5>
+              {coverImage ? (
+                <div className="position-relative mb-2">
+                  <img
+                    src={`${API_BASE_URL}/uploads/highlight/${coverImage}`}
+                    className="img-fluid rounded border"
+                    alt="Couverture"
+                  />
+                  <button
+                    className="btn btn-danger btn-sm position-absolute top-0 end-0 m-1"
+                    onClick={() => setCoverImage("")}
+                  >
+                    ×
+                  </button>
+                </div>
+              ) : (
+                <div className="bg-light border rounded text-center py-4 mb-2 text-muted">
+                  <small>Aucune image de couverture sélectionnée</small>
+                </div>
+              )}
+              <p className="small text-muted">
+                Sélectionnez une image dans la banque ci-dessous et cliquez sur
+                "Utiliser en couverture".
+              </p>
+            </div>
+          </div>
+
+          <div className="card shadow-sm">
+            <div className="card-body">
+              <h5 className="card-title fw-bold mb-3">Banque d'images</h5>
+
+              <form onSubmit={handleImageUpload} className="mb-3">
+                <input
+                  type="text"
+                  placeholder="Nom..."
+                  className="form-control form-control-sm mb-1"
+                  value={imageName}
+                  onChange={(e) => setImageName(e.target.value)}
+                  required
+                />
+                <input
+                  type="file"
+                  className="form-control form-control-sm mb-1"
+                  onChange={(e) => setSelectedFile(e.target.files[0])}
+                  required
+                />
+                <button type="submit" className="btn btn-success btn-sm w-100">
+                  Uploader
+                </button>
+              </form>
+
+              <hr />
+
+              <div
+                className="row g-2"
+                style={{ maxHeight: "600px", overflowY: "auto" }}
+              >
+                {images
+                  .filter((img) => img[":url"])
+                  .map((img) => (
+                    <div key={img[":id"]} className="col-6">
+                      <div className="card h-100 border p-1 shadow-none">
+                        <img
+                          src={`${API_BASE_URL}/uploads/highlight/${img[":url"]}`}
+                          className="card-img-top rounded cursor-pointer"
+                          style={{
+                            height: "80px",
+                            objectFit: "cover",
+                            cursor: "pointer",
+                          }}
+                          onClick={() => insertImageInEditor(img[":url"])}
+                          title="Insérer dans le texte"
+                        />
+                        <div className="p-1">
+                          <button
+                            className="btn btn-link btn-sm p-0 text-decoration-none w-100 text-center"
+                            style={{ fontSize: "0.7rem" }}
+                            onClick={() => setCoverImage(img[":url"])}
+                          >
+                            📌 Couverture
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                  ))}
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
-
-      <div className="mb-4">
-        <label className="block text-sm font-medium mb-2">Auteur</label>
-        <input
-          type="text"
-          value={author}
-          onChange={(e) => setAuthor(e.target.value)}
-          className="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-          placeholder="Nom de l'auteur"
-        />
-      </div>
-
-      <div className="mb-4">
-        <label className="block text-sm font-medium mb-2">Contenu</label>
-        <CKEditor
-          editor={ClassicEditor}
-          data={content}
-          onChange={(event, editor) => {
-            const data = editor.getData();
-            setContent(data);
-          }}
-          config={{
-            toolbar: [
-              "heading",
-              "|",
-              "bold",
-              "italic",
-              "link",
-              "blockQuote",
-              "numberedList",
-              "bulletedList",
-              "|",
-              "insertTable",
-              "uploadImage",
-              "mediaEmbed",
-              "|",
-              "undo",
-              "redo",
-            ],
-          }}
-        />
-      </div>
-
-      <button
-        onClick={handleSubmit}
-        className="mt-4 px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition"
-      >
-        Publier l'article
-      </button>
     </div>
   );
 }
