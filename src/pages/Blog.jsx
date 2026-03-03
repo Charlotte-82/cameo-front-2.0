@@ -115,7 +115,7 @@ export default function BlogEditor() {
     const coverImageUrl = `${API_BASE_URL}/uploads/highlight/${selectedArticle.cover_image}`;
 
     return (
-      <div className="px-5 py-5 mt-5 rounded shadow-sm articlePage">
+      <div className="px-5 py-5  rounded shadow-sm articlePage">
         <div className="d-flex flex-wrap justify-content-between align-items-center mb-4 pb-3">
           <button
             className="boutonLien text-decoration-none"
@@ -202,7 +202,7 @@ export default function BlogEditor() {
             </div>
           </div>
           <div
-            className="article-content fs-5 lh-base"
+            className="article-preview-content article-content fs-5 lh-base"
             dangerouslySetInnerHTML={{ __html: selectedArticle.content }}
           />
         </article>

@@ -1358,3 +1358,52 @@ strong {
     display: none;
   }
 }
+
+/* On cible toutes les balises de style à l'intérieur de ton éditeur */
+.article-preview-content em,
+.article-preview-content i,
+.article-preview-content span[style*="italic"] {
+  font-style: italic !important;
+  font-size: inherit !important;
+  color: inherit !important;
+  font-family: inherit !important;
+  line-height: inherit !important;
+}
+
+/* Applique-le aussi à la zone de saisie (le div contentEditable) */
+[contenteditable] em,
+[contenteditable] i,
+[contenteditable] span {
+  font-size: inherit;
+  color: inherit;
+}
+
+/* 1. On cible la zone d'affichage de l'article */
+.article-preview-content em,
+.article-preview-content i {
+  font-style: italic !important;
+  font-size: inherit !important;
+  color: inherit !important;
+  font-family: inherit !important;
+}
+
+/* 2. On nettoie aussi les spans qui pourraient avoir été générés avec du style inline */
+.article-preview-content span {
+  font-size: inherit !important;
+  color: inherit !important;
+}
+
+// .article-preview-content div,
+// .article-preview-content p {
+//   overflow: hidden;
+// }
+
+// /* Optionnel : une classe pour forcer l'arrêt du flottement */
+// .clear {
+//   clear: both;
+// }
+
+.article-preview-content img {
+  max-width: 100%; /* Sécurité pour ne pas déborder du mobile */
+  height: auto;
+}

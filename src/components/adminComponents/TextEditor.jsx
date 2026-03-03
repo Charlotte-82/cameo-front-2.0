@@ -11,7 +11,6 @@ export default function TextEditor({
   const [title, setTitle] = useState(initialData?.title || "");
   const [author, setAuthor] = useState(initialData?.author || "");
   const [content, setContent] = useState(initialData?.content || "");
-  // NOUVEAU : Image de couverture
   const [coverImage, setCoverImage] = useState(initialData?.cover_image || "");
   const [date, setDate] = useState(
     initialData?.date ||
@@ -26,8 +25,23 @@ export default function TextEditor({
   const [selectedFile, setSelectedFile] = useState(null);
   const [imageName, setImageName] = useState("");
 
+  // --- AJOUT : Synchronisation des champs quand initialData change ---
   useEffect(() => {
-    if (editorRef.current && content) {
+    setTitle(initialData?.title || "");
+    setAuthor(initialData?.author || "");
+    setContent(initialData?.content || "");
+    setCoverImage(initialData?.cover_image || "");
+
+    // Mise à jour du contenu visuel de l'éditeur (div contentEditable)
+    if (editorRef.current) {
+      editorRef.current.innerHTML = initialData?.content || "";
+    }
+  }, [initialData]);
+  // ------------------------------------------------------------------
+
+  useEffect(() => {
+    if (editorRef.current && content && !initialData) {
+      // Ajout check !initialData pour éviter double init
       editorRef.current.innerHTML = content;
     }
     fetchImages();
@@ -76,15 +90,29 @@ export default function TextEditor({
     }
   };
 
-  // MODIFIÉ : Ajout du choix de la taille
   const insertImageInEditor = (imageUrl) => {
-    const width = prompt(
-      "Largeur de l'image en % ou px (ex: 50% ou 300px) :",
-      "100%",
-    );
-    if (width === null) return; // Annuler si l'utilisateur clique sur annuler
+    const width = prompt("Largeur (ex: 30%, 300px) :", "50%");
+    if (width === null) return;
 
-    const img = `<img src="${API_BASE_URL}/uploads/highlight/${imageUrl}" alt="Image article" style="width: ${width}; height: auto; display: block; margin: 10px auto;" />`;
+    const align = prompt(
+      "Alignement : tapez 'gauche', 'droite' ou 'centre'",
+      "gauche",
+    );
+
+    let floatStyle = "";
+    let marginStyle = "margin: 10px auto; display: block;"; // Par défaut : centré
+
+    if (align === "gauche") {
+      floatStyle = "float: left;";
+      marginStyle = "margin: 0 20px 10px 0;"; // Marge à droite pour décoller le texte
+    } else if (align === "droite") {
+      floatStyle = "float: right;";
+      marginStyle = "margin: 0 0 10px 20px;"; // Marge à gauche
+    }
+
+    const img = `<img src="${API_BASE_URL}/uploads/highlight/${imageUrl}" 
+                    alt="Image article" 
+                    style="width: ${width}; height: auto; ${floatStyle} ${marginStyle}" />`;
 
     if (editorRef.current) {
       editorRef.current.focus();
@@ -95,7 +123,7 @@ export default function TextEditor({
   };
 
   const handleSubmit = async () => {
-    if (!title || !author || !content || !date) {
+    if (!title || !author || !content) {
       alert("Tous les champs sont requis !");
       return;
     }
@@ -108,7 +136,7 @@ export default function TextEditor({
         title: title.trim(),
         author: author.trim(),
         content: content,
-        cover_image: coverImage, // AJOUT : Envoi de la couverture
+        cover_image: coverImage,
         date: new Date().toISOString().slice(0, 19).replace("T", " "),
         tags: extraTags.join(","),
       };
@@ -135,7 +163,7 @@ export default function TextEditor({
       }
 
       if (onSave) {
-        onSave({ ...articleData, id: data.id });
+        onSave({ ...articleData, id: data.id || initialData?.id });
       }
 
       if (!editMode) {
@@ -143,7 +171,6 @@ export default function TextEditor({
         setAuthor("");
         setContent("");
         setCoverImage("");
-        setDate("");
         if (editorRef.current) {
           editorRef.current.innerHTML = "";
         }
@@ -189,95 +216,85 @@ export default function TextEditor({
             <div className="mb-3">
               <label className="form-label fw-bold">Contenu</label>
               <div className="border rounded-top p-2 bg-light d-flex flex-wrap gap-1">
-                {/* Toolbar */}
-                <div className="border rounded-top p-2 bg-light d-flex flex-wrap gap-1">
-                  <button
-                    type="button"
-                    onClick={() => execCommand("bold")}
-                    className="btn btn-sm btn-outline-secondary bg-white"
-                    title="Gras"
-                  >
-                    <strong>G</strong>
-                  </button>
-                  <button
-                    type="button"
-                    onClick={() => execCommand("italic")}
-                    className="btn btn-sm btn-outline-secondary bg-white"
-                    title="Italique"
-                  >
-                    <em>I</em>
-                  </button>
-                  <button
-                    type="button"
-                    onClick={() => execCommand("underline")}
-                    className="btn btn-sm btn-outline-secondary bg-white"
-                    title="Souligné"
-                  >
-                    <u>S</u>
-                  </button>
-                  <div className="vr mx-1"></div>
-                  <button
-                    type="button"
-                    onClick={() => execCommand("insertUnorderedList")}
-                    className="btn btn-sm btn-outline-secondary bg-white"
-                    title="Liste à puces"
-                  >
-                    • Liste
-                  </button>
-                  <button
-                    type="button"
-                    onClick={() => execCommand("insertOrderedList")}
-                    className="btn btn-sm btn-outline-secondary bg-white"
-                    title="Liste numérotée"
-                  >
-                    1. Liste
-                  </button>
-                  <div className="vr mx-1"></div>
-                  <button
-                    type="button"
-                    onClick={() => execCommand("formatBlock", "h2")}
-                    className="btn btn-sm btn-outline-secondary bg-white"
-                    title="Titre"
-                  >
-                    H2
-                  </button>
-                  <button
-                    type="button"
-                    onClick={() => execCommand("formatBlock", "h3")}
-                    className="btn btn-sm btn-outline-secondary bg-white"
-                    title="Sous-titre"
-                  >
-                    H3
-                  </button>
-                  <button
-                    type="button"
-                    onClick={() => execCommand("formatBlock", "p")}
-                    className="btn btn-sm btn-outline-secondary bg-white"
-                    title="Paragraphe"
-                  >
-                    P
-                  </button>
-                  <div className="vr mx-1"></div>
-                  <button
-                    type="button"
-                    onClick={() => {
-                      const url = prompt("URL du lien:");
-                      if (url) execCommand("createLink", url);
-                    }}
-                    className="btn btn-sm btn-outline-secondary bg-white"
-                    title="Lien"
-                  >
-                    🔗
-                  </button>
-                </div>
+                <button
+                  type="button"
+                  onClick={() => execCommand("bold")}
+                  className="btn btn-sm btn-outline-secondary bg-white"
+                  title="Gras"
+                >
+                  <strong>G</strong>
+                </button>
+                <button
+                  type="button"
+                  onClick={() => execCommand("italic")}
+                  className="btn btn-sm btn-outline-secondary bg-white"
+                  title="Italique"
+                >
+                  <em>I</em>
+                </button>
+                <button
+                  type="button"
+                  onClick={() => execCommand("underline")}
+                  className="btn btn-sm btn-outline-secondary bg-white"
+                  title="Souligné"
+                >
+                  <u>S</u>
+                </button>
                 <div className="vr mx-1"></div>
                 <button
                   type="button"
-                  onClick={() => setShowImageBank(!showImageBank)}
-                  className="btn btn-sm btn-primary"
+                  onClick={() => execCommand("insertUnorderedList")}
+                  className="btn btn-sm btn-outline-secondary bg-white"
+                  title="Liste à puces"
                 >
-                  🖼️ Insérer Image
+                  • Liste
                 </button>
+                <button
+                  type="button"
+                  onClick={() => execCommand("insertOrderedList")}
+                  className="btn btn-sm btn-outline-secondary bg-white"
+                  title="Liste numérotée"
+                >
+                  1. Liste
+                </button>
+                <div className="vr mx-1"></div>
+                <button
+                  type="button"
+                  onClick={() => execCommand("formatBlock", "h2")}
+                  className="btn btn-sm btn-outline-secondary bg-white"
+                  title="Titre"
+                >
+                  H2
+                </button>
+                <button
+                  type="button"
+                  onClick={() => execCommand("formatBlock", "h3")}
+                  className="btn btn-sm btn-outline-secondary bg-white"
+                  title="Sous-titre"
+                >
+                  H3
+                </button>
+                <button
+                  type="button"
+                  onClick={() => execCommand("formatBlock", "p")}
+                  className="btn btn-sm btn-outline-secondary bg-white"
+                  title="Paragraphe"
+                >
+                  P
+                </button>
+                <div className="vr mx-1"></div>
+                <button
+                  type="button"
+                  onClick={() => {
+                    const url = prompt("URL du lien:");
+                    if (url) execCommand("createLink", url);
+                  }}
+                  className="btn btn-sm btn-outline-secondary bg-white"
+                  title="Lien"
+                >
+                  🔗
+                </button>
+                <div className="vr mx-1"></div>
               </div>
 
               <div
@@ -300,12 +317,12 @@ export default function TextEditor({
                   ? "Enregistrer les modifications"
                   : "Publier l'article"}
             </button>
+            {error && <p className="text-danger mt-2">{error}</p>}
           </div>
         </div>
 
         {/* COLONNE DROITE : BANQUE D'IMAGES & COUVERTURE */}
         <div className="col-12 col-lg-4">
-          {/* NOUVEAU : APERÇU COUVERTURE */}
           <div className="card shadow-sm mb-4 border-primary">
             <div className="card-body">
               <h5 className="card-title fw-bold">Image de couverture</h5>
@@ -328,17 +345,12 @@ export default function TextEditor({
                   <small>Aucune image de couverture sélectionnée</small>
                 </div>
               )}
-              <p className="small text-muted">
-                Sélectionnez une image dans la banque ci-dessous et cliquez sur
-                "Utiliser en couverture".
-              </p>
             </div>
           </div>
 
           <div className="card shadow-sm">
             <div className="card-body">
               <h5 className="card-title fw-bold mb-3">Banque d'images</h5>
-
               <form onSubmit={handleImageUpload} className="mb-3">
                 <input
                   type="text"
@@ -358,9 +370,7 @@ export default function TextEditor({
                   Uploader
                 </button>
               </form>
-
               <hr />
-
               <div
                 className="row g-2"
                 style={{ maxHeight: "600px", overflowY: "auto" }}
@@ -379,7 +389,6 @@ export default function TextEditor({
                             cursor: "pointer",
                           }}
                           onClick={() => insertImageInEditor(img[":url"])}
-                          title="Insérer dans le texte"
                         />
                         <div className="p-1">
                           <button

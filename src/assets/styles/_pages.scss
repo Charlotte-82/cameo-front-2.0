@@ -1844,12 +1844,13 @@
   @include mobile {
     height: 50vh;
     background-attachment: scroll;
+    margin-left: 0;
   }
 }
 
 .article-hero-banner h1 {
   @include mobile {
-    font-size: 2.5rem;
+    font-size: 1.5rem;
   }
 }
 
@@ -1867,9 +1868,6 @@
   height: auto;
   display: block;
   margin: 1rem auto;
-
-  padding: 10px;
-  background-color: $darkorange-color;
-  border: 1px solid $text-color;
-  border-radius: 100% 0% 100% 0% / 15% 85% 15% 85%;
+  border: 3px solid $dark-color;
+  border-radius: 0.5em;
 }
