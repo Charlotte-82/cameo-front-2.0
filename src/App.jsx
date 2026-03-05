@@ -21,6 +21,7 @@ import PrivateRoute from "./components/PrivateRoute.jsx";
 import Profile from "./pages/Profile.jsx";
 import Politique from "./pages/Politics.jsx";
 import DashBlog from "./adminPages/BlogManagement.jsx";
+import ResetPasswordPage from "./pages/ResetPassword.jsx";
 import { AuthProvider, useAuth } from "./contexts/AuthContext.jsx";
 
 function App() {
@@ -44,6 +45,7 @@ function App() {
         <Route path="/mentions" element={<Mentions />}></Route>
         <Route path="/politique" element={<Politique />}></Route>
         <Route path="/admin" element={<Admin />}></Route>
+        <Route path="/reset-password" element={<ResetPasswordPage />} />
         <Route element={<PrivateRoute />}>
           <Route path="/admin/dashboard" element={<Dashboard />}></Route>
           <Route

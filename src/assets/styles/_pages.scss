@@ -308,6 +308,10 @@
   @extend %heading-h2-style;
 }
 
+.adminForm {
+  width: 60%;
+}
+
 .adminFormDiv {
   display: flex;
   justify-content: center;
@@ -316,6 +320,10 @@
 
 .adminForm fieldset {
   @extend %fieldset-style;
+}
+
+.adminForm input {
+  width: 80%;
 }
 
 .adminForm label {

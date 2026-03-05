@@ -4,6 +4,7 @@ import { useAuth } from "../contexts/AuthContext";
 function Profile() {
   const { client } = useAuth();
   const [products, setProducts] = useState([]);
+  const [showPassword, setShowPassword] = useState(false);
   const [form, setForm] = useState({
     lastname: "",
     firstname: "",
@@ -40,7 +41,7 @@ function Profile() {
   const fetchProducts = async () => {
     try {
       const resEntier = await fetch(
-        `${API_BASE_URL}/product?type=gateau-entier`
+        `${API_BASE_URL}/product?type=gateau-entier`,
       );
       if (!resEntier.ok) throw new Error(`Erreur ${resEntier.status}`);
       const gateauxEntiers = await resEntier.json();
@@ -68,7 +69,7 @@ function Profile() {
         bookings.map(async (b, index) => {
           try {
             const activityRes = await fetch(
-              `${API_BASE_URL}/activity/${b.activity}`
+              `${API_BASE_URL}/activity/${b.activity}`,
             );
             if (!activityRes.ok) throw new Error("Activité introuvable");
 
@@ -96,7 +97,7 @@ function Profile() {
               key: `${b.client}-${b.activity}-${index}`,
             };
           }
-        })
+        }),
       );
 
       setReservations(bookingsWithActivity);
@@ -116,7 +117,7 @@ function Profile() {
         `${API_BASE_URL}/booking/${clientId}/${activityId}`,
         {
           method: "DELETE",
-        }
+        },
       );
       if (!res.ok) throw new Error(`Erreur ${res.status}`);
       fetchReservations(client.id_client);
@@ -277,12 +278,21 @@ function Profile() {
           <br></br>
           <label>Nouveau mot de passe:</label>
           <input
-            type="password"
+            type={showPassword ? "text" : "password"}
             name="password"
             value={form.password}
             onChange={handleChange}
             placeholder="Laissez vide pour ne pas changer"
           />
+          <span
+            className="password-toggle-icon"
+            onClick={() => setShowPassword(!showPassword)}
+            style={{
+              cursor: "pointer",
+            }}
+          >
+            {showPassword ? "👁️" : "👁️‍🗨️"}{" "}
+          </span>
           <br></br>
           <div
             style={{

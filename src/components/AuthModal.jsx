@@ -1,11 +1,14 @@
 import React, { useState, useEffect } from "react";
 import ReactDOM from "react-dom";
 import { useAuth } from "../contexts/AuthContext";
+import ReCAPTCHA from "react-google-recaptcha";
 
 function AuthModal({ onClose, onLoginSuccess }) {
-  const [isLoginMode, setIsLoginMode] = useState(true);
+  const [view, setView] = useState("login");
   const [products, setProducts] = useState([]);
   const { login } = useAuth();
+  const [error, setError] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
   const [form, setForm] = useState({
     lastname: "",
     firstname: "",
@@ -14,6 +17,7 @@ function AuthModal({ onClose, onLoginSuccess }) {
     tel: "",
     newsletter: "0",
     product_id: "",
+    captchaToken: "",
   });
 
   const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
@@ -23,18 +27,15 @@ function AuthModal({ onClose, onLoginSuccess }) {
       try {
         const res = await fetch(`${API_BASE_URL}/product`);
         const data = await res.json();
-        // Filtrer uniquement les gâteaux (gateau-entier et gateau-part)
         const cakes = data.filter(
           (product) =>
-            product.type === "gateau-entier" || product.type === "gateau-part"
+            product.type === "gateau-entier" || product.type === "gateau-part",
         );
-        console.log("Gâteaux filtrés :", cakes);
         setProducts(cakes);
       } catch (error) {
         console.error("Erreur chargement gâteaux:", error);
       }
     };
-
     fetchCakes();
   }, [API_BASE_URL]);
 
@@ -45,68 +46,286 @@ function AuthModal({ onClose, onLoginSuccess }) {
 
   const handleLoginSubmit = async (e) => {
     e.preventDefault();
+    setError("");
+
     try {
       await login(form.mail, form.password);
       onClose();
       if (onLoginSuccess) onLoginSuccess();
     } catch (err) {
-      console.error("Erreur de connexion:", err);
-      alert("Impossible de se connecter. Veuillez vérifier vos identifiants.");
+      const serverMessage = err.response?.data?.message || err.message;
+      setError(serverMessage);
     }
   };
 
   const handleRegisterSubmit = async (e) => {
     e.preventDefault();
-
-    const userData = {
-      firstname: form.firstname,
-      lastname: form.lastname,
-      mail: form.mail,
-      password: form.password,
-      tel: form.tel,
-      newsletter: form.newsletter,
-      product_id: form.product_id,
-    };
-
-    console.log("Tentative d'enregistrement avec:", userData);
-
+    const passwordRegex =
+      /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{12,}$/;
+    if (!passwordRegex.test(form.password)) {
+      alert(
+        "Sécurité : 12 caractères minimum, Majuscule, Minuscule, Chiffre et Caractère spécial requis.",
+      );
+      return;
+    }
+    console.log("Données envoyées au PHP :", JSON.stringify(form));
     try {
       const response = await fetch(`${API_BASE_URL}/client`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(userData),
+        body: JSON.stringify(form),
       });
 
       if (!response.ok) throw new Error(`Erreur: ${response.statusText}`);
 
-      const result = await response.json();
-      console.log("Enregistrement réussi:", result);
-
-      setForm({
-        lastname: "",
-        firstname: "",
-        mail: "",
-        password: "",
-        tel: "",
-        newsletter: "0",
-        product_id: "",
-      });
-      onClose();
-      alert("Enregistrement réussi !");
+      setView("success-mail");
     } catch (error) {
-      console.error(error);
       alert(`Échec de l'enregistrement: ${error.message}`);
     }
   };
 
-  const modalContent = (
+  const handleRequestReset = async (e) => {
+    e.preventDefault();
+    try {
+      await fetch(`${API_BASE_URL}/auth/request-password-reset`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ mail: form.mail }),
+      });
+      alert("Si ce compte existe, un lien a été envoyé.");
+      setView("login");
+    } catch (err) {
+      alert("Erreur lors de la demande.");
+    }
+  };
+
+  const renderContent = () => {
+    switch (view) {
+      case "login":
+        return (
+          <div className="auth-form login-form">
+            {error && (
+              <div
+                style={{
+                  color: "#721c24",
+                  backgroundColor: "#f8d7da",
+                  padding: "10px",
+                  borderRadius: "5px",
+                  marginBottom: "15px",
+                  fontSize: "0.9em",
+                  border: "1px solid #f5c6cb",
+                }}
+              >
+                {error}
+              </div>
+            )}
+            <form onSubmit={handleLoginSubmit} className="adminForm4">
+              <label>Email:</label>
+              <input
+                type="email"
+                name="mail"
+                value={form.mail}
+                onChange={handleChange}
+                required
+              />
+              <label>Mot de passe:</label>
+
+              <input
+                type={showPassword ? "text" : "password"}
+                name="password"
+                value={form.password}
+                onChange={handleChange}
+                required
+              />
+              <span
+                className="password-toggle-icon"
+                onClick={() => setShowPassword(!showPassword)}
+                style={{
+                  cursor: "pointer",
+                }}
+              >
+                {showPassword ? "👁️" : "👁️‍🗨️"}{" "}
+              </span>
+              <br></br>
+              <button type="submit">Se connecter</button>
+            </form>
+            <p
+              className="forgot-password-link"
+              onClick={() => setView("forgot-password")}
+              style={{ cursor: "pointer", color: "#b21a00", marginTop: "10px" }}
+            >
+              Mot de passe oublié ?
+            </p>
+            <p className="toggle-form-link">
+              Pas encore de compte ?{" "}
+              <span onClick={() => setView("register")}>S'enregistrer</span>
+            </p>
+          </div>
+        );
+
+      case "register":
+        return (
+          <div className="auth-form register-form">
+            <form onSubmit={handleRegisterSubmit} className="adminForm4">
+              <label>Nom</label>
+              <input
+                name="lastname"
+                placeholder="Nom"
+                onChange={handleChange}
+                required
+              />
+              <br></br>
+              <label>Prénom</label>
+              <input
+                name="firstname"
+                placeholder="Prénom"
+                onChange={handleChange}
+                required
+              />
+              <br></br>
+              <label>Email</label>
+              <input
+                type="email"
+                name="mail"
+                placeholder="Adresse Email"
+                onChange={handleChange}
+                required
+              />
+              <br></br>
+              <label>Mot de passe</label>
+              <label>
+                <small>
+                  12 caractères, 1 minuscule, 1 majuscule, 1 chiffre, 1
+                  caractère spécial minimum
+                </small>
+              </label>
+              <input
+                type={showPassword ? "text" : "password"}
+                name="password"
+                onChange={handleChange}
+                required
+              />
+              <span
+                className="password-toggle-icon"
+                onClick={() => setShowPassword(!showPassword)}
+                style={{
+                  cursor: "pointer",
+                }}
+              >
+                {showPassword ? "👁️" : "👁️‍🗨️"}{" "}
+                {/* Ou une icône Lucide-react / FontAwesome */}
+              </span>
+              <br></br>
+              <label>Téléphone</label>
+              <input type="tel" name="tel" onChange={handleChange} required />
+              <br></br>
+
+              <label>Je veux recevoir la newsletter ?</label>
+              <div className="inputRadioRegister">
+                <input
+                  type="radio"
+                  name="newsletter"
+                  value="1"
+                  onChange={handleChange}
+                  style={{ marginRight: "0.2em" }}
+                />{" "}
+                Oui
+                <input
+                  type="radio"
+                  name="newsletter"
+                  value="0"
+                  onChange={handleChange}
+                  defaultChecked
+                  style={{ marginRight: "0.2em", marginLeft: "0.5em" }}
+                />{" "}
+                Non
+              </div>
+              <br></br>
+
+              <label>Gâteau préféré</label>
+              <select name="product_id" onChange={handleChange} required>
+                <option value="">--Choisissez--</option>
+                {products.map((p) => (
+                  <option key={p.id} value={p.id}>
+                    {p.name}
+                  </option>
+                ))}
+              </select>
+
+              <div style={{ marginTop: "15px" }}>
+                <ReCAPTCHA
+                  sitekey={import.meta.env.VITE_RECAPTCHA_SITE_KEY}
+                  onChange={(val) => setForm({ ...form, captchaToken: val })}
+                />
+              </div>
+
+              <button
+                type="submit"
+                disabled={!form.captchaToken}
+                style={{ marginTop: "15px" }}
+              >
+                S'enregistrer
+              </button>
+            </form>
+            <p className="toggle-form-link">
+              Déjà un compte ?{" "}
+              <span onClick={() => setView("login")}>Se connecter</span>
+            </p>
+          </div>
+        );
+
+      case "forgot-password":
+        return (
+          <div className="auth-form">
+            <h3>Réinitialiser</h3>
+            <p>Saisissez votre email pour recevoir un lien.</p>
+            <form onSubmit={handleRequestReset} className="adminForm4">
+              <input
+                type="email"
+                name="mail"
+                placeholder="Votre email"
+                onChange={handleChange}
+                required
+              />
+              <button type="submit">Envoyer le lien</button>
+            </form>
+            <p
+              className="toggle-form-link"
+              onClick={() => setView("login")}
+              style={{ cursor: "pointer" }}
+            >
+              Retour à la connexion
+            </p>
+          </div>
+        );
+
+      case "success-mail":
+        return (
+          <div className="auth-form" style={{ textAlign: "center" }}>
+            <h3 style={{ color: "#b21a00" }}>Vérifiez vos emails ! 📧</h3>
+            <p>
+              Un lien d'activation vous a été envoyé. Merci de cliquer dessus
+              pour valider votre compte.
+            </p>
+            <button onClick={onClose}>Fermer</button>
+          </div>
+        );
+
+      default:
+        return null;
+    }
+  };
+
+  return ReactDOM.createPortal(
     <div className="modal-backdrop">
       <div className="modal fade show" style={{ display: "block" }}>
         <div className="modal-dialog modal-dialog-centered">
           <div className="modal-content">
             <div className="modal-header">
               <h3 className="modal-title">
-                {isLoginMode ? "Connexion" : "S'enregistrer"}
+                {view === "login" && "Connexion"}
+                {view === "register" && "Enregistrement"}
+                {view === "forgot-password" && "Récupération"}
               </h3>
               <button
                 type="button"
@@ -115,165 +334,22 @@ function AuthModal({ onClose, onLoginSuccess }) {
               ></button>
             </div>
             <div className="modal-body">
-              {isLoginMode ? (
-                <div className="auth-form login-form">
-                  <form onSubmit={handleLoginSubmit} className="adminForm4">
-                    <label>Email:</label>
-                    <br />
-                    <input
-                      type="email"
-                      name="mail"
-                      placeholder="email"
-                      value={form.mail}
-                      onChange={handleChange}
-                      required
-                    />
-                    <br />
-                    <br />
-                    <label>Mot de passe:</label>
-                    <br />
-                    <input
-                      type="password"
-                      name="password"
-                      placeholder="mot de passe"
-                      value={form.password}
-                      onChange={handleChange}
-                      required
-                    />
-                    <br />
-                    <br />
-                    <button type="submit">Se connecter</button>
-                  </form>
-                  <p className="toggle-form-link">
-                    Pas encore de compte ?{" "}
-                    <span onClick={() => setIsLoginMode(false)}>
-                      S'enregistrer
-                    </span>
-                  </p>
-                </div>
-              ) : (
-                <div className="auth-form register-form">
-                  <h3>S'enregistrer</h3>
-                  <form onSubmit={handleRegisterSubmit} className="adminForm4">
-                    <label>Nom</label>
-                    <input
-                      name="lastname"
-                      placeholder="Nom"
-                      value={form.lastname}
-                      onChange={handleChange}
-                      required
-                    />
-                    <br />
-                    <label>Prénom</label>
-                    <input
-                      name="firstname"
-                      placeholder="Prénom"
-                      value={form.firstname}
-                      onChange={handleChange}
-                      required
-                    />
-                    <br />
-                    <label>Email</label>
-                    <input
-                      type="email"
-                      name="mail"
-                      placeholder="Email"
-                      value={form.mail}
-                      onChange={handleChange}
-                      required
-                    />
-                    <br />
-                    <label>Mot de passe</label>
-                    <input
-                      type="password"
-                      name="password"
-                      placeholder="Mot de passe"
-                      value={form.password}
-                      onChange={handleChange}
-                      required
-                    />
-                    <br />
-                    <label>Téléphone</label>
-                    <input
-                      type="tel"
-                      name="tel"
-                      placeholder="Téléphone"
-                      value={form.tel}
-                      onChange={handleChange}
-                      required
-                    />
-                    <br />
-                    <label>S'inscrire à la newsletter ?</label>
-                    <div className="inputRadioRegister">
-                      <input
-                        name="newsletter"
-                        type="radio"
-                        value="1"
-                        checked={form.newsletter === "1"}
-                        onChange={handleChange}
-                        required
-                      />{" "}
-                      <label className="labelRadioNews">oui</label>
-                      <input
-                        name="newsletter"
-                        type="radio"
-                        value="0"
-                        checked={form.newsletter === "0"}
-                        onChange={handleChange}
-                        required
-                      />{" "}
-                      <label className="labelRadioNews">non</label>
-                    </div>
-                    <br />
-                    <label>Gâteau préféré</label>
-                    <select
-                      name="product_id"
-                      value={form.product_id}
-                      onChange={handleChange}
-                      required
-                    >
-                      <option value="">--Choisissez un gâteau préféré--</option>
-                      {products.map((product, index) => (
-                        <option key={product.id || index} value={product.id}>
-                          {product.name}
-                        </option>
-                      ))}
-                    </select>
-
-                    <br />
-                    <button type="submit">S'enregistrer</button>
-                  </form>
-                  <p className="toggle-form-link">
-                    Déjà un compte ?{" "}
-                    <span onClick={() => setIsLoginMode(true)}>
-                      Se connecter
-                    </span>
-                  </p>
-                  <div style={{ display: "flex", justifyContent: "center" }}>
-                    <a
-                      href="/politique"
-                      target="_blank"
-                      style={{
-                        fontSize: "xx-small",
-                        textAlign: "center",
-                        color: "#b21a00",
-                      }}
-                    >
-                      Politique de Confidentialité
-                    </a>
-                  </div>
-                </div>
-              )}
+              {renderContent()}
+              <div style={{ textAlign: "center", marginTop: "15px" }}>
+                <a
+                  href="/politique"
+                  target="_blank"
+                  style={{ fontSize: "xx-small", color: "#b21a00" }}
+                >
+                  Politique de Confidentialité
+                </a>
+              </div>
             </div>
           </div>
         </div>
       </div>
-    </div>
-  );
-
-  return ReactDOM.createPortal(
-    modalContent,
-    document.getElementById("modal-root")
+    </div>,
+    document.getElementById("modal-root"),
   );
 }
 

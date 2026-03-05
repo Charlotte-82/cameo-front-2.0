@@ -5,6 +5,7 @@ function AdminLogin() {
   const [name, setName] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
   const navigate = useNavigate();
 
   const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
@@ -22,7 +23,7 @@ function AdminLogin() {
             "Content-Type": "application/json",
           },
           body: JSON.stringify({ name, password }),
-        }
+        },
       );
 
       const data = await response.json();
@@ -56,14 +57,25 @@ function AdminLogin() {
             />
             <br />
             <br />
-            <label>Mot de passe</label>
-            <br />
+            <label>Mot de passe</label> <br />
             <input
-              type="password"
+              type={showPassword ? "text" : "password"}
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               required
-            />
+            />{" "}
+            <span
+              className="password-toggle-icon"
+              onClick={() => setShowPassword(!showPassword)}
+              style={{
+                cursor: "pointer",
+                right: "10px",
+                top: "50%",
+                transform: "translateY(-50%)",
+              }}
+            >
+              {showPassword ? "👁️" : "👁️‍🗨️"}{" "}
+            </span>
             <br />
             <br />
             <button type="submit">Se connecter</button>

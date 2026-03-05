@@ -30,7 +30,7 @@ export const AuthProvider = ({ children }) => {
       } catch (error) {
         console.error(
           "Erreur lors de la vérification de l'authentification :",
-          error
+          error,
         );
         setIsAuthenticated(false);
         setClient(null);
@@ -42,22 +42,52 @@ export const AuthProvider = ({ children }) => {
     checkAuthStatus();
   }, [API_BASE_URL]);
 
+  // const login = async (mail, password) => {
+  //   try {
+  //     const response = await fetch(`${API_BASE_URL}/auth/login`, {
+  //       method: "POST",
+  //       headers: {
+  //         "Content-Type": "application/json",
+  //       },
+  //       body: JSON.stringify({ client_mail: mail, client_password: password }),
+  //       credentials: "include",
+  //     });
+
+  //     if (!response.ok) {
+  //       throw new Error("Échec de la connexion");
+  //     }
+
+  //     const data = await response.json();
+  //     setIsAuthenticated(true);
+  //     setClient(data.client);
+  //     return data;
+  //   } catch (error) {
+  //     console.error("Erreur de connexion :", error);
+  //     throw error;
+  //   }
+  // };
+
   const login = async (mail, password) => {
     try {
       const response = await fetch(`${API_BASE_URL}/auth/login`, {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ client_mail: mail, client_password: password }),
         credentials: "include",
       });
 
+      // 1. On récupère le JSON dans tous les cas
+      const data = await response.json();
+
+      // 2. Si la réponse est en erreur (ex: 403)
       if (!response.ok) {
-        throw new Error("Échec de la connexion");
+        // On crée une erreur mais on y attache les données du serveur
+        const error = new Error(data.message || "Échec de la connexion");
+        error.response = { data: data }; // On simule la structure d'Axios pour ne pas casser ta modale
+        throw error;
       }
 
-      const data = await response.json();
+      // 3. Si tout va bien
       setIsAuthenticated(true);
       setClient(data.client);
       return data;

@@ -6,6 +6,7 @@ function UserDataManagement() {
   const [clients, setClients] = useState([]);
   const [products, setProducts] = useState([]);
   const [existingPassword, setExistingPassword] = useState(null);
+  const [showPassword, setShowPassword] = useState(false);
   const [form, setForm] = useState({
     firstname: "",
     lastname: "",
@@ -33,7 +34,7 @@ function UserDataManagement() {
     const res = await fetch(`${API_BASE_URL}/product`);
     const data = await res.json();
     const allowed = data.filter((p) =>
-      ["gateau-entier", "gateau-part"].includes(p.type)
+      ["gateau-entier", "gateau-part"].includes(p.type),
     );
 
     setProducts(allowed);
@@ -178,13 +179,23 @@ function UserDataManagement() {
           {!editingId && (
             <input
               name="password"
-              type="password"
+              type={showPassword ? "text" : "password"}
               placeholder="Mot de passe"
               value={form.password}
               onChange={handleChange}
               required
             />
           )}
+          <span
+            className="password-toggle-icon"
+            onClick={() => setShowPassword(!showPassword)}
+            style={{
+              cursor: "pointer",
+            }}
+          >
+            {showPassword ? "👁️" : "👁️‍🗨️"}{" "}
+            {/* Ou une icône Lucide-react / FontAwesome */}
+          </span>
           <br></br>
           <button
             type="submit"
