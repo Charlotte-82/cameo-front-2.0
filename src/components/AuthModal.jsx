@@ -60,20 +60,34 @@ function AuthModal({ onClose, onLoginSuccess }) {
 
   const handleRegisterSubmit = async (e) => {
     e.preventDefault();
+    const cleanedPassword = form.password.trim();
+    const cleanedMail = form.mail.trim().toLowerCase();
     const passwordRegex =
       /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{12,}$/;
-    if (!passwordRegex.test(form.password)) {
+    // if (!passwordRegex.test(form.password)) {
+    //   alert(
+    //     "Sécurité : 12 caractères minimum, Majuscule, Minuscule, Chiffre et Caractère spécial requis.",
+    //   );
+    //   return;
+    // }
+    if (!passwordRegex.test(cleanedPassword)) {
       alert(
-        "Sécurité : 12 caractères minimum, Majuscule, Minuscule, Chiffre et Caractère spécial requis.",
+        "Sécurité : 12 caractères minimum, Majuscule, Minuscule, Chiffre et Caractère spécial requis (ex: @, $, !, #, .).",
       );
       return;
     }
-    console.log("Données envoyées au PHP :", JSON.stringify(form));
+    // console.log("Données envoyées au PHP :", JSON.stringify(form));
+
+    const formDataToSend = {
+      ...form,
+      password: cleanedPassword,
+      mail: cleanedMail,
+    };
     try {
       const response = await fetch(`${API_BASE_URL}/client`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(form),
+        body: JSON.stringify(formDataToSend),
       });
 
       if (!response.ok) throw new Error(`Erreur: ${response.statusText}`);
@@ -135,6 +149,8 @@ function AuthModal({ onClose, onLoginSuccess }) {
                 name="password"
                 value={form.password}
                 onChange={handleChange}
+                autoCapitalize="none"
+                autoCorrect="off"
                 required
               />
               <span

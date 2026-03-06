@@ -20,30 +20,47 @@ const ResetPasswordPage = () => {
   }, [token, navigate]);
 
   const handleReset = async (e) => {
+    // e.preventDefault();
+
+    // const passwordRegex =
+    //   /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{12,}$/;
+
+    // if (passwords.new !== passwords.confirm) {
+    //   alert("Les mots de passe ne correspondent pas.");
+    //   return;
+    // }
+
+    // if (!passwordRegex.test(passwords.new)) {
+    //   alert(
+    //     "Le mot de passe doit contenir au moins 12 caractères, une majuscule, une minuscule, un chiffre et un caractère spécial.",
+    //   );
+    //   return;
+    // }
+
     e.preventDefault();
-
+    const newPass = passwords.new.trim();
+    const confirmPass = passwords.confirm.trim();
     const passwordRegex =
-      /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{12,}$/;
+      /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&.,#\-/_]).{12,}$/;
 
-    if (passwords.new !== passwords.confirm) {
+    if (newPass !== confirmPass) {
       alert("Les mots de passe ne correspondent pas.");
       return;
     }
 
-    if (!passwordRegex.test(passwords.new)) {
+    if (!passwordRegex.test(newPass)) {
       alert(
-        "Le mot de passe doit contenir au moins 12 caractères, une majuscule, une minuscule, un chiffre et un caractère spécial.",
+        "Le mot de passe doit contenir au moins 12 caractères, une majuscule, une minuscule, un chiffre et un caractère spécial (ex: @, $, !, %, *, ?, &, ., #).",
       );
       return;
     }
-
     try {
       const response = await fetch(
         `${import.meta.env.VITE_API_BASE_URL}/auth/reset-password`,
         {
           method: "POST",
           headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ token, password: passwords.new }),
+          body: JSON.stringify({ token, password: newPass }),
         },
       );
 
@@ -82,6 +99,8 @@ const ResetPasswordPage = () => {
             type={showPassword ? "text" : "password"}
             placeholder="Nouveau mot de passe"
             className="form-control"
+            autoCapitalize="none"
+            autoCorrect="off"
             onChange={(e) =>
               setPasswords({ ...passwords, new: e.target.value })
             }
@@ -103,6 +122,8 @@ const ResetPasswordPage = () => {
             type={showPassword ? "text" : "password"}
             placeholder="Confirmez le mot de passe"
             className="form-control"
+            autoCapitalize="none"
+            autoCorrect="off"
             onChange={(e) =>
               setPasswords({ ...passwords, confirm: e.target.value })
             }
